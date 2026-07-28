@@ -1,3 +1,12 @@
+/**
+ * LUXE Fashion Store — Custom design tokens injected before Tailwind.
+ * Path resolves relative to this file via Vite/PostCSS.
+ * ─────────────────────────────────────────────────────────────────────────
+ * IMPORTANT: This import must stay BEFORE @tailwind directives so that our
+ * CSS custom properties are available inside Tailwind's @layer blocks.
+ */
+@import '../../../resources/themes/default/assets/css/_variables.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
