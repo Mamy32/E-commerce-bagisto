@@ -5,7 +5,7 @@
  * IMPORTANT: This import must stay BEFORE @tailwind directives so that our
  * CSS custom properties are available inside Tailwind's @layer blocks.
  */
-@import '../../../resources/themes/default/assets/css/_variables.css';
+@import '../../../../../../../resources/themes/default/assets/css/_variables.css';
 
 @tailwind base;
 @tailwind components;
