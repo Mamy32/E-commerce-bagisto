@@ -20,6 +20,7 @@
         "astrotomic/laravel-translatable": "^11.16",
         "barryvdh/laravel-dompdf": "^2.0.0|^3.0",
         "diglactic/laravel-breadcrumbs": "^10.0",
+        "duitkupg/duitku-php": "dev-master",
         "elasticsearch/elasticsearch": "^8.10",
         "enshrined/svg-sanitize": "^0.22.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -64,6 +65,8 @@
     },
     "autoload": {
         "psr-4": {
+            "Fashion\\Biteship\\": "packages/Fashion/Biteship/src/",
+            "Fashion\\Duitku\\": "packages/Fashion/Duitku/src/",
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
@@ -111,6 +114,8 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "Fashion\\Biteship\\": "packages/Fashion/Biteship/src/",
+            "Fashion\\Duitku\\": "packages/Fashion/Duitku/src/",
             "Tests\\": "tests/",
             "Webkul\\Admin\\Tests\\": "packages/Webkul/Admin/tests",
             "Webkul\\Core\\Tests\\": "packages/Webkul/Core/tests",

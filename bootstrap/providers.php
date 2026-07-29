@@ -93,4 +93,6 @@ return [
     TaxServiceProvider::class,
     ThemeServiceProvider::class,
     UserServiceProvider::class,
+    Fashion\Biteship\Providers\BiteshipServiceProvider::class,
+    Fashion\Duitku\Providers\DuitkuServiceProvider::class,
 ];
