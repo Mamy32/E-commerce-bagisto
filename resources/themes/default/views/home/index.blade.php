@@ -106,7 +106,7 @@
                     @endif
 
                     <x-shop::categories.carousel
-                        :title=""
+                        title="" 
                         :src="route('shop.api.categories.index', $data['filters'] ?? [])"
                         :navigation-link="route('shop.home.index')"
                         aria-label="{{ trans('shop::app.home.index.categories-carousel') }}"
@@ -124,7 +124,7 @@
                     @endif
 
                     <x-shop::products.carousel
-                        :title=""
+                        title="" 
                         :src="route('shop.api.products.index', $data['filters'] ?? [])"
                         :navigation-link="route('shop.search.index', $data['filters'] ?? [])"
                         aria-label="{{ trans('shop::app.home.index.product-carousel') }}"
