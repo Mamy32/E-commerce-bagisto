@@ -3,7 +3,7 @@
 <div class="flex min-h-[78px] w-full items-center justify-between border-b border-fashion-border px-[60px] max-1180:px-8">
 
     {{-- LEFT: Logo + Category Navigation --}}
-    <div class="flex items-center gap-x-10 max-[1180px]:gap-x-6">
+    <div class="flex items-center gap-x-10 max-[1100px]:gap-x-6">
 
         {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.logo.before') !!}
 
@@ -93,6 +93,36 @@
         {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.search_bar.after') !!}
 
         <div class="flex items-center gap-x-5">
+
+            <!-- Locales Switcher -->
+            <x-shop::dropdown position="bottom-{{ core()->getCurrentLocale()->direction === 'ltr' ? 'right' : 'left' }}">
+                <x-slot:toggle>
+                    <div
+                        class="flex cursor-pointer items-center gap-1.5 hover:opacity-60 transition-opacity"
+                        role="button"
+                        tabindex="0"
+                    >
+                        <img
+                            src="{{ ! empty(core()->getCurrentLocale()->logo_url)
+                                    ? core()->getCurrentLocale()->logo_url
+                                    : bagisto_asset('images/default-language.svg')
+                                }}"
+                            class="h-[16px] w-[24px] object-cover rounded-sm"
+                            alt="Locale"
+                        />
+                        
+                        <span class="text-sm font-medium text-fashion-navy" v-pre>
+                            {{ strtoupper(app()->getLocale()) }}
+                        </span>
+
+                        <span class="text-xl icon-arrow-down" role="presentation"></span>
+                    </div>
+                </x-slot>
+            
+                <x-slot:content class="journal-scroll max-h-[500px] !p-0">
+                    <v-locale-switcher></v-locale-switcher>
+                </x-slot>
+            </x-shop::dropdown>
 
             {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.compare.before') !!}
 
@@ -541,6 +571,43 @@
                     this.currentViewLevel = 'main';
                 },
             },
+        });
+    </script>
+
+    <script type="text/x-template" id="v-locale-switcher-template">
+        <div class="my-2.5 grid gap-1 overflow-auto max-md:my-0 sm:max-h-[500px]">
+            <span
+                class="flex cursor-pointer items-center gap-2.5 px-5 py-2 text-sm text-fashion-navy hover:bg-fashion-surface transition-colors"
+                :class="{'bg-fashion-surface font-semibold': locale.code == '{{ app()->getLocale() }}'}"
+                v-for="locale in locales"
+                @click="change(locale)"                  
+            >
+                <img
+                    :src="locale.logo_url || '{{ bagisto_asset('images/default-language.svg') }}'"
+                    width="24"
+                    height="16"
+                    class="rounded-sm object-cover"
+                />
+                @{{ locale.name }}
+            </span>
+        </div>
+    </script>
+
+    <script type="module">
+        app.component('v-locale-switcher', {
+            template: '#v-locale-switcher-template',
+            data() {
+                return {
+                    locales: @json(core()->getCurrentChannel()->locales()->orderBy('name')->get()),
+                };
+            },
+            methods: {
+                change(locale) {
+                    let url = new URL(window.location.href);
+                    url.searchParams.set('locale', locale.code);
+                    window.location.href = url.href;
+                }
+            }
         });
     </script>
 @endPushOnce
