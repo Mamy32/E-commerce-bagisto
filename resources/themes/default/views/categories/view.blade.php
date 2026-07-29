@@ -37,7 +37,7 @@
     <div class="mx-auto mt-10 max-w-[1440px] px-[60px] max-lg:px-8 max-md:mt-6 max-md:px-4">
 
         @if (core()->getConfigData('general.general.breadcrumbs.shop'))
-            <x-shop::breadcrumbs name="product" :entity="$category" />
+            <x-shop::breadcrumbs name="category" :entity="$category" />
         @endif
 
         <h1 class="mt-4 font-dmserif text-4xl italic leading-tight text-fashion-navy max-md:text-3xl max-sm:text-2xl">
