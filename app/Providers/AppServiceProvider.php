@@ -38,5 +38,24 @@ class AppServiceProvider extends ServiceProvider
         ParallelTesting::setUpTestDatabase(function (string $database, int $token) {
             Artisan::call('db:seed');
         });
+
+        // Inject Resend Configuration from Admin UI
+        try {
+            if ($apiKey = core()->getConfigData('emails.general.resend.api_key')) {
+                config(['services.resend.key' => $apiKey]);
+                
+                // If API key exists, switch default mailer to resend
+                config(['mail.default' => 'resend']);
+                
+                if ($senderName = core()->getConfigData('emails.general.resend.sender_name')) {
+                    config(['mail.from.name' => $senderName]);
+                }
+                if ($senderEmail = core()->getConfigData('emails.general.resend.sender_email')) {
+                    config(['mail.from.address' => $senderEmail]);
+                }
+            }
+        } catch (\Exception $e) {
+            // Ignore during migrations or when core isn't ready
+        }
     }
 }

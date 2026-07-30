@@ -26,4 +26,34 @@ class Shipment extends Base
             report($e);
         }
     }
+
+    /**
+     * Send shipment update mail.
+     *
+     * @param  \Webkul\Sale\Contracts\Shipment  $shipment
+     * @return void
+     */
+    public function shipmentUpdate($shipment)
+    {
+        try {
+            $this->prepareMail($shipment, new \Webkul\Shop\Mail\Order\ShipmentUpdateNotification($shipment));
+        } catch (\Exception $e) {
+            report($e);
+        }
+    }
+
+    /**
+     * Send shipment delivered mail.
+     *
+     * @param  \Webkul\Sale\Contracts\Shipment  $shipment
+     * @return void
+     */
+    public function shipmentDelivered($shipment)
+    {
+        try {
+            $this->prepareMail($shipment, new \Webkul\Shop\Mail\Order\OrderDeliveredNotification($shipment));
+        } catch (\Exception $e) {
+            report($e);
+        }
+    }
 }

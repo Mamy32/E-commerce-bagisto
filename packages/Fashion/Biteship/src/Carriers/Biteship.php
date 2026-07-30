@@ -21,9 +21,9 @@ class Biteship extends AbstractShipping
      */
     protected $biteshipService;
 
-    public function __construct(BiteshipService $biteshipService)
+    public function __construct()
     {
-        $this->biteshipService = $biteshipService;
+        $this->biteshipService = app(BiteshipService::class);
     }
 
     /**

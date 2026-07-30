@@ -14,7 +14,7 @@ class DuitkuServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            dirname(__DIR__) . '/Config/paymentmethods.php', 'payment-methods'
+            dirname(__DIR__) . '/Config/paymentmethods.php', 'payment_methods'
         );
 
         $this->mergeConfigFrom(

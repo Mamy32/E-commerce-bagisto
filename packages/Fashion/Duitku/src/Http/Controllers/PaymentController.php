@@ -43,10 +43,14 @@ class PaymentController extends Controller
             ]);
 
             if (! $order) {
-                throw new \Exception('No pending order found for this checkout.');
+                $data = (new \Webkul\Sales\Transformers\OrderResource($cart))->jsonSerialize();
+                $order = $this->orderRepository->create($data);
             }
 
             $paymentUrl = $this->duitkuService->createInvoice($order);
+
+            Cart::deActivateCart();
+            session()->flash('order_id', $order->id);
 
             return redirect($paymentUrl);
         } catch (\Exception $e) {

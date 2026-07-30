@@ -133,5 +133,21 @@ class EventServiceProvider extends ServiceProvider
             [Refund::class, 'afterCreated'],
             [CatalogCache::class, 'flush'],
         ],
+
+        'sales.order.payment.failed' => [
+            [Order::class, 'paymentFailed'],
+        ],
+
+        'sales.order.payment.pending' => [
+            [Order::class, 'paymentPending'],
+        ],
+
+        'sales.shipment.update' => [
+            [Shipment::class, 'shipmentUpdate'],
+        ],
+
+        'sales.shipment.delivered' => [
+            [Shipment::class, 'shipmentDelivered'],
+        ],
     ];
 }

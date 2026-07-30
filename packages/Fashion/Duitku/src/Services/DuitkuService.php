@@ -88,13 +88,6 @@ class DuitkuService
             throw new Exception('Duitku: Invalid signature.');
         }
 
-        $resultCode = $data['resultCode'] ?? '';
-        
-        if ($resultCode !== '00') {
-            Log::info('Duitku webhook: non-completed status', $data);
-            return false;
-        }
-
         $order = $this->orderRepository->findOneWhere(['increment_id' => $merchantOrderId]);
         if (!$order) {
             $order = $this->orderRepository->find($merchantOrderId);
@@ -102,6 +95,18 @@ class DuitkuService
 
         if (!$order) {
             Log::warning('Duitku webhook: order not found', ['order_id' => $merchantOrderId]);
+            return false;
+        }
+
+        $resultCode = $data['resultCode'] ?? '';
+
+        if ($resultCode !== '00') {
+            Log::info('Duitku webhook: non-completed status', $data);
+            if ($resultCode === '01') {
+                event('sales.order.payment.failed', $order);
+            } elseif ($resultCode === '02') {
+                event('sales.order.payment.pending', $order);
+            }
             return false;
         }
 

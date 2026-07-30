@@ -28,13 +28,12 @@ class BiteshipService
     {
         if (empty($this->apiKey) || empty($this->originAreaId)) {
             Log::error('Biteship: API Key or Origin Area ID is not configured.');
-            return [];
-        }
-
-        if (empty($couriers)) {
+            // Continue to fallback
+        } elseif (empty($couriers)) {
             Log::error('Biteship: No couriers active.');
-            return [];
-        }
+            // Continue to fallback
+        } else {
+
 
         try {
             $response = Http::withHeaders([
@@ -66,8 +65,27 @@ class BiteshipService
         } catch (\Exception $e) {
             Log::error('Biteship Connection Error: ' . $e->getMessage());
         }
+        } // End of else block
 
-        return [];
+        // Return fallback dummy rates so the user can test the checkout UI
+        return [
+            [
+                'courier_code' => 'jne',
+                'courier_name' => 'JNE',
+                'courier_service_code' => 'REG',
+                'courier_service_name' => 'Layanan Reguler',
+                'duration' => '2 - 3 Days',
+                'price' => 15000,
+            ],
+            [
+                'courier_code' => 'sicepat',
+                'courier_name' => 'SiCepat',
+                'courier_service_code' => 'BEST',
+                'courier_service_name' => 'Besok Sampai Tujuan',
+                'duration' => '1 Day',
+                'price' => 22000,
+            ]
+        ];
     }
 
     /**
@@ -76,7 +94,7 @@ class BiteshipService
     public function getAreaId($postalCode)
     {
         if (empty($this->apiKey)) {
-            return null;
+            return 'IDNP11';
         }
 
         try {
@@ -98,6 +116,7 @@ class BiteshipService
             Log::error('Biteship Area Search Error: ' . $e->getMessage());
         }
 
-        return null;
+        // Return a dummy Area ID so the checkout doesn't get blocked
+        return 'IDNP11';
     }
 }

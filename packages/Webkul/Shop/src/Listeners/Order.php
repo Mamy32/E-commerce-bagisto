@@ -48,6 +48,36 @@ class Order extends Base
     }
 
     /**
+     * Send payment failed mail.
+     *
+     * @param  OrderContract  $order
+     * @return void
+     */
+    public function paymentFailed($order)
+    {
+        try {
+            $this->prepareMail($order, new \Webkul\Shop\Mail\Order\PaymentFailedNotification($order));
+        } catch (\Exception $e) {
+            report($e);
+        }
+    }
+
+    /**
+     * Send payment pending mail.
+     *
+     * @param  OrderContract  $order
+     * @return void
+     */
+    public function paymentPending($order)
+    {
+        try {
+            $this->prepareMail($order, new \Webkul\Shop\Mail\Order\PaymentPendingNotification($order));
+        } catch (\Exception $e) {
+            report($e);
+        }
+    }
+
+    /**
      * Send order comment mail.
      *
      * @param  OrderComment  $comment

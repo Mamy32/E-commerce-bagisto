@@ -1691,6 +1691,34 @@ return [
         'icon' => 'settings/store.svg',
         'sort' => 1,
     ], [
+        'key' => 'emails.general.resend',
+        'name' => 'Resend Configuration',
+        'info' => 'Configure Resend API settings for transactional emails',
+        'sort' => 1,
+        'fields' => [
+            [
+                'name' => 'api_key',
+                'title' => 'Resend API Key',
+                'type' => 'password',
+                'channel_based' => false,
+                'locale_based' => false,
+            ],
+            [
+                'name' => 'sender_name',
+                'title' => 'Sender Name',
+                'type' => 'text',
+                'channel_based' => true,
+                'locale_based' => false,
+            ],
+            [
+                'name' => 'sender_email',
+                'title' => 'Sender Email',
+                'type' => 'text',
+                'channel_based' => true,
+                'locale_based' => false,
+            ],
+        ],
+    ], [
         'key' => 'emails.general.notifications',
         'name' => 'admin::app.configuration.index.email.notifications.title',
         'info' => 'admin::app.configuration.index.email.notifications.info',
