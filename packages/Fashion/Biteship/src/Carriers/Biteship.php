@@ -70,7 +70,7 @@ class Biteship extends AbstractShipping
         }
 
         if (empty($activeCouriers)) {
-            return false;
+            $activeCouriers = [];
         }
 
         // 4. Fetch Rates from API
