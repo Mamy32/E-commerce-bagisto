@@ -61,31 +61,24 @@ class BiteshipService
                 'status'   => $response->status(),
                 'response' => $response->body()
             ]);
-
+            
+            // SANDBOX FALLBACK: If Biteship blocks rates due to 0 balance, provide a dummy rate so checkout can proceed
+            return [
+                [
+                    'company' => 'sicepat',
+                    'courier_name' => 'SiCepat (Sandbox Fallback)',
+                    'courier_service_name' => 'REG',
+                    'courier_service_code' => 'reg',
+                    'price' => 15000,
+                    'description' => 'Regular Service'
+                ]
+            ];
         } catch (\Exception $e) {
             Log::error('Biteship Connection Error: ' . $e->getMessage());
         }
         } // End of else block
 
-        // Return fallback dummy rates so the user can test the checkout UI
-        return [
-            [
-                'courier_code' => 'jne',
-                'courier_name' => 'JNE',
-                'courier_service_code' => 'REG',
-                'courier_service_name' => 'Layanan Reguler',
-                'duration' => '2 - 3 Days',
-                'price' => 15000,
-            ],
-            [
-                'courier_code' => 'sicepat',
-                'courier_name' => 'SiCepat',
-                'courier_service_code' => 'BEST',
-                'courier_service_name' => 'Besok Sampai Tujuan',
-                'duration' => '1 Day',
-                'price' => 22000,
-            ]
-        ];
+        return [];
     }
 
     /**
@@ -118,5 +111,89 @@ class BiteshipService
 
         // Return a dummy Area ID so the checkout doesn't get blocked
         return 'IDNP11';
+    }
+
+    /**
+     * Create a Shipping Order in Biteship
+     *
+     * @param \Webkul\Sales\Contracts\Order $order
+     * @param string $courierCompany
+     * @param string $courierType
+     * @return array|false
+     */
+    public function createShippingOrder($order, $courierCompany, $courierType)
+    {
+        if (empty($this->apiKey) || empty($this->originAreaId)) {
+            Log::error('Biteship: Cannot create order, API Key or Origin Area ID is missing.');
+            return false;
+        }
+
+        $items = [];
+        $totalWeight = 0;
+
+        foreach ($order->items as $item) {
+            $itemWeight = $item->weight ?: 1000;
+            $totalWeight += $itemWeight * $item->qty_ordered;
+            
+            $items[] = [
+                'name' => $item->name,
+                'description' => $item->name,
+                'sku' => $item->sku ?? 'SKU-001',
+                'value' => (int) $item->price,
+                'quantity' => (int) $item->qty_ordered,
+                'weight' => (int) $itemWeight
+            ];
+        }
+
+        if ($totalWeight <= 0) {
+            $totalWeight = 1000;
+        }
+
+        // Get shipping address
+        $shippingAddress = $order->shipping_address;
+        $destinationAreaId = $this->getAreaId($shippingAddress->postcode);
+
+        $payload = [
+            'origin_area_id' => $this->originAreaId,
+            'destination_area_id' => $destinationAreaId,
+            'courier_company' => $courierCompany,
+            'courier_type' => $courierType,
+            'courier_insurance' => 0,
+            'delivery_type' => 'now',
+            'order_note' => 'Order #' . $order->increment_id,
+            'items' => $items,
+            'shipper_name' => core()->getConfigData('general.general.email_settings.sender_name') ?: 'Store Admin',
+            'shipper_contact_name' => core()->getConfigData('general.general.email_settings.sender_name') ?: 'Store Admin',
+            'shipper_contact_email' => core()->getConfigData('emails.general.notifications.emails.general.notifications.shop_email_from') ?: 'admin@example.com',
+            'shipper_contact_phone' => '081234567890', // Fallback as bagisto might not have this globally
+            'origin_address' => core()->getConfigData('sales.shipping.origin.address1') ?: 'Store Warehouse Address',
+            'recipient_name' => $shippingAddress->first_name . ' ' . $shippingAddress->last_name,
+            'recipient_contact_name' => $shippingAddress->first_name . ' ' . $shippingAddress->last_name,
+            'recipient_contact_email' => $order->customer_email,
+            'recipient_contact_phone' => $shippingAddress->phone ?: '081234567890',
+            'destination_address' => $shippingAddress->address1 . ($shippingAddress->address2 ? ', ' . $shippingAddress->address2 : '') . ', ' . $shippingAddress->city . ', ' . $shippingAddress->state . ' ' . $shippingAddress->postcode,
+        ];
+
+        try {
+            $response = Http::withHeaders([
+                'Authorization' => $this->apiKey,
+                'Content-Type'  => 'application/json',
+            ])->post($this->baseUrl . '/orders', $payload);
+
+            if ($response->successful()) {
+                Log::info('Biteship Order Created Successfully', $response->json());
+                return $response->json();
+            }
+
+            Log::error('Biteship Create Order Error', [
+                'status' => $response->status(),
+                'response' => $response->body()
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Biteship Create Order Connection Error: ' . $e->getMessage());
+        }
+
+        return false;
     }
 }

@@ -13,7 +13,7 @@ class BiteshipServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        app('events')->listen('sales.invoice.save.after', 'Fashion\Biteship\Listeners\InvoiceSavedListener@handle');
     }
 
     /**
