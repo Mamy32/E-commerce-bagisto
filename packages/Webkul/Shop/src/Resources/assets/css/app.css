@@ -40,10 +40,6 @@ img.lazy {
         @apply cursor-not-allowed opacity-50;
     }
 
-    .luxe-navbar-scrolled {
-        @apply bg-white/60 backdrop-blur-md border border-white/40 shadow-sm;
-    }
-
     [class^="icon-"],
     [class*=" icon-"] {
         /* use !important to prevent issues with browser extensions that change fonts */

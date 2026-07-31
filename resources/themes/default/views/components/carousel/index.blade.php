@@ -41,7 +41,11 @@
                 before the Tailwind CSS bundle finishes parsing on slow
                 mobile CPU.
             --}}
-            <img
+            <div class="relative">
+                <!-- Dark overlay for better text contrast -->
+                <div class="absolute inset-0 bg-black/30 pointer-events-none z-[100]"></div>
+                
+                <img
                 src="{{ $firstImage }}"
                 srcset="{{ $firstImage }} 1920w, {{ str_replace('storage', 'cache/large', $firstImage) }} 1280w, {{ str_replace('storage', 'cache/medium', $firstImage) }} 1024w, {{ str_replace('storage', 'cache/small', $firstImage) }} 768w"
                 sizes="100vw"
@@ -51,6 +55,7 @@
                 fetchpriority="high"
                 decoding="sync"
             >
+            </div>
         @else
             <div class="shimmer h-[100vh] w-screen"></div>
         @endif
@@ -66,17 +71,36 @@
             <!-- Editorial Overlay (Fjc Fashion) -->
             <div class="pointer-events-none absolute inset-0 z-[150] flex items-center justify-start px-10 md:px-20 lg:px-32">
                 <div class="flex max-w-xl flex-col items-center text-center md:items-start md:text-left mt-16 lg:mt-24">
-                    <h1 class="mb-6 font-serif text-5xl md:text-7xl lg:text-[100px] leading-none text-fashion-navy">Fjc Fashion</h1>
-                    <p class="mb-10 text-base md:text-lg text-fashion-navy/80 max-w-md font-light">
-                        Elegance defined by timeless design. <br class="hidden md:block">
-                        Explore the new Collection.
+                    <h1 class="mb-6 font-serif text-5xl md:text-7xl lg:text-[80px] leading-tight text-fashion-navy">{!! __('custom.hero.title') !!}</h1>
+                    <p class="mb-10 text-base md:text-lg text-fashion-navy/80 max-w-md font-light leading-relaxed">
+                        {{ __('custom.hero.subtitle') }}
                     </p>
                     <a
                         href="{{ route('shop.search.index') }}"
                         class="pointer-events-auto border border-fashion-navy bg-white/20 backdrop-blur-sm px-10 py-4 text-xs font-semibold tracking-[0.2em] uppercase text-fashion-navy transition-all duration-300 hover:bg-fashion-navy hover:text-white"
                     >
-                        Explore More
+                        {{ __('custom.hero.button') }}
                     </a>
+                    
+                    <!-- Social Proof -->
+                    <div class="mt-12 flex items-center gap-4 border-t border-fashion-navy/20 pt-6">
+                        <div class="flex -space-x-3">
+                            <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover" src="https://i.pravatar.cc/100?img=11" alt="Customer Avatar"/>
+                            <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover" src="https://i.pravatar.cc/100?img=44" alt="Customer Avatar"/>
+                            <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover" src="https://i.pravatar.cc/100?img=68" alt="Customer Avatar"/>
+                            <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover" src="https://i.pravatar.cc/100?img=32" alt="Customer Avatar"/>
+                        </div>
+                        <div class="flex flex-col text-left">
+                            <div class="flex text-[#C9A84C] text-sm">
+                                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            </div>
+                            <span class="mt-1 text-xs font-semibold text-fashion-navy/80 uppercase tracking-widest">{{ __('custom.hero.social_proof') }}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -86,12 +110,15 @@
                 ref="sliderContainer"
             >
                 <div
-                    class="h-[100vh] w-screen bg-cover bg-no-repeat"
+                    class="h-[100vh] w-screen bg-cover bg-no-repeat relative"
                     v-for="(image, index) in images"
                     :key="index"
                     @click="visitLink(image)"
                     ref="slide"
                 >
+                    <!-- Dark overlay for better text contrast -->
+                    <div class="absolute inset-0 bg-black/30 pointer-events-none z-[100]"></div>
+                    
                     <x-shop::media.images.lazy
                         class="h-[100vh] w-screen max-w-full select-none transition-transform duration-300 ease-in-out will-change-transform object-cover"
                         ::lazy="index === 0 ? false : true"

@@ -14,10 +14,10 @@
         >
             <img
                 src="{{ core()->getCurrentChannel()->logo_url ?? bagisto_asset('images/logo.svg') }}"
-                width="131"
-                height="29"
+                width="220"
+                height="55"
                 alt="{{ config('app.name') }}"
-                class="h-auto max-h-[36px] w-auto object-contain"
+                class="h-auto max-h-[55px] w-auto object-contain"
             >
         </a>
 
@@ -289,7 +289,7 @@
             >
                 <a
                     :href="category.url"
-                    class="inline-block px-4 text-sm font-medium uppercase tracking-wider text-fashion-navy transition-colors group-hover:text-fashion-accent"
+                    class="inline-block px-4 text-sm font-medium uppercase tracking-wider text-fashion-navy transition-opacity group-hover:opacity-60"
                 >
                     @{{ category.name }}
                 </a>
@@ -313,7 +313,7 @@
                                     v-if="secondLevelCategory.children && secondLevelCategory.children.length"
                                 >
                                     <li
-                                        class="text-sm text-fashion-navy hover:text-fashion-accent"
+                                        class="text-sm text-fashion-navy transition-opacity hover:opacity-60"
                                         v-for="thirdLevelCategory in secondLevelCategory.children"
                                     >
                                         <a :href="thirdLevelCategory.url">@{{ thirdLevelCategory.name }}</a>
@@ -332,7 +332,7 @@
                     class="flex h-[77px] cursor-pointer items-center border-b-2 border-transparent hover:border-fashion-accent"
                     @click="toggleCategoryDrawer"
                 >
-                    <span class="flex items-center gap-1.5 px-4 text-sm font-medium uppercase tracking-wider text-fashion-navy hover:text-fashion-accent">
+                    <span class="flex items-center gap-1.5 px-4 text-sm font-medium uppercase tracking-wider text-fashion-navy transition-opacity hover:opacity-60">
                         <span class="text-xl icon-hamburger"></span>
                         @lang('shop::app.components.layouts.header.desktop.bottom.all')
                     </span>
@@ -345,7 +345,7 @@
                 >
                     <a
                         :href="category.url"
-                        class="inline-block px-4 text-sm font-medium uppercase tracking-wider text-fashion-navy transition-colors group-hover:text-fashion-accent"
+                        class="inline-block px-4 text-sm font-medium uppercase tracking-wider text-fashion-navy transition-opacity group-hover:opacity-60"
                     >
                         @{{ category.name }}
                     </a>

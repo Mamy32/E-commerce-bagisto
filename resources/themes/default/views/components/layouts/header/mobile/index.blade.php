@@ -22,11 +22,11 @@
                 aria-label="{{ config('app.name') }}"
             >
                 <img
-                    class="block max-h-[28px] w-auto object-contain"
+                    class="block max-h-[40px] w-auto object-contain"
                     src="{{ core()->getCurrentChannel()->logo_url ?? bagisto_asset('images/logo.svg') }}"
                     alt="{{ config('app.name') }}"
-                    width="120"
-                    height="28"
+                    width="180"
+                    height="40"
                 >
             </a>
 
@@ -207,9 +207,9 @@
                     <img
                         src="{{ core()->getCurrentChannel()->logo_url ?? bagisto_asset('images/logo.svg') }}"
                         alt="{{ config('app.name') }}"
-                        width="120"
-                        height="28"
-                        class="max-h-[28px] w-auto object-contain"
+                        width="180"
+                        height="40"
+                        class="max-h-[40px] w-auto object-contain"
                     >
                 </a>
             </x-slot>

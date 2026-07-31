@@ -30,8 +30,8 @@
     The v-fashion-announcement component is available globally if needed
     for other pages.
 --}}
-<header class="fixed w-full left-0 right-0 top-6 z-[300] mx-auto max-w-[1440px] px-8 transition-all duration-500" id="luxe-main-header">
-    <div id="luxe-main-header-inner" class="bg-transparent border-transparent rounded-2xl transition-all duration-500">
+<header class="fixed w-full left-0 right-0 top-0 z-[300] bg-transparent transition-all duration-500" id="luxe-main-header">
+    <div id="luxe-main-header-inner" class="mx-auto max-w-[1440px] px-8 transition-all duration-500">
     <v-header-switcher>
         {{-- Desktop Header Shimmer (shown before Vue hydrates) --}}
         <div class="flex flex-wrap max-lg:hidden">
@@ -156,27 +156,56 @@
 
     <script type="module">
         /**
-         * Make the navbar transparent at the top, and frosted glass on scroll.
+         * Make the navbar transparent at the top, and solid white on scroll.
+         * We inject a <style> tag to bypass Vue 3's Virtual DOM which aggressively 
+         * overwrites vanilla JS class manipulations inside the #app container.
          */
         (function () {
-            const header = document.getElementById('luxe-main-header');
-            const inner = document.getElementById('luxe-main-header-inner');
-            if (! header || ! inner) return;
+            // Create a dedicated style block in the document head
+            const style = document.createElement('style');
+            document.head.appendChild(style);
 
-            window.addEventListener('scroll', () => {
-                const isScrolled = window.scrollY > 50;
-                
-                if (isScrolled) {
-                    inner.classList.add('luxe-navbar-scrolled');
-                    inner.classList.remove('bg-transparent', 'border-transparent');
-                } else {
-                    inner.classList.remove('luxe-navbar-scrolled');
-                    inner.classList.add('bg-transparent', 'border-transparent');
-                }
-            }, { passive: true });
+            // Use IntersectionObserver to detect scroll reliably
+            const observer = new IntersectionObserver(
+                ([e]) => {
+                    const isScrolled = !e.isIntersecting;
+                    
+                    if (isScrolled) {
+                        // Apply design-matched background and shadow using CSS rules
+                        style.innerHTML = `
+                            #luxe-main-header {
+                                background-color: var(--color-surface) !important;
+                                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+                                border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+                            }
+                        `;
+                    } else {
+                        // Revert to transparent
+                        style.innerHTML = `
+                            #luxe-main-header {
+                                background-color: transparent !important;
+                                box-shadow: none !important;
+                                border-bottom: none !important;
+                            }
+                        `;
+                    }
+                },
+                { threshold: [0] }
+            );
+
+            // Create an invisible 50px anchor at the absolute top of the page
+            const anchor = document.createElement('div');
+            anchor.style.position = 'absolute';
+            anchor.style.top = '0';
+            anchor.style.left = '0';
+            anchor.style.width = '100%';
+            anchor.style.height = '50px';
+            anchor.style.pointerEvents = 'none';
+            anchor.style.visibility = 'hidden';
             
-            // Trigger once on load in case the user loads the page already scrolled down
-            window.dispatchEvent(new Event('scroll'));
+            // Insert it as the very first child of body
+            document.body.prepend(anchor);
+            observer.observe(anchor);
         })();
     </script>
 @endPushOnce
