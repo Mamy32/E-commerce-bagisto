@@ -36,42 +36,42 @@
 
                     <!-- Accordion Blade Component Content -->
                     <x-slot:content class="mt-8 !p-0 max-md:mt-0 max-md:rounded-t-none max-md:border max-md:border-t-0 max-md:!p-4">
-                        <div class="flex flex-wrap gap-8 max-md:gap-4 max-sm:gap-2.5">
+                        <div class="flex flex-col gap-4">
                             <template v-for="method in methods">
                                 {!! view_render_event('bagisto.shop.checkout.onepage.shipping_method.before') !!}
 
                                 <div
-                                    class="relative max-w-[218px] select-none max-md:max-w-full max-md:flex-auto"
+                                    class="relative select-none flex items-start gap-4"
                                     v-for="rate in method.rates"
                                 >
-                                    <input 
-                                        type="radio"
-                                        name="shipping_method"
-                                        :id="rate.method"
-                                        :value="rate.method"
-                                        class="peer hidden"
-                                        @change="store(rate.method)"
-                                    >
+                                    <div class="mt-1">
+                                        <input 
+                                            type="radio"
+                                            name="shipping_method"
+                                            :id="rate.method"
+                                            :value="rate.method"
+                                            class="peer hidden"
+                                            @change="store(rate.method)"
+                                        >
+
+                                        <label 
+                                            class="icon-radio-unselect peer-checked:icon-radio-select cursor-pointer text-2xl text-navyBlue"
+                                            :for="rate.method"
+                                        >
+                                        </label>
+                                    </div>
 
                                     <label 
-                                        class="icon-radio-unselect peer-checked:icon-radio-select absolute top-5 cursor-pointer text-2xl text-navyBlue ltr:right-5 rtl:left-5"
+                                        class="cursor-pointer"
                                         :for="rate.method"
                                     >
-                                    </label>
-
-                                    <label 
-                                        class="block cursor-pointer rounded-xl border border-zinc-200 p-5 max-sm:flex max-sm:gap-4 max-sm:rounded-lg max-sm:px-4 max-sm:py-2.5"
-                                        :for="rate.method"
-                                    >
-                                        <span class="icon-flate-rate text-6xl text-navyBlue max-sm:text-5xl"></span>
-
                                         <div>
-                                            <p class="mt-1.5 text-2xl font-semibold max-md:text-base">
+                                            <p class="text-base font-semibold text-zinc-900">
                                                 @{{ rate.base_formatted_price }}
                                             </p>
                                             
-                                            <p class="mt-2.5 text-xs font-medium max-md:mt-1 max-sm:mt-0 max-sm:font-normal max-sm:text-zinc-500">
-                                                <span class="font-medium">@{{ rate.method_title }}</span> - @{{ rate.method_description }}
+                                            <p class="mt-1 text-sm font-normal text-zinc-600">
+                                                <span class="font-medium text-zinc-800">@{{ rate.method_title }}</span> - @{{ rate.method_description }}
                                             </p>
                                         </div>
                                     </label>

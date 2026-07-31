@@ -39,39 +39,41 @@
     
                     <!-- Accordion Blade Component Content -->
                     <x-slot:content class="mt-8 !p-0 max-md:mt-0 max-md:rounded-t-none max-md:border max-md:border-t-0 max-md:!p-4">
-                        <div class="flex flex-wrap gap-7 max-md:gap-4 max-sm:gap-2.5">
+                        <div class="flex flex-col gap-4">
                             <div 
-                                class="relative cursor-pointer max-md:max-w-full max-md:flex-auto"
+                                class="relative cursor-pointer select-none flex items-center gap-4"
                                 v-for="(payment, index) in methods"
                             >
                                 {!! view_render_event('bagisto.shop.checkout.payment-method.before') !!}
 
-                                <input 
-                                    type="radio" 
-                                    name="payment[method]" 
-                                    :value="payment.payment"
-                                    :id="payment.method"
-                                    class="peer hidden"
-                                    @change="store(payment)"
-                                >
-    
-                                <label 
-                                    :for="payment.method" 
-                                    class="icon-radio-unselect peer-checked:icon-radio-select absolute top-5 cursor-pointer text-2xl text-navyBlue ltr:right-5 rtl:left-5"
-                                >
-                                </label>
+                                <div class="mt-1">
+                                    <input 
+                                        type="radio" 
+                                        name="payment[method]" 
+                                        :value="payment.payment"
+                                        :id="payment.method"
+                                        class="peer hidden"
+                                        @change="store(payment)"
+                                    >
+        
+                                    <label 
+                                        :for="payment.method" 
+                                        class="icon-radio-unselect peer-checked:icon-radio-select cursor-pointer text-2xl text-navyBlue"
+                                    >
+                                    </label>
+                                </div>
 
                                 <label 
                                     :for="payment.method" 
-                                    class="block w-[190px] cursor-pointer rounded-xl border border-zinc-200 p-5 max-md:flex max-md:w-full max-md:gap-5 max-md:rounded-lg max-sm:gap-4 max-sm:px-4 max-sm:py-2.5"
+                                    class="cursor-pointer flex items-center gap-4"
                                 >
                                     {!! view_render_event('bagisto.shop.checkout.onepage.payment-method.image.before') !!}
 
                                     <img
-                                        class="max-h-11 max-w-14"
+                                        class="max-h-8 max-w-12 object-contain"
                                         :src="payment.image"
-                                        width="55"
-                                        height="55"
+                                        width="48"
+                                        height="32"
                                         :alt="payment.method_title"
                                         :title="payment.method_title"
                                     />
@@ -81,7 +83,7 @@
                                     <div>
                                         {!! view_render_event('bagisto.shop.checkout.onepage.payment-method.title.before') !!}
 
-                                        <p class="mt-1.5 text-sm font-semibold max-md:mt-1 max-sm:mt-0">
+                                        <p class="text-base font-semibold text-zinc-900">
                                             @{{ payment.method_title }}
                                         </p>
                                         
@@ -89,7 +91,7 @@
 
                                         {!! view_render_event('bagisto.shop.checkout.onepage.payment-method.description.before') !!}
 
-                                        <p class="mt-2.5 text-xs font-medium text-zinc-500 max-md:mt-1 max-sm:mt-0">
+                                        <p class="text-sm font-normal text-zinc-600 mt-1">
                                             @{{ payment.description }}
                                         </p> 
 

@@ -65,11 +65,12 @@ class BiteshipService
             // SANDBOX FALLBACK: If Biteship blocks rates due to 0 balance, provide a dummy rate so checkout can proceed
             return [
                 [
-                    'company' => 'sicepat',
+                    'courier_code' => 'sicepat',
                     'courier_name' => 'SiCepat (Sandbox Fallback)',
                     'courier_service_name' => 'REG',
                     'courier_service_code' => 'reg',
                     'price' => 15000,
+                    'duration' => '1 - 2 Days',
                     'description' => 'Regular Service'
                 ]
             ];
