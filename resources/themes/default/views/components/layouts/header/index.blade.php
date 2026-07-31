@@ -30,10 +30,8 @@
     The v-fashion-announcement component is available globally if needed
     for other pages.
 --}}
-<header
-    class="sticky top-0 z-[300] bg-fashion-surface border-b border-fashion-border transition-shadow duration-300 max-lg:shadow-sm"
-    id="luxe-main-header"
->
+<header class="fixed w-full left-0 right-0 top-6 z-[300] mx-auto max-w-[1440px] px-8 transition-all duration-500" id="luxe-main-header">
+    <div id="luxe-main-header-inner" class="bg-transparent border-transparent rounded-2xl transition-all duration-500">
     <v-header-switcher>
         {{-- Desktop Header Shimmer (shown before Vue hydrates) --}}
         <div class="flex flex-wrap max-lg:hidden">
@@ -93,6 +91,7 @@
             </div>
         </div>
     </v-header-switcher>
+    </div>
 </header>
 
 {!! view_render_event('bagisto.shop.layout.header.after') !!}
@@ -157,16 +156,27 @@
 
     <script type="module">
         /**
-         * Add shadow when user scrolls down — reinforces that the header
-         * is floating above content without the heavy initial shadow.
+         * Make the navbar transparent at the top, and frosted glass on scroll.
          */
         (function () {
             const header = document.getElementById('luxe-main-header');
-            if (! header) return;
+            const inner = document.getElementById('luxe-main-header-inner');
+            if (! header || ! inner) return;
 
             window.addEventListener('scroll', () => {
-                header.classList.toggle('shadow-md', window.scrollY > 10);
+                const isScrolled = window.scrollY > 50;
+                
+                if (isScrolled) {
+                    inner.classList.add('luxe-navbar-scrolled');
+                    inner.classList.remove('bg-transparent', 'border-transparent');
+                } else {
+                    inner.classList.remove('luxe-navbar-scrolled');
+                    inner.classList.add('bg-transparent', 'border-transparent');
+                }
             }, { passive: true });
+            
+            // Trigger once on load in case the user loads the page already scrolled down
+            window.dispatchEvent(new Event('scroll'));
         })();
     </script>
 @endPushOnce

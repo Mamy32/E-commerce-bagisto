@@ -6,11 +6,12 @@
     </div>
 @endif
 
-<header class="shadow-gray sticky top-0 z-10 bg-white shadow-sm max-lg:shadow-none">
-    <v-header-switcher>
-        <!-- Desktop Header Shimmer -->
-        <div class="flex flex-wrap max-lg:hidden">
-            <div class="flex min-h-[78px] w-full justify-between border border-b border-l-0 border-r-0 border-t-0 px-[60px] max-1180:px-8">
+<header class="sticky top-6 z-50 mx-auto max-w-[1440px] px-8 transition-all duration-300">
+    <div class="bg-white/60 backdrop-blur-md rounded-2xl shadow-sm max-lg:shadow-none text-fashion-navy border border-white/40">
+        <v-header-switcher>
+            <!-- Desktop Header Shimmer -->
+            <div class="flex flex-wrap max-lg:hidden">
+                <div class="flex min-h-[78px] w-full items-center justify-between px-10">
                 <!-- Left Navigation Section -->
                 <div class="flex items-center gap-x-10 max-[1180px]:gap-x-5">
                     <!-- Logo Shimmer -->
@@ -137,6 +138,7 @@
             </div>
         </div>
     </v-header-switcher>
+    </div>
 </header>
 
 {!! view_render_event('bagisto.shop.layout.header.after') !!}

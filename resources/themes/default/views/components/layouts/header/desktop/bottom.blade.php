@@ -1,9 +1,9 @@
 {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.before') !!}
 
-<div class="flex min-h-[78px] w-full items-center justify-between border-b border-fashion-border px-[60px] max-1180:px-8">
+<div class="flex min-h-[78px] w-full items-center justify-between px-10">
 
-    {{-- LEFT: Logo + Category Navigation --}}
-    <div class="flex items-center gap-x-10 max-[1100px]:gap-x-6">
+    {{-- LEFT: Logo --}}
+    <div class="flex items-center">
 
         {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.logo.before') !!}
 
@@ -23,6 +23,10 @@
 
         {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.logo.after') !!}
 
+    </div>
+
+    {{-- CENTER: Category Navigation --}}
+    <div class="hidden lg:flex items-center justify-center flex-1">
         {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.category.before') !!}
 
         <v-desktop-category>
@@ -40,11 +44,11 @@
     </div>
 
     {{-- RIGHT: Search + Icons --}}
-    <div class="flex items-center gap-x-6 max-[1100px]:gap-x-4">
+    <div class="flex items-center gap-x-6">
 
         {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.search_bar.before') !!}
 
-        <div class="relative">
+        <div class="relative flex items-center group">
             <form
                 action="{{ route('shop.search.index') }}"
                 class="flex items-center"
@@ -53,40 +57,22 @@
                 tooldescription="{{ trans('shop::app.components.layouts.webmcp.search-products') }}"
                 toolautosubmit
             >
-                <label
-                    for="organic-search"
-                    class="sr-only"
-                >
-                    @lang('shop::app.components.layouts.header.desktop.bottom.search')
-                </label>
+                <label for="organic-search" class="sr-only">@lang('shop::app.components.layouts.header.desktop.bottom.search')</label>
 
-                <div class="pointer-events-none absolute top-1/2 -translate-y-1/2 text-lg text-fashion-muted ltr:left-3 rtl:right-3 icon-search"></div>
+                <div class="icon-search pointer-events-none absolute z-10 flex items-center text-2xl text-fashion-navy left-2"></div>
 
                 <input
                     id="organic-search"
                     type="text"
                     name="query"
                     value="{{ request('query') }}"
-                    class="block w-[340px] max-xl:w-[260px] rounded-lg border border-fashion-border bg-white py-2.5 text-xs font-medium text-fashion-navy placeholder-fashion-muted transition-colors px-10 hover:border-fashion-navy focus:border-fashion-navy focus:outline-none"
-                    minlength="{{ core()->getConfigData('catalog.products.search.min_query_length') }}"
-                    maxlength="{{ core()->getConfigData('catalog.products.search.max_query_length') }}"
+                    class="w-10 opacity-0 focus:w-[260px] xl:focus:w-[340px] focus:opacity-100 focus:pl-10 focus:bg-white/50 focus:border-b focus:border-fashion-navy transition-all duration-400 bg-transparent text-sm font-medium text-fashion-navy placeholder-fashion-muted outline-none py-2 rounded-full cursor-pointer group-hover:w-[260px] xl:group-hover:w-[340px] group-hover:opacity-100 group-hover:pl-10 group-hover:bg-white/50"
                     placeholder="@lang('shop::app.components.layouts.header.desktop.bottom.search-text')"
                     aria-label="@lang('shop::app.components.layouts.header.desktop.bottom.search-text')"
-                    aria-required="true"
-                    pattern="[^\\]+"
-                    toolparamdescription="{{ trans('shop::app.components.layouts.webmcp.search-products-query') }}"
                     required
                 >
 
-                <button
-                    type="submit"
-                    class="hidden"
-                    aria-label="@lang('shop::app.components.layouts.header.desktop.bottom.submit')"
-                ></button>
-
-                @if (core()->getConfigData('catalog.products.settings.image_search'))
-                    @include('shop::search.images.index')
-                @endif
+                <button type="submit" class="hidden"></button>
             </form>
         </div>
 

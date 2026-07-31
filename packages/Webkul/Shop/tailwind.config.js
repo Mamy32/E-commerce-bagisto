@@ -50,23 +50,23 @@ module.exports = {
                 darkPink:   '#F85156',
 
                 /**
-                 * ─── LUXE Brand Design Tokens ─────────────────────────────
+                 * ─── LUXE Brand Design Tokens (Aurora Light Theme) ────────────
                  *
-                 * Palette: Minimalist Luxury
+                 * Palette: Minimalist Feminine Luxury
                  * Usage:
-                 *   fashion-surface  → page background (warm off-white)
-                 *   fashion-navy     → primary text, nav background
-                 *   fashion-accent   → gold CTA buttons, highlights
+                 *   fashion-surface  → page background (soft warm pink/beige)
+                 *   fashion-navy     → primary text (elegant dark brown)
+                 *   fashion-accent   → highlights, soft buttons (muted light pink)
                  *   fashion-muted    → secondary text, borders
-                 *   fashion-overlay  → dark overlay for modals / hero
+                 *   fashion-overlay  → frosted glass overlay
                  */
-                'fashion-surface':  '#FAF8F5',
-                'fashion-navy':     '#0D1B2A',
-                'fashion-accent':   '#C9A84C',
-                'fashion-accent-dark': '#A8873A',
-                'fashion-muted':    '#8A8A8A',
-                'fashion-border':   '#E8E2DA',
-                'fashion-overlay':  'rgba(13, 27, 42, 0.6)',
+                'fashion-surface':  '#FDFBF9', // very light warm white/beige for backgrounds
+                'fashion-navy':     '#3D312A', // deep elegant dark brown
+                'fashion-accent':   '#E8D0C3', // soft light pink/beige
+                'fashion-accent-dark': '#D4BAAC',
+                'fashion-muted':    '#9E8E85',
+                'fashion-border':   '#F0EAE5',
+                'fashion-overlay':  'rgba(253, 251, 249, 0.7)',
             },
 
             fontFamily: {
