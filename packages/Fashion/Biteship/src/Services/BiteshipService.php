@@ -61,19 +61,7 @@ class BiteshipService
                 'status'   => $response->status(),
                 'response' => $response->body()
             ]);
-            
-            // SANDBOX FALLBACK: If Biteship blocks rates due to 0 balance, provide a dummy rate so checkout can proceed
-            return [
-                [
-                    'courier_code' => 'sicepat',
-                    'courier_name' => 'SiCepat (Sandbox Fallback)',
-                    'courier_service_name' => 'REG',
-                    'courier_service_code' => 'reg',
-                    'price' => 15000,
-                    'duration' => '1 - 2 Days',
-                    'description' => 'Regular Service'
-                ]
-            ];
+            return [];
         } catch (\Exception $e) {
             Log::error('Biteship Connection Error: ' . $e->getMessage());
         }
