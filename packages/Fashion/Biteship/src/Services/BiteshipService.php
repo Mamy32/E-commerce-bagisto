@@ -151,15 +151,12 @@ class BiteshipService
             'delivery_type' => 'now',
             'order_note' => 'Order #' . $order->increment_id,
             'items' => $items,
-            'shipper_name' => core()->getConfigData('general.general.email_settings.sender_name') ?: 'Store Admin',
-            'shipper_contact_name' => core()->getConfigData('general.general.email_settings.sender_name') ?: 'Store Admin',
-            'shipper_contact_email' => core()->getConfigData('emails.general.notifications.emails.general.notifications.shop_email_from') ?: 'admin@example.com',
-            'shipper_contact_phone' => '081234567890', // Fallback as bagisto might not have this globally
+            'origin_contact_name' => core()->getConfigData('general.general.email_settings.sender_name') ?: 'Store Admin',
+            'origin_contact_phone' => '081234567890', // Fallback as bagisto might not have this globally
             'origin_address' => core()->getConfigData('sales.shipping.origin.address1') ?: 'Store Warehouse Address',
-            'recipient_name' => $shippingAddress->first_name . ' ' . $shippingAddress->last_name,
-            'recipient_contact_name' => $shippingAddress->first_name . ' ' . $shippingAddress->last_name,
-            'recipient_contact_email' => $order->customer_email,
-            'recipient_contact_phone' => $shippingAddress->phone ?: '081234567890',
+            'destination_contact_name' => $shippingAddress->first_name . ' ' . $shippingAddress->last_name,
+            'destination_contact_phone' => $shippingAddress->phone ?: '081234567890',
+            'destination_contact_email' => $order->customer_email,
             'destination_address' => $shippingAddress->address1 . ($shippingAddress->address2 ? ', ' . $shippingAddress->address2 : '') . ', ' . $shippingAddress->city . ', ' . $shippingAddress->state . ' ' . $shippingAddress->postcode,
         ];
 

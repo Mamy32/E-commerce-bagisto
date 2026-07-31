@@ -176,7 +176,29 @@
                         @lang('shop::app.checkout.onepage.address.state')
                     </x-shop::form.control-group.label>
 
-                    <template v-if="states">
+                    <template v-if="selectedCountry === 'ID' && indonesiaRegions">
+                        <x-shop::form.control-group.control
+                            type="select"
+                            ::name="controlName + '.state'"
+                            rules="{{ core()->isStateRequired() ? 'required' : '' }}"
+                            ::value="address.state"
+                            v-model="selectedState"
+                            @change="onStateChange"
+                            :label="trans('shop::app.checkout.onepage.address.state')"
+                            :placeholder="trans('shop::app.checkout.onepage.address.state')"
+                        >
+                            <option value="">
+                                @lang('shop::app.checkout.onepage.address.select-state')
+                            </option>
+                            <option
+                                v-for="(cities, province) in indonesiaRegions"
+                                :value="province"
+                            >
+                                @{{ province }}
+                            </option>
+                        </x-shop::form.control-group.control>
+                    </template>
+                    <template v-else-if="states">
                         <template v-if="haveStates">
                             <x-shop::form.control-group.control
                                 type="select"
@@ -224,14 +246,35 @@
                         @lang('shop::app.checkout.onepage.address.city')
                     </x-shop::form.control-group.label>
 
-                    <x-shop::form.control-group.control
-                        type="text"
-                        ::name="controlName + '.city'"
-                        ::value="address.city"
-                        rules="required"
-                        :label="trans('shop::app.checkout.onepage.address.city')"
-                        :placeholder="trans('shop::app.checkout.onepage.address.city')"
-                    />
+                    <template v-if="selectedCountry === 'ID' && indonesiaRegions && selectedState && indonesiaRegions[selectedState]">
+                        <x-shop::form.control-group.control
+                            type="select"
+                            ::name="controlName + '.city'"
+                            ::value="address.city"
+                            v-model="address.city"
+                            rules="required"
+                            :label="trans('shop::app.checkout.onepage.address.city')"
+                            :placeholder="trans('shop::app.checkout.onepage.address.city')"
+                        >
+                            <option value="">Select City</option>
+                            <option
+                                v-for="city in indonesiaRegions[selectedState]"
+                                :value="city"
+                            >
+                                @{{ city }}
+                            </option>
+                        </x-shop::form.control-group.control>
+                    </template>
+                    <template v-else>
+                        <x-shop::form.control-group.control
+                            type="text"
+                            ::name="controlName + '.city'"
+                            ::value="address.city"
+                            rules="required"
+                            :label="trans('shop::app.checkout.onepage.address.city')"
+                            :placeholder="trans('shop::app.checkout.onepage.address.city')"
+                        />
+                    </template>
 
                     <x-shop::form.control-group.error ::name="controlName + '.city'" />
                 </x-shop::form.control-group>
@@ -313,6 +356,8 @@
             data() {
                 return {
                     selectedCountry: this.address.country,
+                    selectedState: this.address.state,
+                    indonesiaRegions: null,
 
                     countries: [],
 
@@ -328,8 +373,8 @@
 
             mounted() {
                 this.getCountries();
-
                 this.getStates();
+                this.getIndonesiaRegions();
             },
 
             methods: {
@@ -348,6 +393,19 @@
                         })
                         .catch(() => {});
                 },
+                
+                getIndonesiaRegions() {
+                    this.$axios.get("/indonesia-regions.json")
+                        .then(response => {
+                            this.indonesiaRegions = response.data;
+                        })
+                        .catch(() => {});
+                },
+
+                onStateChange(e) {
+                    this.selectedState = e.target.value;
+                    this.address.city = '';
+                }
             }
         });
     </script>
