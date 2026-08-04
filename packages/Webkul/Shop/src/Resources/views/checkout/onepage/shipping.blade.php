@@ -24,12 +24,12 @@
 
             <template v-else>
                 <!-- Accordion Blade Component -->
-                <x-shop::accordion class="overflow-hidden !border-b-0 max-md:rounded-lg max-md:!border-none max-md:!bg-gray-100">
-                    <!-- Accordion Blade Component Header -->
-                    <x-slot:header class="px-0 py-4 max-md:p-3 max-md:text-sm max-md:font-medium max-sm:p-2">
-                        <div class="flex items-center justify-between">
-                            <h2 class="text-2xl font-medium max-md:text-base">
-                                @lang('shop::app.checkout.onepage.shipping.shipping-method')
+                <x-shop::accordion class="mb-6 overflow-hidden max-md:mb-0 max-md:mt-0 bg-transparent">
+                    <!-- Accordion Header Component Slot -->
+                    <x-slot:header class="!p-0 max-md:!mb-0 max-md:!p-3 max-md:text-sm max-md:font-medium max-sm:!p-2 bg-transparent">
+                        <div class="flex items-center justify-between pb-4 border-b-2 border-transparent">
+                            <h2 class="text-xl font-serif text-fashion-navy uppercase tracking-widest max-md:text-base">
+                                2. SHIPPING METHOD
                             </h2>
                         </div>
                     </x-slot>

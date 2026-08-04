@@ -32,7 +32,7 @@
                     <form @submit="handleSubmit($event, addAddressToCart)">
                         <!-- Billing Address Header -->
                         <div class="mb-4 flex items-center justify-between max-md:mb-2">
-                            <h2 class="text-xl font-medium max-sm:text-base max-sm:font-normal">
+                            <h2 class="text-2xl font-serif text-fashion-navy max-sm:text-base max-sm:font-normal">
                                 @lang('shop::app.checkout.onepage.address.billing-address')
                             </h2>
                         </div>
@@ -265,7 +265,7 @@
                     <form @submit="handleSubmit($event, updateOrCreateAddress)">
                         <!-- Billing Address Header -->
                         <div class="mb-4 flex items-center justify-between">
-                            <h2 class="text-xl font-medium max-md:text-base max-sm:font-normal">
+                            <h2 class="text-2xl font-serif text-fashion-navy max-md:text-base max-sm:font-normal">
                                 <template v-if="activeAddressForm == 'billing'">
                                     @lang('shop::app.checkout.onepage.address.billing-address')
                                 </template>

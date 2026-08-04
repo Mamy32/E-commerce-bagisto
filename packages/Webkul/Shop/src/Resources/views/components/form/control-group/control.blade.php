@@ -19,7 +19,7 @@
                 name="{{ $name }}"
                 v-bind="field"
                 :class="[errors.length ? 'border !border-red-500 hover:border-red-500' : '']"
-                {{ $attributes->except(['value', ':value', 'v-model', 'rules', ':rules', 'label', ':label'])->merge(['class' => 'mb-1.5 w-full rounded-lg border px-5 py-3 text-base font-normal text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 max-sm:px-4 max-md:py-2 max-sm:text-sm']) }}
+                {{ $attributes->except(['value', ':value', 'v-model', 'rules', ':rules', 'label', ':label'])->merge(['class' => 'mb-1.5 w-full rounded-none border border-[#d4af37] px-5 py-3 text-base font-normal text-gray-600 transition-all outline-none hover:border-[#b8952a] focus:border-[#b8952a] focus:ring-1 focus:ring-[#b8952a] max-sm:px-4 max-md:py-2 max-sm:text-sm']) }}
             >
         </v-field>
         @break
@@ -65,7 +65,7 @@
                 name="{{ $name }}"
                 v-bind="field"
                 :class="[errors.length ? 'border !border-red-500 hover:border-red-500' : '']"
-                {{ $attributes->except(['value', ':value', 'v-model', 'rules', ':rules', 'label', ':label'])->merge(['class' => 'mb-1.5 w-full rounded-lg border px-5 py-3 text-base font-normal text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400']) }}
+                {{ $attributes->except(['value', ':value', 'v-model', 'rules', ':rules', 'label', ':label'])->merge(['class' => 'mb-1.5 w-full rounded-none border border-[#d4af37] px-5 py-3 text-base font-normal text-gray-600 transition-all hover:border-[#b8952a] focus:border-[#b8952a] outline-none']) }}
             >
             </textarea>
 
@@ -126,7 +126,7 @@
                 name="{{ $name }}"
                 v-bind="field"
                 :class="[errors.length ? 'border !border-red-500' : '']"
-                {{ $attributes->except(['value', ':value', 'v-model', 'rules', ':rules', 'label', ':label'])->merge(['class' => 'custom-select mb-1.5 w-full rounded-lg border border-zinc-200 bg-white px-5 py-3 text-base text-gray-600  transition-all hover:border-gray-400 focus-visible:outline-none max-md:py-2 max-sm:px-4 max-sm:text-sm']) }}
+                {{ $attributes->except(['value', ':value', 'v-model', 'rules', ':rules', 'label', ':label'])->merge(['class' => 'custom-select mb-1.5 w-full rounded-none border border-[#d4af37] bg-white px-5 py-3 text-base text-gray-600 transition-all hover:border-[#b8952a] focus:border-[#b8952a] focus-visible:outline-none max-md:py-2 max-sm:px-4 max-sm:text-sm']) }}
             >
                 {{ $slot }}
             </select>

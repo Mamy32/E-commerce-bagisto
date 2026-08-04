@@ -71,8 +71,8 @@
             <!-- Editorial Overlay (Fjc Fashion) -->
             <div class="pointer-events-none absolute inset-0 z-[150] flex items-center justify-start px-10 md:px-20 lg:px-32">
                 <div class="flex max-w-xl flex-col items-center text-center md:items-start md:text-left mt-16 lg:mt-24">
-                    <h1 class="mb-6 font-serif text-5xl md:text-7xl lg:text-[80px] leading-tight text-fashion-navy">{!! __('custom.hero.title') !!}</h1>
-                    <p class="mb-10 text-base md:text-lg text-fashion-navy/80 max-w-md font-light leading-relaxed">
+                    <h1 class="mb-6 font-serif text-5xl md:text-7xl lg:text-[80px] leading-tight text-[#594A38]">{!! __('custom.hero.title') !!}</h1>
+                    <p class="mb-10 text-base md:text-lg text-[#594A38]/90 max-w-md font-light leading-relaxed">
                         {{ __('custom.hero.subtitle') }}
                     </p>
                     <a

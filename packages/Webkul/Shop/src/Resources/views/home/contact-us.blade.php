@@ -130,5 +130,27 @@
 
     @push('scripts')
         {!! \Webkul\Customer\Facades\Captcha::renderJS() !!}
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var input = document.querySelector('input[name="contact"]');
+                if (input) {
+                    var iti = window.intlTelInput(input, {
+                        initialCountry: "auto",
+                        geoIpLookup: function(callback) {
+                            fetch("https://ipapi.co/json")
+                            .then(function(res) { return res.json(); })
+                            .then(function(data) { callback(data.country_code); })
+                            .catch(function() { callback("us"); });
+                        },
+                        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/js/utils.js"
+                    });
+
+                    var form = input.closest('form');
+                    form.addEventListener('submit', function() {
+                        input.value = iti.getNumber();
+                    });
+                }
+            });
+        </script>
     @endpush
 </x-shop::layouts>

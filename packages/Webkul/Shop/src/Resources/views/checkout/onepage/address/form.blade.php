@@ -104,35 +104,19 @@
                 </x-shop::form.control-group.label>
 
                 <x-shop::form.control-group.control
-                    type="text"
+                    type="textarea"
                     ::name="controlName + '.address.[0]'"
                     ::value="address.address[0]"
                     rules="required|address"
                     :label="trans('shop::app.checkout.onepage.address.street-address')"
                     :placeholder="trans('shop::app.checkout.onepage.address.street-address')"
+                    rows="3"
                 />
 
                 <x-shop::form.control-group.error
                     class="mb-2"
                     ::name="controlName + '.address.[0]'"
                 />
-
-                @if (core()->getConfigData('customer.address.information.street_lines') > 1)
-                    @for ($i = 1; $i < core()->getConfigData('customer.address.information.street_lines'); $i++)
-                        <x-shop::form.control-group.control
-                            type="text"
-                            ::name="controlName + '.address.[{{ $i }}]'"
-                            rules="address"
-                            :label="trans('shop::app.checkout.onepage.address.street-address')"
-                            :placeholder="trans('shop::app.checkout.onepage.address.street-address')"
-                        />
-
-                        <x-shop::form.control-group.error
-                            class="mb-2"
-                            ::name="controlName + '.address.[{{ $i }}]'"
-                        />
-                    @endfor
-                @endif
             </x-shop::form.control-group>
 
             {!! view_render_event('bagisto.shop.checkout.onepage.address.form.address.after') !!}
@@ -315,6 +299,8 @@
                     rules="required|phone"
                     :label="trans('shop::app.checkout.onepage.address.telephone')"
                     :placeholder="trans('shop::app.checkout.onepage.address.telephone')"
+                    ref="phoneInput"
+                    @blur="updatePhoneWithCountryCode"
                 />
 
                 <x-shop::form.control-group.error ::name="controlName + '.phone'" />
@@ -375,6 +361,24 @@
                 this.getCountries();
                 this.getStates();
                 this.getIndonesiaRegions();
+
+                this.$nextTick(() => {
+                    const phoneInputEl = this.$refs.phoneInput;
+                    if (phoneInputEl && window.intlTelInput) {
+                        this.iti = window.intlTelInput(phoneInputEl, {
+                            initialCountry: "auto",
+                            geoIpLookup: function(callback) {
+                                fetch("https://ipapi.co/json")
+                                .then(res => res.json())
+                                .then(data => callback(data.country_code))
+                                .catch(() => callback("us"));
+                            },
+                            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/js/utils.js"
+                        });
+                        
+                        phoneInputEl.addEventListener("countrychange", this.updatePhoneWithCountryCode);
+                    }
+                });
             },
 
             methods: {
@@ -405,6 +409,19 @@
                 onStateChange(e) {
                     this.selectedState = e.target.value;
                     this.address.city = '';
+                },
+
+                updatePhoneWithCountryCode() {
+                    if (this.iti && this.iti.isValidNumber()) {
+                        this.address.phone = this.iti.getNumber();
+                        
+                        // Force VeeValidate to update the value
+                        const phoneInputEl = this.$refs.phoneInput;
+                        if (phoneInputEl) {
+                            phoneInputEl.value = this.address.phone;
+                            phoneInputEl.dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                    }
                 }
             }
         });

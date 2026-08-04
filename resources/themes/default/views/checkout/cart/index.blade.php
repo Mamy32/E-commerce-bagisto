@@ -33,6 +33,7 @@
                         alt="{{ config('app.name') }}"
                         width="131"
                         height="29"
+                        class="max-h-[55px] w-auto object-contain"
                     >
                 </a>
 

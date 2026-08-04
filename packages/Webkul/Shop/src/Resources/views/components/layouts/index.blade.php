@@ -80,7 +80,10 @@
 
         <style>
             {!! core()->getConfigData('general.content.custom_scripts.custom_css') !!}
+            .iti { width: 100%; display: block; }
         </style>
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/css/intlTelInput.css" />
 
         @if(core()->getConfigData('general.content.speculation_rules.enabled'))
             <script type="speculationrules">
@@ -176,5 +179,7 @@
         <script type="text/javascript">
             {!! core()->getConfigData('general.content.custom_scripts.custom_javascript') !!}
         </script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/js/intlTelInput.min.js"></script>
     </body>
 </html>

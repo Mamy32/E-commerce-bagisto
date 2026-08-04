@@ -31,6 +31,7 @@
                         alt="{{ config('app.name') }}"
                         width="131"
                         height="29"
+                        class="max-h-[55px] w-auto object-contain"
                     >
                 </a>
             </div>
@@ -44,16 +45,7 @@
     {!! view_render_event('bagisto.shop.checkout.onepage.header.after') !!}
 
     <!-- Page Content -->
-    <div class="container px-[60px] max-lg:px-8 max-sm:px-4">
-
-        {!! view_render_event('bagisto.shop.checkout.onepage.breadcrumbs.before') !!}
-
-        <!-- Breadcrumbs -->
-        @if ((core()->getConfigData('general.general.breadcrumbs.shop')))
-            <x-shop::breadcrumbs name="checkout" />
-        @endif
-
-        {!! view_render_event('bagisto.shop.checkout.onepage.breadcrumbs.after') !!}
+    <div class="w-full max-lg:px-8 max-sm:px-4">
 
         <!-- Checkout Vue Component -->
         <v-checkout>
@@ -73,42 +65,49 @@
             </template>
 
             <template v-else>
-                <div class="grid grid-cols-[1fr_auto] gap-8 max-lg:grid-cols-[1fr] max-md:gap-5">
+                <div class="grid grid-cols-1 lg:grid-cols-2 min-h-[calc(100vh-100px)]">
                     <!-- Included Checkout Summary Blade File For Mobile view -->
                     <div class="hidden max-md:block">
                         @include('shop::checkout.onepage.summary')
                     </div>
 
-                    <div
-                        class="overflow-y-auto max-md:grid max-md:gap-4"
-                        id="steps-container"
-                    >
-                        <!-- Included Addresses Blade File -->
-                        <template v-if="['address', 'shipping', 'payment', 'review'].includes(currentStep)">
-                            @include('shop::checkout.onepage.address')
-                        </template>
+                    <!-- Left Side: Forms -->
+                    <div class="w-full bg-white">
+                        <div class="w-full max-w-xl lg:ml-auto lg:pr-16 xl:pr-24 lg:pl-8 pt-10 pb-20 max-lg:mx-auto max-lg:px-0" id="steps-container">
+                            
+                            <!-- Breadcrumbs -->
+                            <div class="flex items-center text-xs tracking-wider uppercase text-gray-400 mb-10 font-serif">
+                                <a href="{{ route('shop.home.index') }}" class="hover:text-fashion-navy transition-colors">Home</a>
+                                <span class="mx-2">&gt;</span>
+                                <a href="{{ route('shop.checkout.cart.index') }}" class="hover:text-fashion-navy transition-colors">Cart</a>
+                                <span class="mx-2">&gt;</span>
+                                <span class="text-fashion-navy font-medium">Checkout</span>
+                            </div>
 
-                        <!-- Included Shipping Methods Blade File -->
-                        <template v-if="cart.have_stockable_items && ['shipping', 'payment', 'review'].includes(currentStep)">
-                            @include('shop::checkout.onepage.shipping')
-                        </template>
+                            <!-- Included Addresses Blade File -->
+                            <template v-if="['address', 'shipping', 'payment', 'review'].includes(currentStep)">
+                                @include('shop::checkout.onepage.address')
+                            </template>
 
-                        <!-- Included Payment Methods Blade File -->
-                        <template v-if="['payment', 'review'].includes(currentStep)">
-                            @include('shop::checkout.onepage.payment')
-                        </template>
+                            <!-- Included Shipping Methods Blade File -->
+                            <template v-if="cart.have_stockable_items && ['shipping', 'payment', 'review'].includes(currentStep)">
+                                @include('shop::checkout.onepage.shipping')
+                            </template>
+
+                            <!-- Included Payment Methods Blade File -->
+                            <template v-if="['payment', 'review'].includes(currentStep)">
+                                @include('shop::checkout.onepage.payment')
+                            </template>
+                        </div>
                     </div>
 
-                    <!-- Included Checkout Summary Blade File For Desktop view -->
-                    <div class="sticky top-8 block h-max w-[442px] max-w-full max-lg:w-auto max-lg:max-w-[442px] ltr:pl-8 max-lg:ltr:pl-0 rtl:pr-8 max-lg:rtl:pr-0">
-                        <div class="block max-md:hidden">
+                    <!-- Right Side: Summary -->
+                    <div class="w-full bg-[#F3EFEA]">
+                        <!-- Included Checkout Summary Blade File For Desktop view -->
+                        <div class="sticky top-0 w-full max-w-lg lg:mr-auto lg:pl-16 xl:pl-24 lg:pr-8 pt-10 pb-20 max-lg:mx-auto max-lg:px-0 max-md:hidden h-max">
                             @include('shop::checkout.onepage.summary')
-                        </div>
 
-                        <div
-                            class="flex justify-end"
-                            v-if="canPlaceOrder"
-                        >
+                            <div class="flex mt-8" v-if="canPlaceOrder">
                             <template v-if="(selectedPaymentMethod || cart.payment_method) == 'paypal_smart_button'">
                                 {!! view_render_event('bagisto.shop.checkout.onepage.summary.paypal_smart_button.before') !!}
 
@@ -121,7 +120,7 @@
                             <template v-else>
                                 <x-shop::button
                                     type="button"
-                                    class="primary-button w-max rounded-2xl bg-navyBlue px-11 py-3 max-md:mb-4 max-md:w-full max-md:max-w-full max-md:rounded-lg max-sm:py-1.5"
+                                    class="w-full rounded-none primary-button bg-fashion-navy text-white hover:bg-black uppercase tracking-widest text-sm py-4 max-md:mb-4 max-md:w-full max-md:max-w-full max-sm:py-3 transition-colors duration-300"
                                     :title="trans('shop::app.checkout.onepage.summary.place-order')"
                                     ::disabled="isPlacingOrder"
                                     ::loading="isPlacingOrder"
@@ -130,6 +129,7 @@
                             </template>
                         </div>
                     </div>
+                </div>
                 </div>
             </template>
         </script>

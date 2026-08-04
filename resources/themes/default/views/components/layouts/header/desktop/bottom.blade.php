@@ -289,7 +289,7 @@
             >
                 <a
                     :href="category.url"
-                    class="inline-block px-4 text-sm font-medium uppercase tracking-wider text-fashion-navy transition-opacity group-hover:opacity-60"
+                    class="inline-block px-4 text-sm font-medium uppercase tracking-wider text-[#594A38] transition-opacity group-hover:opacity-60"
                 >
                     @{{ category.name }}
                 </a>
@@ -332,7 +332,7 @@
                     class="flex h-[77px] cursor-pointer items-center border-b-2 border-transparent hover:border-fashion-accent"
                     @click="toggleCategoryDrawer"
                 >
-                    <span class="flex items-center gap-1.5 px-4 text-sm font-medium uppercase tracking-wider text-fashion-navy transition-opacity hover:opacity-60">
+                    <span class="flex items-center gap-1.5 px-4 text-sm font-medium uppercase tracking-wider text-[#594A38] transition-opacity hover:opacity-60">
                         <span class="text-xl icon-hamburger"></span>
                         @lang('shop::app.components.layouts.header.desktop.bottom.all')
                     </span>
@@ -345,7 +345,7 @@
                 >
                     <a
                         :href="category.url"
-                        class="inline-block px-4 text-sm font-medium uppercase tracking-wider text-fashion-navy transition-opacity group-hover:opacity-60"
+                        class="inline-block px-4 text-sm font-medium uppercase tracking-wider text-[#594A38] transition-opacity group-hover:opacity-60"
                     >
                         @{{ category.name }}
                     </a>
