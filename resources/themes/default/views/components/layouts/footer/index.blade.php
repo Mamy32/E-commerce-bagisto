@@ -180,26 +180,16 @@
     </div>
 
     {{-- Bottom bar --}}
-    <div class="flex items-center justify-between border-t border-fashion-border bg-fashion-surface px-[60px] py-4 max-md:flex-col max-md:gap-2 max-md:text-center max-sm:px-4">
+    <div class="flex items-center justify-center border-t border-fashion-border bg-fashion-surface px-[60px] py-4 max-md:flex-col max-md:gap-2 max-md:text-center max-sm:px-4">
 
         {!! view_render_event('bagisto.shop.layout.footer.footer_text.before') !!}
 
         <p class="text-xs text-fashion-muted">
-            @if (core()->getConfigData('general.content.footer.copyright_content'))
-                {!! core()->getConfigData('general.content.footer.copyright_content') !!}
-            @else
-                @lang('shop::app.components.layouts.footer.footer-text', ['current_year' => date('Y')])
-            @endif
+            &copy; 2026 Jfc Fashion. All rights reserved.
         </p>
 
         {!! view_render_event('bagisto.shop.layout.footer.footer_text.after') !!}
 
-        <div class="flex items-center gap-3">
-            <span class="flex h-6 items-center rounded border border-fashion-border bg-white px-2 text-[10px] font-bold text-fashion-navy" aria-label="Visa">VISA</span>
-            <span class="flex h-6 items-center rounded border border-fashion-border bg-white px-2 text-[10px] font-bold text-fashion-navy" aria-label="Mastercard">MC</span>
-            <span class="flex h-6 items-center rounded border border-fashion-border bg-white px-2 text-[10px] font-bold text-fashion-navy" aria-label="PayPal">PP</span>
-            <span class="flex h-6 items-center rounded border border-fashion-border bg-white px-2 text-[10px] font-bold text-fashion-navy" aria-label="Stripe">stripe</span>
-        </div>
     </div>
 
 </footer>
