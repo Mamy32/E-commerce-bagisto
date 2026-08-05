@@ -154,9 +154,13 @@
 
                         var form = input.closest('form');
                         if (form) {
-                            form.addEventListener('submit', function() {
-                                input.value = iti.getNumber();
-                            });
+                            var submitBtn = form.querySelector('button[type="submit"]');
+                            if (submitBtn) {
+                                submitBtn.addEventListener('click', function() {
+                                    input.value = iti.getNumber();
+                                    input.dispatchEvent(new Event('input', { bubbles: true }));
+                                });
+                            }
                         }
                     }
                 }, 100);

@@ -12,6 +12,21 @@
 @endphp
 
 <!-- SEO Meta Content -->
+@push('scripts')
+    <script>
+        window.isProductPage = true;
+    </script>
+@endpush
+
+@push('styles')
+    <style>
+        /* Reduce the gap on the product page only */
+        #main {
+            padding-top: 110px !important;
+        }
+    </style>
+@endpush
+
 @push('meta')
     <meta name="description" content="{{ trim($product->meta_description) != "" ? $product->meta_description : \Illuminate\Support\Str::limit(strip_tags($product->description), 120, '') }}"/>
 
@@ -26,19 +41,29 @@
     <?php $productBaseImage = product_image()->getProductBaseImage($product); ?>
 
     <meta name="twitter:card" content="summary_large_image" />
+
     <meta name="twitter:title" content="{{ $product->name }}" />
+
     <meta name="twitter:description" content="{!! htmlspecialchars(trim(strip_tags($product->description))) !!}" />
+
     <meta name="twitter:image:alt" content="" />
+
     <meta name="twitter:image" content="{{ $productBaseImage['medium_image_url'] }}" />
+
     <meta property="og:type" content="og:product" />
+
     <meta property="og:title" content="{{ $product->name }}" />
+
     <meta property="og:image" content="{{ $productBaseImage['medium_image_url'] }}" />
+
     <meta property="og:description" content="{!! htmlspecialchars(trim(strip_tags($product->description))) !!}" />
+
     <meta property="og:url" content="{{ route('shop.product_or_category.index', $product->url_key) }}" />
 @endPush
 
+<!-- Page Layout -->
 <x-shop::layouts>
-
+    <!-- Page Title -->
     <x-slot:title>
         {{ trim($product->meta_title) != "" ? $product->meta_title : $product->name }}
     </x-slot>
@@ -46,8 +71,8 @@
     {!! view_render_event('bagisto.shop.products.view.before', ['product' => $product]) !!}
 
     <!-- Breadcrumbs -->
-    @if (core()->getConfigData('general.general.breadcrumbs.shop'))
-        <div class="mx-auto max-w-[1440px] px-[60px] pt-5 max-lg:px-8 max-md:hidden max-md:px-4">
+    @if ((core()->getConfigData('general.general.breadcrumbs.shop')))
+        <div class="flex justify-center px-7 max-lg:hidden">
             <x-shop::breadcrumbs
                 name="product"
                 :entity="$product"
@@ -60,43 +85,27 @@
         <x-shop::shimmer.products.view />
     </v-product>
 
-    <!-- ─── Desktop: Tabs (Description / Additional Info / Reviews) ── -->
+    <!-- Information Section -->
     <div class="1180:mt-20">
         <div class="max-1180:hidden">
             <x-shop::tabs
                 position="center"
                 ref="productTabs"
             >
-                {!! view_render_event('bagisto.shop.products.view.description.before', ['product' => $product]) !!}
-
-                <x-shop::tabs.item
-                    id="descritpion-tab"
-                    class="container mt-[60px] !p-0"
-                    :title="trans('shop::app.products.view.description')"
-                    :is-selected="true"
-                >
-                    <div class="container mt-[60px] max-1180:px-5">
-                        <p class="text-lg text-fashion-muted max-1180:text-sm">
-                            {!! $product->description !!}
-                        </p>
-                    </div>
-                </x-shop::tabs.item>
-
-                {!! view_render_event('bagisto.shop.products.view.description.after', ['product' => $product]) !!}
-
-                @if (count($attributeData))
+                <!-- Additional Information Tab -->
+                @if(count($attributeData))
                     <x-shop::tabs.item
                         id="information-tab"
-                        class="container mt-[60px] !p-0"
+                        class="container mt-[40px] !p-0 border-t border-gray-200 pt-8"
                         :title="trans('shop::app.products.view.additional-information')"
-                        :is-selected="false"
+                        :is-selected="true"
                     >
                         <div class="container mt-[60px] max-1180:px-5">
                             <div class="mt-8 grid max-w-max grid-cols-[auto_1fr] gap-4">
                                 @foreach ($customAttributeValues as $customAttributeValue)
                                     @if (! empty($customAttributeValue['value']))
                                         <div class="grid">
-                                            <p class="text-base text-fashion-navy">
+                                            <p class="text-base text-black">
                                                 {{ $customAttributeValue['label'] }}
                                             </p>
                                         </div>
@@ -120,7 +129,7 @@
                                             </a>
                                         @else
                                             <div class="grid">
-                                                <p class="text-base text-fashion-muted">
+                                                <p class="text-base text-zinc-500">
                                                     {{ $customAttributeValue['value'] }}
                                                 </p>
                                             </div>
@@ -132,9 +141,10 @@
                     </x-shop::tabs.item>
                 @endif
 
+                <!-- Reviews Tab -->
                 <x-shop::tabs.item
                     id="review-tab"
-                    class="container mt-[60px] !p-0"
+                    class="container mt-[40px] !p-0 border-t border-gray-200 pt-8"
                     :title="trans('shop::app.products.view.review')"
                     :is-selected="false"
                 >
@@ -144,32 +154,15 @@
         </div>
     </div>
 
-    <!-- ─── Mobile: Accordions ───────────────────────────────────────── -->
+    <!-- Information Section -->
     <div class="container mt-6 grid gap-3 !p-0 max-1180:px-5 1180:hidden">
-
-        <x-shop::accordion
-            class="max-md:border-none"
-            :is-active="true"
-        >
-            <x-slot:header class="bg-fashion-surface max-md:!py-3 max-sm:!py-2">
-                <p class="text-base font-medium 1180:hidden">
-                    @lang('shop::app.products.view.description')
-                </p>
-            </x-slot>
-
-            <x-slot:content class="max-sm:px-0">
-                <div class="mb-5 text-lg text-fashion-muted max-1180:text-sm max-md:mb-1 max-md:px-4">
-                    {!! $product->description !!}
-                </div>
-            </x-slot>
-        </x-shop::accordion>
-
+        <!-- Additional Information Accordion -->
         @if (count($attributeData))
             <x-shop::accordion
                 class="max-md:border-none"
                 :is-active="false"
             >
-                <x-slot:header class="bg-fashion-surface max-md:!py-3 max-sm:!py-2">
+                <x-slot:header class="bg-gray-100 max-md:!py-3 max-sm:!py-2">
                     <p class="text-base font-medium 1180:hidden">
                         @lang('shop::app.products.view.additional-information')
                     </p>
@@ -177,12 +170,12 @@
 
                 <x-slot:content class="max-sm:px-0">
                     <div class="container max-1180:px-5">
-                        <div class="grid max-w-max grid-cols-[auto_1fr] gap-4 text-lg text-fashion-muted max-1180:text-sm">
+                        <div class="grid max-w-max grid-cols-[auto_1fr] gap-4 text-lg text-zinc-500 max-1180:text-sm">
                             @foreach ($customAttributeValues as $customAttributeValue)
                                 @if (! empty($customAttributeValue['value']))
                                     <div class="grid">
                                         <p
-                                            class="text-base text-fashion-navy"
+                                            class="text-base text-black"
                                             v-pre
                                         >
                                             {{ $customAttributeValue['label'] }}
@@ -210,7 +203,7 @@
                                     @else
                                         <div class="grid">
                                             <p
-                                                class="text-base text-fashion-muted"
+                                                class="text-base text-zinc-500"
                                                 v-pre
                                             >
                                                 {{ $customAttributeValue['value'] ?? '-' }}
@@ -225,12 +218,13 @@
             </x-shop::accordion>
         @endif
 
+        <!-- Reviews Accordion -->
         <x-shop::accordion
             class="max-md:border-none"
             :is-active="false"
         >
             <x-slot:header
-                class="bg-fashion-surface max-md:!py-3 max-sm:!py-2"
+                class="bg-gray-100 max-md:!py-3 max-sm:!py-2"
                 id="review-accordian-button"
             >
                 <p class="text-base font-medium">
@@ -275,30 +269,25 @@
 
                     <div class="container px-[60px] max-1180:px-0">
                         <div class="mt-12 flex gap-9 max-1180:flex-wrap max-lg:mt-0 max-sm:gap-y-4">
-
-                            <!-- Gallery -->
+                            <!-- Gallery Blade Inclusion -->
                             @include('shop::products.view.gallery')
 
-                            <!-- ─── Product Details Column ─────────────── -->
+                            <!-- Details -->
                             <div class="relative max-w-[590px] max-1180:w-full max-1180:max-w-full max-1180:px-5 max-sm:px-4">
-
                                 {!! view_render_event('bagisto.shop.products.name.before', ['product' => $product]) !!}
 
                                 <div class="flex justify-between gap-4">
-                                    <h1
-                                        class="product-name-heading break-words text-3xl max-sm:text-xl"
-                                        v-pre
-                                    >
+                                    <h1 class="break-words font-dmserif uppercase text-4xl max-sm:text-2xl" v-pre>
                                         {{ $product->name }}
                                     </h1>
 
                                     @if (core()->getConfigData('customer.settings.wishlist.wishlist_option'))
                                         <div
-                                            class="flex max-h-[46px] min-h-[46px] min-w-[46px] cursor-pointer items-center justify-center rounded-full border border-fashion-border bg-white text-2xl transition-all hover:border-fashion-navy max-sm:max-h-7 max-sm:min-h-7 max-sm:min-w-7 max-sm:text-base"
+                                            class="max-sm:min-h-7 max-sm:min-w-7 flex max-h-[46px] min-h-[46px] min-w-[46px] cursor-pointer items-center justify-center rounded-full border bg-white text-2xl transition-all hover:opacity-[0.8] max-sm:max-h-7 max-sm:text-base"
                                             role="button"
                                             aria-label="@lang('shop::app.products.view.add-to-wishlist')"
                                             tabindex="0"
-                                            :class="isWishlist ? 'icon-heart-fill text-red-600' : 'icon-heart text-fashion-navy'"
+                                            :class="isWishlist ? 'icon-heart-fill text-red-600' : 'icon-heart'"
                                             @click="addToWishlist"
                                         >
                                         </div>
@@ -311,6 +300,7 @@
                                 {!! view_render_event('bagisto.shop.products.rating.before', ['product' => $product]) !!}
 
                                 @if ($totalRatings = $reviewHelper->getTotalFeedback($product))
+                                    <!-- Scroll To Reviews Section and Activate Reviews Tab -->
                                     <div
                                         class="mt-1 w-max cursor-pointer max-sm:mt-1.5"
                                         role="button"
@@ -318,7 +308,7 @@
                                         @click="scrollToReview"
                                     >
                                         <x-shop::products.ratings
-                                            class="transition-all hover:border-fashion-border max-sm:px-3 max-sm:py-1"
+                                            class="transition-all hover:border-gray-400 max-sm:px-3 max-sm:py-1"
                                             :average="$avgRatings"
                                             :total="$totalRatings"
                                             ::rating="true"
@@ -331,12 +321,12 @@
                                 <!-- Pricing -->
                                 {!! view_render_event('bagisto.shop.products.price.before', ['product' => $product]) !!}
 
-                                <p class="mt-[22px] flex flex-wrap items-center gap-2.5 text-2xl font-semibold text-fashion-navy max-sm:mt-2 max-sm:text-lg">
+                                <p class="mt-[22px] flex items-center gap-2.5 text-2xl !font-medium text-[#d4af37] max-sm:mt-2 max-sm:gap-x-2.5 max-sm:gap-y-0 max-sm:text-lg">
                                     {!! $product->getTypeInstance()->getPriceHtml() !!}
                                 </p>
 
                                 @if (\Webkul\Tax\Facades\Tax::isInclusiveTaxProductPrices())
-                                    <span class="text-sm font-normal text-fashion-muted max-sm:text-xs">
+                                    <span class="text-sm font-normal text-zinc-500 max-sm:text-xs">
                                         (@lang('shop::app.products.view.tax-inclusive'))
                                     </span>
                                 @endif
@@ -344,7 +334,7 @@
                                 @if (count($product->getTypeInstance()->getCustomerGroupPricingOffers()))
                                     <div class="mt-2.5 grid gap-1.5">
                                         @foreach ($product->getTypeInstance()->getCustomerGroupPricingOffers() as $offer)
-                                            <p class="text-fashion-muted [&>*]:text-fashion-navy">
+                                            <p class="text-zinc-500 [&>*]:text-black">
                                                 {!! $offer !!}
                                             </p>
                                         @endforeach
@@ -353,22 +343,21 @@
 
                                 {!! view_render_event('bagisto.shop.products.price.after', ['product' => $product]) !!}
 
-                                {!! view_render_event('bagisto.shop.products.short_description.before', ['product' => $product]) !!}
 
-                                <p class="mt-6 text-base leading-relaxed text-fashion-muted max-sm:mt-1.5 max-sm:text-sm">
-                                    {!! $product->short_description !!}
-                                </p>
-
-                                {!! view_render_event('bagisto.shop.products.short_description.after', ['product' => $product]) !!}
 
                                 @include('shop::products.view.types.simple')
+
                                 @include('shop::products.view.types.configurable')
+
                                 @include('shop::products.view.types.grouped')
+
                                 @include('shop::products.view.types.bundle')
+
                                 @include('shop::products.view.types.downloadable')
+
                                 @include('shop::products.view.types.booking')
 
-                                <!-- Quantity + Add to Cart -->
+                                <!-- Product Actions and Quantity Box -->
                                 <div class="mt-8 flex max-w-[470px] gap-4 max-sm:mt-4">
 
                                     {!! view_render_event('bagisto.shop.products.view.quantity.before', ['product' => $product]) !!}
@@ -384,25 +373,23 @@
                                     {!! view_render_event('bagisto.shop.products.view.quantity.after', ['product' => $product]) !!}
 
                                     @if (core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
+                                        <!-- Add To Cart Button -->
                                         {!! view_render_event('bagisto.shop.products.view.add_to_cart.before', ['product' => $product]) !!}
 
-                                        <x-shop::button
+                                        <button
                                             type="submit"
-                                            class="secondary-button w-full max-w-full rounded-xl max-md:py-3 max-sm:rounded-lg max-sm:py-1.5"
-                                            button-type="secondary-button"
-                                            :loading="false"
-                                            :title="trans('shop::app.products.view.add-to-cart')"
-                                            :disabled="! $product->isSaleable(1)"
-                                            ::loading="isStoring.addToCart"
-                                            ::disabled="isStoring.addToCart"
+                                            class="m-0 flex w-full flex-1 items-center justify-center rounded-none bg-[#d4af37] px-14 py-4 text-base font-semibold uppercase tracking-widest text-gray-900 transition-all hover:bg-[#b8952a] max-md:py-3 max-sm:rounded-lg max-sm:py-1.5"
+                                            :disabled="isStoring.addToCart || {{ $product->isSaleable(1) ? 'false' : 'true' }}"
                                             @click="is_buy_now=0;"
-                                        />
+                                        >
+                                            @lang('shop::app.products.view.add-to-cart')
+                                        </button>
 
                                         {!! view_render_event('bagisto.shop.products.view.add_to_cart.after', ['product' => $product]) !!}
                                     @else
                                         <button
                                             type="button"
-                                            class="secondary-button w-full max-w-full rounded-xl max-md:py-3 max-sm:rounded-lg max-sm:py-1.5"
+                                            class="secondary-button w-full max-w-full max-md:py-3 max-sm:rounded-lg max-sm:py-1.5"
                                             @click="$refs.contactUsModal.open()"
                                         >
                                             @lang('shop::app.components.layouts.footer.contact-us')
@@ -410,14 +397,14 @@
                                     @endif
                                 </div>
 
-                                <!-- Buy Now -->
+                                <!-- Buy Now Button -->
                                 @if (core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
                                     {!! view_render_event('bagisto.shop.products.view.buy_now.before', ['product' => $product]) !!}
 
                                     @if (core()->getConfigData('catalog.products.storefront.buy_now_button_display'))
                                         <x-shop::button
                                             type="submit"
-                                            class="primary-button mt-5 w-full max-w-[470px] rounded-xl max-md:py-3 max-sm:mt-3 max-sm:rounded-lg max-sm:py-1.5"
+                                            class="primary-button mt-5 w-full max-w-[470px] max-md:py-3 max-sm:mt-3 max-sm:rounded-lg max-sm:py-1.5"
                                             button-type="primary-button"
                                             :title="trans('shop::app.products.view.buy-now')"
                                             :disabled="! $product->isSaleable(1)"
@@ -432,12 +419,12 @@
 
                                 {!! view_render_event('bagisto.shop.products.view.additional_actions.before', ['product' => $product]) !!}
 
-                                <!-- Compare -->
+                                <!-- Share Buttons -->
                                 <div class="mt-10 flex gap-9 max-md:mt-4 max-md:flex-wrap max-sm:justify-center max-sm:gap-3">
                                     {!! view_render_event('bagisto.shop.products.view.compare.before', ['product' => $product]) !!}
 
                                     <div
-                                        class="flex cursor-pointer items-center justify-center gap-2.5 text-sm text-fashion-muted transition-colors hover:text-fashion-navy max-sm:gap-1.5 max-sm:text-base"
+                                        class="flex cursor-pointer items-center justify-center gap-2.5 max-sm:gap-1.5 max-sm:text-base"
                                         role="button"
                                         tabindex="0"
                                         @click="is_buy_now=0; addToCompare({{ $product->id }})"
@@ -454,6 +441,27 @@
 
                                     {!! view_render_event('bagisto.shop.products.view.compare.after', ['product' => $product]) !!}
                                 </div>
+                                <!-- Product Tabs (Vanilla JS) -->
+                                <div class="mt-12 w-full text-gray-900 border-t border-gray-200 pt-8" id="product-tabs">
+                                    <div class="flex gap-8 border-b border-gray-200 pb-2 text-sm font-medium uppercase tracking-widest text-gray-500 max-sm:gap-4 max-sm:text-[10px]">
+                                        <button type="button" onclick="switchTab('description')" id="tab-btn-description" class="tab-btn text-gray-900 border-b-2 border-gray-900 pb-2 -mb-[9px]">Description</button>
+                                        <button type="button" onclick="switchTab('details')" id="tab-btn-details" class="tab-btn pb-2 -mb-[9px] border-b-2 border-transparent hover:text-gray-900">Details & Composition</button>
+                                        <button type="button" onclick="switchTab('shipping')" id="tab-btn-shipping" class="tab-btn pb-2 -mb-[9px] border-b-2 border-transparent hover:text-gray-900">Shipping & Returns</button>
+                                    </div>
+                                    
+                                    <div class="mt-6 text-sm text-gray-700 leading-relaxed max-sm:text-xs">
+                                        <div id="tab-content-description" class="tab-content">
+                                            {!! $product->description !!}
+                                        </div>
+                                        <div id="tab-content-details" class="tab-content" style="display: none;">
+                                            {!! $product->short_description ?: 'Crafted from exceptionally soft, premium materials. Check individual product labels for specific care instructions.' !!}
+                                        </div>
+                                        <div id="tab-content-shipping" class="tab-content" style="display: none;">
+                                            {!! $product->shipping_and_returns ?: 'We offer standard and express shipping options. Returns are accepted within 30 days of receiving your order. Please ensure items are unworn and in their original packaging.' !!}
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                 {!! view_render_event('bagisto.shop.products.view.additional_actions.after', ['product' => $product]) !!}
                             </div>
@@ -465,7 +473,7 @@
             <!-- Contact Us Modal -->
             <x-shop::modal ref="contactUsModal">
                 <x-slot:header>
-                    <h2 class="text-lg font-semibold text-fashion-navy max-md:text-base">
+                <h2 class="text-lg font-semibold max-md:text-base">
                         @lang('shop::app.products.view.contact-us.title')
                     </h2>
                 </x-slot>
@@ -558,7 +566,7 @@
                         <div class="mt-6 flex justify-end">
                             <button
                                 type="submit"
-                                class="primary-button rounded-xl px-8 py-3 max-sm:rounded-lg max-sm:px-6 max-sm:py-2"
+                                class="primary-button rounded-2xl px-8 py-3 max-sm:rounded-lg max-sm:px-6 max-sm:py-2"
                             >
                                 @lang('shop::app.products.view.contact-us.submit')
                             </button>
@@ -631,6 +639,15 @@
 
                     checkWishlistStatus() {
                         if (this.isCustomer) {
+                            /**
+                             * Fetches the wishlist items for the customer and checks whether the current
+                             * product exists in the wishlist. If found, `isWishlist` is set to true;
+                             * otherwise, it is set to false.
+                             *
+                             * This approach is used due to Full Page Cache (FPC) limitations. We cannot
+                             * use a replacer here because `product_id` is dynamic, and the replacer
+                             * cannot reliably detect it.
+                             */
                             this.$axios.get('{{ route('shop.api.customers.account.wishlist.index') }}')
                                 .then(response => {
                                     const wishlistItems = response.data.data || [];
@@ -658,6 +675,9 @@
                     },
 
                     addToCompare(productId) {
+                        /**
+                         * This will handle for customers.
+                         */
                         if (this.isCustomer) {
                             this.$axios.post('{{ route("shop.api.compare.store") }}', {
                                     'product_id': productId
@@ -678,6 +698,9 @@
                             return;
                         }
 
+                        /**
+                         * This will handle for guests.
+                         */
                         let existingItems = this.getStorageValue(this.getCompareItemsStorageKey()) ?? [];
 
                         if (existingItems.length) {
@@ -771,11 +794,13 @@
         >
             <div ref="carouselWrapper">
                 <template v-if="isVisible">
+                    <!-- Featured Products -->
                     <x-shop::products.carousel
                         :title="trans('shop::app.products.view.related-product-title')"
                         :src="route('shop.api.products.related.index', ['id' => $product->id])"
                     />
 
+                    <!-- Up-sell Products -->
                     <x-shop::products.carousel
                         :title="trans('shop::app.products.view.up-sell-title')"
                         :src="route('shop.api.products.up-sell.index', ['id' => $product->id])"
@@ -800,7 +825,7 @@
                             entries.forEach((entry) => {
                                 if (entry.isIntersecting) {
                                     this.isVisible = true;
-                                    observer.unobserve(entry.target);
+                                    observer.unobserve(entry.target); // Stop observing
                                 }
                             });
                         },
@@ -815,6 +840,19 @@
         @if (core()->getConfigData('customer.captcha.credentials.status'))
             {!! \Webkul\Customer\Facades\Captcha::renderJS() !!}
         @endif
+    
+        <script>
+            window.switchTab = function(tabId) {
+                document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+                document.querySelectorAll('.tab-btn').forEach(el => {
+                    el.classList.remove('text-gray-900', 'border-gray-900', 'border-b-2');
+                    el.classList.add('border-transparent', 'border-b-2');
+                });
+                document.getElementById('tab-content-' + tabId).style.display = 'block';
+                let btn = document.getElementById('tab-btn-' + tabId);
+                btn.classList.add('text-gray-900', 'border-gray-900', 'border-b-2');
+                btn.classList.remove('border-transparent');
+            }
+        </script>
     @endPushOnce
-
 </x-shop::layouts>

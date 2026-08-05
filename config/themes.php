@@ -24,6 +24,17 @@ return [
                 'package_assets_directory' => 'src/Resources/assets',
             ],
         ],
+        'second-theme' => [
+            'name' => 'Second Theme',
+            'assets_path' => 'public/themes/shop/second-theme',
+            'views_path' => 'resources/themes/second-theme/views',
+
+            'vite' => [
+                'hot_file' => 'shop-default-vite.hot',
+                'build_directory' => 'themes/shop/default/build',
+                'package_assets_directory' => 'src/Resources/assets',
+            ],
+        ],
     ],
 
     /*

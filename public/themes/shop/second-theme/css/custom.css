@@ -1,0 +1,77 @@
+:root {
+    --sukkha-bg: #FFFFFF;
+    --sukkha-text: #25160E;
+    --sukkha-text-muted: #666666;
+    --sukkha-border: #EEEEEE;
+    --sukkha-accent: #25160E;
+    --sukkha-accent-hover: #402819;
+}
+
+body {
+    background-color: var(--sukkha-bg);
+    color: var(--sukkha-text);
+    font-family: 'Poppins', sans-serif; /* Fallback sans-serif that SukkhaCitta uses */
+}
+
+/* Primary buttons with minimalist style */
+.primary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--sukkha-accent);
+    color: #FFFFFF !important;
+    border: 1px solid var(--sukkha-accent);
+    padding: 12px 32px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+.primary-button:hover {
+    background-color: transparent;
+    color: var(--sukkha-accent) !important;
+}
+
+/* Link overrides */
+a {
+    transition: color 0.3s ease;
+}
+a:hover {
+    color: var(--sukkha-text-muted);
+}
+
+/* Typography Overrides */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--sukkha-text);
+    font-weight: 400; /* Minimalist typography is often lighter */
+}
+
+/* Restyled Product Cards */
+.group .bg-gray-100 {
+    background-color: var(--sukkha-bg) !important;
+}
+.group .text-fashion-navy {
+    color: var(--sukkha-text) !important;
+}
+.group .text-fashion-accent {
+    color: var(--sukkha-text-muted) !important;
+}
+
+/* Override default theme colors that might bleed through */
+.bg-fashion-navy {
+    background-color: var(--sukkha-bg) !important;
+}
+.text-fashion-navy {
+    color: var(--sukkha-text) !important;
+}
+.bg-fashion-accent {
+    background-color: var(--sukkha-accent) !important;
+}
+.text-fashion-accent {
+    color: var(--sukkha-text) !important;
+}
+.border-fashion-accent {
+    border-color: var(--sukkha-border) !important;
+}

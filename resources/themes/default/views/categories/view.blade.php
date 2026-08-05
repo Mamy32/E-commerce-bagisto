@@ -12,6 +12,21 @@
     @endif
 @endPush
 
+@push('scripts')
+    <script>
+        window.isProductPage = true;
+    </script>
+@endpush
+
+@push('styles')
+    <style>
+        /* Reduce the gap on the category page */
+        #main {
+            padding-top: 110px !important;
+        }
+    </style>
+@endpush
+
 <x-shop::layouts>
 
     <x-slot:title>

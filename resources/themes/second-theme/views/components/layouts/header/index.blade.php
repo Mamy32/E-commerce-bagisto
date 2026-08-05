@@ -170,30 +170,14 @@
                 ([e]) => {
                     const isScrolled = !e.isIntersecting;
                     
-                    if (window.isProductPage) {
-                        // Always solid styling for product page
-                        style.innerHTML = `
-                            #luxe-main-header {
-                                background-color: var(--color-surface) !important;
-                                border-bottom: 1px solid rgba(0,0,0,0.05) !important;
-                                --nav-dynamic-color: #000000 !important;
-                            }
-                            @media (min-width: 1024px) {
-                                #luxe-main-header .dynamic-nav-element { color: var(--nav-dynamic-color) !important; }
-                                #luxe-main-header .dynamic-nav-placeholder::placeholder { color: var(--nav-dynamic-color) !important; }
-                            }
-                        `;
-                        return; // Exit here
-                    }
-
                     if (isScrolled) {
                         // Apply design-matched background and shadow using CSS rules
                         style.innerHTML = `
                             #luxe-main-header {
-                                background-color: var(--color-surface) !important;
-                                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
-                                border-bottom: 1px solid rgba(0,0,0,0.05) !important;
-                                --nav-dynamic-color: #2F394A !important;
+                                background-color: var(--sukkha-bg) !important;
+                                box-shadow: none !important;
+                                border-bottom: 1px solid var(--sukkha-border) !important;
+                                --nav-dynamic-color: var(--sukkha-text) !important;
                             }
                             @media (min-width: 1024px) {
                                 #luxe-main-header .dynamic-nav-element { color: var(--nav-dynamic-color) !important; }
