@@ -30,8 +30,8 @@
     The v-fashion-announcement component is available globally if needed
     for other pages.
 --}}
-<header class="fixed w-full left-0 right-0 top-0 z-[300] bg-transparent transition-all duration-500" id="luxe-main-header">
-    <div id="luxe-main-header-inner" class="mx-auto max-w-[1440px] px-8 transition-all duration-500">
+<header class="sticky top-0 w-full left-0 right-0 z-[300] bg-white transition-all duration-500 lg:fixed lg:bg-transparent" id="luxe-main-header">
+    <div id="luxe-main-header-inner" class="mx-auto max-w-[1440px] lg:px-8 transition-all duration-500">
     <v-header-switcher>
         {{-- Desktop Header Shimmer (shown before Vue hydrates) --}}
         <div class="flex flex-wrap max-lg:hidden">
@@ -177,6 +177,11 @@
                                 background-color: var(--color-surface) !important;
                                 box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
                                 border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+                                --nav-dynamic-color: #2F394A !important;
+                            }
+                            @media (min-width: 1024px) {
+                                #luxe-main-header .dynamic-nav-element { color: var(--nav-dynamic-color) !important; }
+                                #luxe-main-header .dynamic-nav-placeholder::placeholder { color: var(--nav-dynamic-color) !important; }
                             }
                         `;
                     } else {
@@ -186,6 +191,11 @@
                                 background-color: transparent !important;
                                 box-shadow: none !important;
                                 border-bottom: none !important;
+                                --nav-dynamic-color: #ffffff !important;
+                            }
+                            @media (min-width: 1024px) {
+                                #luxe-main-header .dynamic-nav-element { color: var(--nav-dynamic-color) !important; }
+                                #luxe-main-header .dynamic-nav-placeholder::placeholder { color: var(--nav-dynamic-color) !important; }
                             }
                         `;
                     }

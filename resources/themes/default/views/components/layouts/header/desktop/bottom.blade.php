@@ -59,14 +59,14 @@
             >
                 <label for="organic-search" class="sr-only">@lang('shop::app.components.layouts.header.desktop.bottom.search')</label>
 
-                <div class="icon-search pointer-events-none absolute z-10 flex items-center text-2xl text-fashion-navy left-2"></div>
+                <div class="icon-search pointer-events-none absolute z-10 flex items-center text-2xl text-fashion-navy left-2 dynamic-nav-element"></div>
 
                 <input
                     id="organic-search"
                     type="text"
                     name="query"
                     value="{{ request('query') }}"
-                    class="w-10 opacity-0 focus:w-[260px] xl:focus:w-[340px] focus:opacity-100 focus:pl-10 focus:bg-white/50 focus:border-b focus:border-fashion-navy transition-all duration-400 bg-transparent text-sm font-medium text-fashion-navy placeholder-fashion-muted outline-none py-2 rounded-full cursor-pointer group-hover:w-[260px] xl:group-hover:w-[340px] group-hover:opacity-100 group-hover:pl-10 group-hover:bg-white/50"
+                    class="w-10 opacity-0 focus:w-[260px] xl:focus:w-[340px] focus:opacity-100 focus:pl-10 focus:bg-white/50 focus:border-b focus:border-fashion-navy transition-all duration-400 bg-transparent text-sm font-medium text-fashion-navy placeholder-fashion-muted outline-none py-2 rounded-full cursor-pointer group-hover:w-[260px] xl:group-hover:w-[340px] group-hover:opacity-100 group-hover:pl-10 group-hover:bg-white/50 dynamic-nav-element dynamic-nav-placeholder"
                     placeholder="@lang('shop::app.components.layouts.header.desktop.bottom.search-text')"
                     aria-label="@lang('shop::app.components.layouts.header.desktop.bottom.search-text')"
                     required
@@ -97,11 +97,11 @@
                             alt="Locale"
                         />
                         
-                        <span class="text-sm font-medium text-fashion-navy" v-pre>
+                        <span class="text-sm font-medium text-fashion-navy dynamic-nav-element" v-pre>
                             {{ strtoupper(app()->getLocale()) }}
                         </span>
 
-                        <span class="text-xl icon-arrow-down" role="presentation"></span>
+                        <span class="text-xl icon-arrow-down dynamic-nav-element" role="presentation"></span>
                     </div>
                 </x-slot>
             
@@ -115,7 +115,7 @@
             @if (core()->getConfigData('catalog.products.settings.compare_option'))
                 <a
                     href="{{ route('shop.compare.index') }}"
-                    class="flex items-center text-fashion-navy transition-opacity hover:opacity-60"
+                    class="flex items-center text-fashion-navy transition-opacity hover:opacity-60 dynamic-nav-element"
                     aria-label="@lang('shop::app.components.layouts.header.desktop.bottom.compare')"
                 >
                     <span class="text-2xl icon-compare" role="presentation"></span>
@@ -138,7 +138,7 @@
 
                 <x-slot:toggle>
                     <span
-                        class="flex cursor-pointer items-center text-2xl text-fashion-navy transition-opacity hover:opacity-60 icon-users"
+                        class="icon-users cursor-pointer text-2xl text-fashion-navy transition-opacity hover:opacity-60 dynamic-nav-element"
                         role="button"
                         aria-label="@lang('shop::app.components.layouts.header.desktop.bottom.profile')"
                         tabindex="0"
@@ -289,7 +289,7 @@
             >
                 <a
                     :href="category.url"
-                    class="inline-block px-4 text-sm font-medium uppercase tracking-wider text-[#594A38] transition-opacity group-hover:opacity-60"
+                    class="inline-block px-4 text-sm font-medium uppercase tracking-wider text-[#594A38] transition-opacity group-hover:opacity-60 dynamic-nav-element"
                 >
                     @{{ category.name }}
                 </a>
@@ -332,7 +332,7 @@
                     class="flex h-[77px] cursor-pointer items-center border-b-2 border-transparent hover:border-fashion-accent"
                     @click="toggleCategoryDrawer"
                 >
-                    <span class="flex items-center gap-1.5 px-4 text-sm font-medium uppercase tracking-wider text-[#594A38] transition-opacity hover:opacity-60">
+                    <span class="flex items-center gap-1.5 px-4 text-sm font-medium uppercase tracking-wider text-[#594A38] transition-opacity hover:opacity-60 dynamic-nav-element">
                         <span class="text-xl icon-hamburger"></span>
                         @lang('shop::app.components.layouts.header.desktop.bottom.all')
                     </span>
@@ -345,7 +345,7 @@
                 >
                     <a
                         :href="category.url"
-                        class="inline-block px-4 text-sm font-medium uppercase tracking-wider text-[#594A38] transition-opacity group-hover:opacity-60"
+                        class="inline-block px-4 text-sm font-medium uppercase tracking-wider text-[#594A38] transition-opacity group-hover:opacity-60 dynamic-nav-element"
                     >
                         @{{ category.name }}
                     </a>

@@ -50,7 +50,7 @@
                 srcset="{{ $firstImage }} 1920w, {{ str_replace('storage', 'cache/large', $firstImage) }} 1280w, {{ str_replace('storage', 'cache/medium', $firstImage) }} 1024w, {{ str_replace('storage', 'cache/small', $firstImage) }} 768w"
                 sizes="100vw"
                 class="h-[100vh] w-screen select-none object-cover"
-                style="width:100vw;height:100vh;object-fit:cover;display:block"
+                style="width:100vw;object-fit:cover;display:block"
                 alt="{{ $firstImageTitle ?? trans('shop::app.home.index.image-carousel') }}"
                 fetchpriority="high"
                 decoding="sync"
@@ -69,36 +69,36 @@
     >
         <div class="relative m-auto flex w-full overflow-hidden">
             <!-- Editorial Overlay (Fjc Fashion) -->
-            <div class="pointer-events-none absolute inset-0 z-[150] flex items-center justify-start px-10 md:px-20 lg:px-32">
-                <div class="flex max-w-xl flex-col items-center text-center md:items-start md:text-left mt-16 lg:mt-24">
-                    <h1 class="mb-6 font-serif text-5xl md:text-7xl lg:text-[80px] leading-tight text-[#594A38]">{!! __('custom.hero.title') !!}</h1>
-                    <p class="mb-10 text-base md:text-lg text-[#594A38]/90 max-w-md font-light leading-relaxed">
+            <div class="pointer-events-none absolute inset-0 z-[150] flex flex-col justify-center items-center md:items-start md:justify-center px-6 md:px-20 lg:px-32">
+                <div class="flex max-w-xl flex-col items-center text-center md:items-start md:text-left mt-0 pointer-events-auto">
+                    <h1 class="mb-4 md:mb-6 font-serif text-4xl sm:text-5xl md:text-7xl lg:text-[80px] leading-tight text-white">{!! __('custom.hero.title') !!}</h1>
+                    <p class="mb-8 md:mb-10 text-sm md:text-lg text-white/90 max-w-md font-light leading-relaxed">
                         {{ __('custom.hero.subtitle') }}
                     </p>
                     <a
                         href="{{ route('shop.search.index') }}"
-                        class="pointer-events-auto border border-fashion-navy bg-white/20 backdrop-blur-sm px-10 py-4 text-xs font-semibold tracking-[0.2em] uppercase text-fashion-navy transition-all duration-300 hover:bg-fashion-navy hover:text-white"
+                        class="pointer-events-auto border border-white bg-white/20 md:bg-white/30 backdrop-blur-sm px-8 py-3 md:px-10 md:py-4 text-xs font-semibold tracking-[0.2em] uppercase text-white transition-all duration-300 hover:bg-white hover:text-fashion-navy"
                     >
                         {{ __('custom.hero.button') }}
                     </a>
                     
                     <!-- Social Proof -->
-                    <div class="mt-12 flex items-center gap-4 border-t border-fashion-navy/20 pt-6">
+                    <div class="mt-10 md:mt-12 flex flex-col md:flex-row items-center gap-3 md:gap-4 border-t border-white/30 pt-6">
                         <div class="flex -space-x-3">
                             <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover" src="https://i.pravatar.cc/100?img=11" alt="Customer Avatar"/>
                             <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover" src="https://i.pravatar.cc/100?img=44" alt="Customer Avatar"/>
                             <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover" src="https://i.pravatar.cc/100?img=68" alt="Customer Avatar"/>
                             <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover" src="https://i.pravatar.cc/100?img=32" alt="Customer Avatar"/>
                         </div>
-                        <div class="flex flex-col text-left">
-                            <div class="flex text-[#C9A84C] text-sm">
+                        <div class="flex flex-col items-center md:items-start text-center md:text-left">
+                            <div class="flex text-[#C9A84C] text-sm justify-center md:justify-start">
                                 <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                                 <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                                 <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                                 <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                                 <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                             </div>
-                            <span class="mt-1 text-xs font-semibold text-fashion-navy/80 uppercase tracking-widest">{{ __('custom.hero.social_proof') }}</span>
+                            <span class="mt-1 text-xs font-semibold text-white/90 uppercase tracking-widest max-w-[200px] md:max-w-none">{{ __('custom.hero.social_proof') }}</span>
                         </div>
                     </div>
                 </div>
