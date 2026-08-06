@@ -39,14 +39,14 @@
     @endphp
 
     <section
-        class="relative flex h-[100vh] min-h-[600px] w-full items-center justify-start overflow-hidden bg-cover bg-center bg-no-repeat"
+        class="relative flex h-[100vh] max-md:h-[80vh] min-h-[600px] max-md:min-h-[400px] w-full items-center justify-start overflow-hidden bg-cover bg-center bg-no-repeat"
         style="background-image: url('{{ $heroImage }}');"
         aria-label="Homepage hero"
     >
         <!-- Dark gradient overlay to make text pop -->
         <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
 
-        <div class="relative z-10 mx-auto flex w-full max-w-[1440px] flex-col items-start justify-center px-[60px] max-lg:px-8 max-sm:px-4">
+        <div class="relative z-10 mx-auto flex w-full max-w-[1440px] flex-col items-start justify-center px-[60px] max-lg:px-8 max-sm:px-4 max-md:-mt-20">
             <p class="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-fashion-accent">
                 {{ config('app.name') }}
             </p>

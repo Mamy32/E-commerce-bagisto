@@ -1,0 +1,429 @@
+@pushOnce('scripts')
+    <script
+        type="text/x-template"
+        id="v-checkout-address-form-template"
+    >
+        <div class="mt-2 max-md:mt-3">
+            <x-shop::form.control-group class="hidden">
+                <x-shop::form.control-group.control
+                    type="text"
+                    ::name="controlName + '.id'"
+                    ::value="address.id"
+                />
+            </x-shop::form.control-group>
+
+
+
+            <!-- First Name -->
+            <div class="grid grid-cols-2 gap-x-5 max-md:grid-cols-1">
+                <x-shop::form.control-group>
+                    <x-shop::form.control-group.label class="required !mt-0">
+                        @lang('shop::app.checkout.onepage.address.first-name')
+                    </x-shop::form.control-group.label>
+
+                    <x-shop::form.control-group.control
+                        type="text"
+                        ::name="controlName + '.first_name'"
+                        ::value="address.first_name"
+                        rules="required"
+                        :label="trans('shop::app.checkout.onepage.address.first-name')"
+                        :placeholder="trans('shop::app.checkout.onepage.address.first-name')"
+                    />
+
+                    <x-shop::form.control-group.error ::name="controlName + '.first_name'" />
+                </x-shop::form.control-group>
+
+                {!! view_render_event('bagisto.shop.checkout.onepage.address.form.first_name.after') !!}
+
+                <!-- Last Name -->
+                <x-shop::form.control-group>
+                    <x-shop::form.control-group.label class="required !mt-0">
+                        @lang('shop::app.checkout.onepage.address.last-name')
+                    </x-shop::form.control-group.label>
+
+                    <x-shop::form.control-group.control
+                        type="text"
+                        ::name="controlName + '.last_name'"
+                        ::value="address.last_name"
+                        rules="required"
+                        :label="trans('shop::app.checkout.onepage.address.last-name')"
+                        :placeholder="trans('shop::app.checkout.onepage.address.last-name')"
+                    />
+
+                    <x-shop::form.control-group.error ::name="controlName + '.last_name'" />
+                </x-shop::form.control-group>
+
+                {!! view_render_event('bagisto.shop.checkout.onepage.address.form.last_name.after') !!}
+            </div>
+
+            <!-- Email -->
+            <x-shop::form.control-group>
+                <x-shop::form.control-group.label class="required !mt-0">
+                    @lang('shop::app.checkout.onepage.address.email')
+                </x-shop::form.control-group.label>
+
+                <x-shop::form.control-group.control
+                    type="email"
+                    ::name="controlName + '.email'"
+                    ::value="address.email"
+                    rules="required|email"
+                    :label="trans('shop::app.checkout.onepage.address.email')"
+                    placeholder="email@example.com"
+                />
+
+                <x-shop::form.control-group.error ::name="controlName + '.email'" />
+            </x-shop::form.control-group>
+
+            {!! view_render_event('bagisto.shop.checkout.onepage.address.form.email.after') !!}
+
+            <!-- Vat ID -->
+            <template v-if="controlName=='billing'">
+                <x-shop::form.control-group>
+                    <x-shop::form.control-group.label>
+                        @lang('shop::app.checkout.onepage.address.vat-id')
+                    </x-shop::form.control-group.label>
+
+                    <x-shop::form.control-group.control
+                        type="text"
+                        ::name="controlName + '.vat_id'"
+                        ::value="address.vat_id"
+                        :label="trans('shop::app.checkout.onepage.address.vat-id')"
+                        :placeholder="trans('shop::app.checkout.onepage.address.vat-id')"
+                    />
+
+                    <x-shop::form.control-group.error ::name="controlName + '.vat_id'" />
+                </x-shop::form.control-group>
+
+                {!! view_render_event('bagisto.shop.checkout.onepage.address.form.vat_id.after') !!}
+            </template>
+
+            <!-- Street Address -->
+            <x-shop::form.control-group>
+                <x-shop::form.control-group.label class="required !mt-0">
+                    @lang('shop::app.checkout.onepage.address.street-address')
+                </x-shop::form.control-group.label>
+
+                <x-shop::form.control-group.control
+                    type="textarea"
+                    ::name="controlName + '.address.[0]'"
+                    ::value="address.address[0]"
+                    rules="required|address"
+                    :label="trans('shop::app.checkout.onepage.address.street-address')"
+                    :placeholder="trans('shop::app.checkout.onepage.address.street-address')"
+                    rows="3"
+                />
+
+                <x-shop::form.control-group.error
+                    class="mb-2"
+                    ::name="controlName + '.address.[0]'"
+                />
+            </x-shop::form.control-group>
+
+            {!! view_render_event('bagisto.shop.checkout.onepage.address.form.address.after') !!}
+
+            <div class="grid grid-cols-2 gap-x-5 max-md:grid-cols-1">
+                <!-- Country -->
+                <x-shop::form.control-group class="!mb-4">
+                    <x-shop::form.control-group.label class="{{ core()->isCountryRequired() ? 'required' : '' }} !mt-0">
+                        @lang('shop::app.checkout.onepage.address.country')
+                    </x-shop::form.control-group.label>
+
+                    <x-shop::form.control-group.control
+                        type="select"
+                        ::name="controlName + '.country'"
+                        ::value="address.country"
+                        v-model="selectedCountry"
+                        rules="{{ core()->isCountryRequired() ? 'required' : '' }}"
+                        :label="trans('shop::app.checkout.onepage.address.country')"
+                        :placeholder="trans('shop::app.checkout.onepage.address.country')"
+                    >
+                        <option value="">
+                            @lang('shop::app.checkout.onepage.address.select-country')
+                        </option>
+
+                        <option
+                            v-for="country in countries"
+                            :value="country.code"
+                        >
+                            @{{ country.name }}
+                        </option>
+                    </x-shop::form.control-group.control>
+
+                    <x-shop::form.control-group.error ::name="controlName + '.country'" />
+                </x-shop::form.control-group>
+
+                {!! view_render_event('bagisto.shop.checkout.onepage.address.form.country.after') !!}
+
+                <!-- State -->
+                <x-shop::form.control-group>
+                    <x-shop::form.control-group.label class="{{ core()->isStateRequired() ? 'required' : '' }} !mt-0">
+                        @lang('shop::app.checkout.onepage.address.state')
+                    </x-shop::form.control-group.label>
+
+                    <template v-if="selectedCountry === 'ID' && indonesiaRegions">
+                        <x-shop::form.control-group.control
+                            type="select"
+                            ::name="controlName + '.state'"
+                            rules="{{ core()->isStateRequired() ? 'required' : '' }}"
+                            ::value="address.state"
+                            v-model="selectedState"
+                            @change="onStateChange"
+                            :label="trans('shop::app.checkout.onepage.address.state')"
+                            :placeholder="trans('shop::app.checkout.onepage.address.state')"
+                        >
+                            <option value="">
+                                @lang('shop::app.checkout.onepage.address.select-state')
+                            </option>
+                            <option
+                                v-for="(cities, province) in indonesiaRegions"
+                                :value="province"
+                            >
+                                @{{ province }}
+                            </option>
+                        </x-shop::form.control-group.control>
+                    </template>
+                    <template v-else-if="states">
+                        <template v-if="haveStates">
+                            <x-shop::form.control-group.control
+                                type="select"
+                                ::name="controlName + '.state'"
+                                rules="{{ core()->isStateRequired() ? 'required' : '' }}"
+                                ::value="address.state"
+                                :label="trans('shop::app.checkout.onepage.address.state')"
+                                :placeholder="trans('shop::app.checkout.onepage.address.state')"
+                            >
+                                <option value="">
+                                    @lang('shop::app.checkout.onepage.address.select-state')
+                                </option>
+
+                                <option
+                                    v-for='(state, index) in states[selectedCountry]'
+                                    :value="state.code"
+                                >
+                                    @{{ state.default_name }}
+                                </option>
+                            </x-shop::form.control-group.control>
+                        </template>
+
+                        <template v-else>
+                            <x-shop::form.control-group.control
+                                type="text"
+                                ::name="controlName + '.state'"
+                                ::value="address.state"
+                                rules="{{ core()->isStateRequired() ? 'required' : '' }}"
+                                :label="trans('shop::app.checkout.onepage.address.state')"
+                                :placeholder="trans('shop::app.checkout.onepage.address.state')"
+                            />
+                        </template>
+                    </template>
+
+                    <x-shop::form.control-group.error ::name="controlName + '.state'" />
+                </x-shop::form.control-group>
+
+                {!! view_render_event('bagisto.shop.checkout.onepage.address.form.state.after') !!}
+            </div>
+
+            <div class="grid grid-cols-2 gap-x-5 max-md:grid-cols-1">
+                <!-- City -->
+                <x-shop::form.control-group>
+                    <x-shop::form.control-group.label class="required !mt-0">
+                        @lang('shop::app.checkout.onepage.address.city')
+                    </x-shop::form.control-group.label>
+
+                    <template v-if="selectedCountry === 'ID' && indonesiaRegions && selectedState && indonesiaRegions[selectedState]">
+                        <x-shop::form.control-group.control
+                            type="select"
+                            ::name="controlName + '.city'"
+                            ::value="address.city"
+                            v-model="address.city"
+                            rules="required"
+                            :label="trans('shop::app.checkout.onepage.address.city')"
+                            :placeholder="trans('shop::app.checkout.onepage.address.city')"
+                        >
+                            <option value="">Select City</option>
+                            <option
+                                v-for="city in indonesiaRegions[selectedState]"
+                                :value="city"
+                            >
+                                @{{ city }}
+                            </option>
+                        </x-shop::form.control-group.control>
+                    </template>
+                    <template v-else>
+                        <x-shop::form.control-group.control
+                            type="text"
+                            ::name="controlName + '.city'"
+                            ::value="address.city"
+                            rules="required"
+                            :label="trans('shop::app.checkout.onepage.address.city')"
+                            :placeholder="trans('shop::app.checkout.onepage.address.city')"
+                        />
+                    </template>
+
+                    <x-shop::form.control-group.error ::name="controlName + '.city'" />
+                </x-shop::form.control-group>
+
+                {!! view_render_event('bagisto.shop.checkout.onepage.address.form.city.after') !!}
+
+                <!-- Postcode -->
+                <x-shop::form.control-group>
+                    <x-shop::form.control-group.label class="{{ core()->isPostCodeRequired() ? 'required' : '' }} !mt-0">
+                        @lang('shop::app.checkout.onepage.address.postcode')
+                    </x-shop::form.control-group.label>
+
+                    <x-shop::form.control-group.control
+                        type="text"
+                        ::name="controlName + '.postcode'"
+                        ::value="address.postcode"
+                        rules="{{ core()->isPostCodeRequired() ? 'required' : '' }}|postcode"
+                        :label="trans('shop::app.checkout.onepage.address.postcode')"
+                        :placeholder="trans('shop::app.checkout.onepage.address.postcode')"
+                    />
+
+                    <x-shop::form.control-group.error ::name="controlName + '.postcode'" />
+                </x-shop::form.control-group>
+
+                {!! view_render_event('bagisto.shop.checkout.onepage.address.form.postcode.after') !!}
+            </div>
+
+            <!-- Phone Number -->
+            <x-shop::form.control-group>
+                <x-shop::form.control-group.label class="required !mt-0">
+                    @lang('shop::app.checkout.onepage.address.telephone')
+                </x-shop::form.control-group.label>
+
+                <x-shop::form.control-group.control
+                    type="text"
+                    ::name="controlName + '.phone'"
+                    ::value="address.phone"
+                    rules="required|phone"
+                    :label="trans('shop::app.checkout.onepage.address.telephone')"
+                    :placeholder="trans('shop::app.checkout.onepage.address.telephone')"
+                    ref="phoneInput"
+                    @blur="updatePhoneWithCountryCode"
+                />
+
+                <x-shop::form.control-group.error ::name="controlName + '.phone'" />
+            </x-shop::form.control-group>
+
+            {!! view_render_event('bagisto.shop.checkout.onepage.address.form.phone.after') !!}
+        </div>
+    </script>
+
+    <script type="module">
+        app.component('v-checkout-address-form', {
+            template: '#v-checkout-address-form-template',
+
+            props: {
+                controlName: {
+                    type: String,
+                    required: true,
+                },
+
+                address: {
+                    type: Object,
+
+                    default: () => ({
+                        id: 0,
+                        company_name: '',
+                        first_name: '',
+                        last_name: '',
+                        email: '',
+                        address: [],
+                        country: '',
+                        state: '',
+                        city: '',
+                        postcode: '',
+                        phone: '',
+                    }),
+                },
+            },
+
+            data() {
+                return {
+                    selectedCountry: this.address.country,
+                    selectedState: this.address.state,
+                    indonesiaRegions: null,
+
+                    countries: [],
+
+                    states: null,
+                }
+            },
+
+            computed: {
+                haveStates() {
+                    return !! this.states[this.selectedCountry]?.length;
+                },
+            },
+
+            mounted() {
+                this.getCountries();
+                this.getStates();
+                this.getIndonesiaRegions();
+
+                this.$nextTick(() => {
+                    const phoneInputEl = this.$refs.phoneInput;
+                    if (phoneInputEl && window.intlTelInput) {
+                        this.iti = window.intlTelInput(phoneInputEl, {
+                            initialCountry: "auto",
+                            geoIpLookup: function(callback) {
+                                fetch("https://ipapi.co/json")
+                                .then(res => res.json())
+                                .then(data => callback(data.country_code))
+                                .catch(() => callback("us"));
+                            },
+                            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/js/utils.js"
+                        });
+                        
+                        phoneInputEl.addEventListener("countrychange", this.updatePhoneWithCountryCode);
+                    }
+                });
+            },
+
+            methods: {
+                getCountries() {
+                    this.$axios.get("{{ route('shop.api.core.countries') }}")
+                        .then(response => {
+                            this.countries = response.data.data;
+                        })
+                        .catch(() => {});
+                },
+
+                getStates() {
+                    this.$axios.get("{{ route('shop.api.core.states') }}")
+                        .then(response => {
+                            this.states = response.data.data;
+                        })
+                        .catch(() => {});
+                },
+                
+                getIndonesiaRegions() {
+                    this.$axios.get("/indonesia-regions.json")
+                        .then(response => {
+                            this.indonesiaRegions = response.data;
+                        })
+                        .catch(() => {});
+                },
+
+                onStateChange(e) {
+                    this.selectedState = e.target.value;
+                    this.address.city = '';
+                },
+
+                updatePhoneWithCountryCode() {
+                    if (this.iti && this.iti.isValidNumber()) {
+                        this.address.phone = this.iti.getNumber();
+                        
+                        // Force VeeValidate to update the value
+                        const phoneInputEl = this.$refs.phoneInput;
+                        if (phoneInputEl) {
+                            phoneInputEl.value = this.address.phone;
+                            phoneInputEl.dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+@endPushOnce

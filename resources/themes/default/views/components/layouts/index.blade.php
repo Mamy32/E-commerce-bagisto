@@ -128,7 +128,7 @@
 
             <main
                 id="main"
-                class="bg-fashion-surface {{ (request()->routeIs('shop.home.index') || !$hasHeader) ? '' : 'pt-24 md:pt-32 lg:pt-40' }}"
+                class="bg-fashion-surface {{ (request()->routeIs('shop.home.index') || !$hasHeader) ? '' : 'pt-24 md:pt-32 lg:pt-28' }}"
             >
                 {{ $slot }}
             </main>

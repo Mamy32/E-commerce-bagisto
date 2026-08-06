@@ -14,7 +14,7 @@
             class="group w-full block cursor-pointer transition-all duration-300"
             v-if="mode != 'list'"
         >
-            <div class="relative h-[384px] w-full overflow-hidden bg-gray-100 max-md:h-[300px] max-sm:h-[250px]">
+            <div class="relative aspect-[4/5] w-full overflow-hidden bg-gray-100">
                 {!! view_render_event('bagisto.shop.components.products.card.image.before') !!}
 
                 <!-- Product Image -->
@@ -24,16 +24,9 @@
                 >
                     <x-shop::media.images.lazy
                         class="h-full w-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-                        ::src="product.base_image.medium_image_url"
-                        ::srcset="`
-                            ${product.base_image.small_image_url} 150w,
-                            ${product.base_image.medium_image_url} 300w,
-                        `"
-                        sizes="(max-width: 768px) 150px, (max-width: 1200px) 300px, 600px"
+                        ::src="product.base_image.original_image_url || product.base_image.large_image_url"
                         ::key="product.id"
                         ::index="product.id"
-                        width="291"
-                        height="384"
                         ::alt="product.name"
                     />
                 </a>
@@ -145,7 +138,7 @@
                         {!! view_render_event('bagisto.shop.components.products.card.add_to_cart.before') !!}
 
                         <button
-                            class="bg-fashion-navy hover:bg-gray-800 text-white text-xs font-semibold uppercase tracking-widest px-4 py-2 transition-colors duration-300 w-full"
+                            class="bg-[#d4af37] hover:bg-[#b8952a] text-gray-900 text-xs font-semibold uppercase tracking-widest px-4 py-2.5 transition-colors duration-300 w-full"
                             :disabled="! product.is_saleable || isAddingToCart"
                             @click="addToCart()"
                         >
@@ -194,18 +187,16 @@
             class="relative flex max-w-max grid-cols-2 gap-4 overflow-hidden rounded max-sm:flex-wrap"
             v-else
         >
-            <div class="group relative max-h-[258px] max-w-[250px] overflow-hidden">
+            <div class="group relative aspect-[4/5] max-w-[250px] overflow-hidden bg-gray-100">
 
                 {!! view_render_event('bagisto.shop.components.products.card.image.before') !!}
 
                 <a :href="'{{ route('shop.product_or_category.index', ':slug') }}'.replace(':slug', product.url_key)">
                     <x-shop::media.images.lazy
-                        class="after:content-[' '] relative min-w-[250px] bg-zinc-100 transition-all duration-300 after:block after:pb-[calc(100%+9px)] group-hover:scale-105"
-                        ::src="product.base_image.medium_image_url"
+                        class="h-full w-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                        ::src="product.base_image.original_image_url || product.base_image.large_image_url"
                         ::key="product.id"
                         ::index="product.id"
-                        width="291"
-                        height="300"
                         ::alt="product.name"
                     />
                 </a>

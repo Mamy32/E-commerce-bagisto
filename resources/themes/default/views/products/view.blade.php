@@ -24,6 +24,11 @@
         #main {
             padding-top: 110px !important;
         }
+        @media (max-width: 768px) {
+            #main {
+                padding-top: 0px !important;
+            }
+        }
     </style>
 @endpush
 
@@ -358,7 +363,7 @@
                                 @include('shop::products.view.types.booking')
 
                                 <!-- Product Actions and Quantity Box -->
-                                <div class="mt-8 flex max-w-[470px] gap-4 max-sm:mt-4">
+                                <div class="mt-8 flex max-w-[470px] gap-4 max-sm:mt-4 max-sm:flex-col">
 
                                     {!! view_render_event('bagisto.shop.products.view.quantity.before', ['product' => $product]) !!}
 
@@ -366,7 +371,7 @@
                                         <x-shop::quantity-changer
                                             name="quantity"
                                             value="1"
-                                            class="gap-x-4 rounded-xl px-7 py-4 max-md:py-3 max-sm:gap-x-5 max-sm:rounded-lg max-sm:px-4 max-sm:py-1.5"
+                                            class="gap-x-4 rounded-xl px-7 py-4 max-md:py-3 max-sm:gap-x-5 max-sm:rounded-lg max-sm:px-4 max-sm:py-3 max-sm:w-full max-sm:justify-between"
                                         />
                                     @endif
 
@@ -378,7 +383,7 @@
 
                                         <button
                                             type="submit"
-                                            class="m-0 flex w-full flex-1 items-center justify-center rounded-none bg-[#d4af37] px-14 py-4 text-base font-semibold uppercase tracking-widest text-gray-900 transition-all hover:bg-[#b8952a] max-md:py-3 max-sm:rounded-lg max-sm:py-1.5"
+                                            class="m-0 flex w-full flex-1 items-center justify-center rounded-none bg-[#d4af37] px-14 py-4 text-base font-semibold uppercase tracking-widest text-gray-900 transition-all hover:bg-[#b8952a] max-md:py-3 max-sm:rounded-lg max-sm:px-4 max-sm:py-3"
                                             :disabled="isStoring.addToCart || {{ $product->isSaleable(1) ? 'false' : 'true' }}"
                                             @click="is_buy_now=0;"
                                         >
@@ -442,11 +447,11 @@
                                     {!! view_render_event('bagisto.shop.products.view.compare.after', ['product' => $product]) !!}
                                 </div>
                                 <!-- Product Tabs (Vanilla JS) -->
-                                <div class="mt-12 w-full text-gray-900 border-t border-gray-200 pt-8" id="product-tabs">
-                                    <div class="flex gap-8 border-b border-gray-200 pb-2 text-sm font-medium uppercase tracking-widest text-gray-500 max-sm:gap-4 max-sm:text-[10px]">
-                                        <button type="button" onclick="switchTab('description')" id="tab-btn-description" class="tab-btn text-gray-900 border-b-2 border-gray-900 pb-2 -mb-[9px]">Description</button>
-                                        <button type="button" onclick="switchTab('details')" id="tab-btn-details" class="tab-btn pb-2 -mb-[9px] border-b-2 border-transparent hover:text-gray-900">Details & Composition</button>
-                                        <button type="button" onclick="switchTab('shipping')" id="tab-btn-shipping" class="tab-btn pb-2 -mb-[9px] border-b-2 border-transparent hover:text-gray-900">Shipping & Returns</button>
+                                <div class="mt-12 w-full text-gray-900 border-t border-gray-200 pt-8 max-sm:overflow-hidden" id="product-tabs">
+                                    <div class="flex gap-8 border-b border-gray-200 pb-2 text-sm font-medium uppercase tracking-widest text-gray-500 max-sm:gap-4 max-sm:text-[10px] overflow-x-auto whitespace-nowrap scrollbar-hide">
+                                        <button type="button" onclick="switchTab('description')" id="tab-btn-description" class="tab-btn text-gray-900 border-b-2 border-gray-900 pb-2 -mb-[9px] shrink-0">Description</button>
+                                        <button type="button" onclick="switchTab('details')" id="tab-btn-details" class="tab-btn pb-2 -mb-[9px] border-b-2 border-transparent hover:text-gray-900 shrink-0">Details & Composition</button>
+                                        <button type="button" onclick="switchTab('shipping')" id="tab-btn-shipping" class="tab-btn pb-2 -mb-[9px] border-b-2 border-transparent hover:text-gray-900 shrink-0">Shipping & Returns</button>
                                     </div>
                                     
                                     <div class="mt-6 text-sm text-gray-700 leading-relaxed max-sm:text-xs">

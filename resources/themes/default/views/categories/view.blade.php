@@ -24,6 +24,11 @@
         #main {
             padding-top: 110px !important;
         }
+        @media (max-width: 768px) {
+            #main {
+                padding-top: 0px !important;
+            }
+        }
     </style>
 @endpush
 
@@ -129,7 +134,7 @@
                         {{-- Grid mode --}}
                         <div v-else class="mt-8 max-md:mt-5">
                             <template v-if="isLoading">
-                                <div class="grid grid-cols-3 gap-8 max-1060:grid-cols-2 max-md:justify-items-center max-md:gap-x-4">
+                                <div class="grid grid-cols-3 gap-8 max-1060:grid-cols-2 max-md:grid-cols-1 max-md:justify-items-center max-md:gap-x-4">
                                     <x-shop::shimmer.products.cards.grid count="12" />
                                 </div>
                             </template>
@@ -138,7 +143,7 @@
 
                             <template v-else>
                                 <template v-if="products.length">
-                                    <div class="grid grid-cols-3 gap-8 max-1060:grid-cols-2 max-md:justify-items-center max-md:gap-x-4">
+                                    <div class="grid grid-cols-3 gap-8 max-1060:grid-cols-2 max-md:grid-cols-1 max-md:justify-items-center max-md:gap-x-4">
                                         <x-shop::products.card ::mode="'grid'" v-for="product in products" />
                                     </div>
                                 </template>

@@ -161,6 +161,7 @@
          * overwrites vanilla JS class manipulations inside the #app container.
          */
         (function () {
+            window.isHomePage = {{ request()->routeIs('shop.home.index') ? 'true' : 'false' }};
             // Create a dedicated style block in the document head
             const style = document.createElement('style');
             document.head.appendChild(style);
@@ -170,8 +171,8 @@
                 ([e]) => {
                     const isScrolled = !e.isIntersecting;
                     
-                    if (window.isProductPage) {
-                        // Always solid styling for product page
+                    if (!window.isHomePage) {
+                        // Always solid styling for non-home pages
                         style.innerHTML = `
                             #luxe-main-header {
                                 background-color: var(--color-surface) !important;
