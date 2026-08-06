@@ -1,0 +1,156 @@
+<v-products-carousel
+    src="{{ $src }}"
+    title="{{ $title }}"
+    navigation-link="{{ $navigationLink ?? '' }}"
+>
+    <x-shop::shimmer.products.carousel :navigation-link="$navigationLink ?? false" />
+</v-products-carousel>
+
+@pushOnce('scripts')
+    <script
+        type="text/x-template"
+        id="v-products-carousel-template"
+    >
+        <div
+            class="mx-auto max-w-[1440px] px-[60px] mt-10 max-lg:px-8 max-md:mt-8 max-sm:mt-7 max-sm:px-4"
+            v-if="! isLoading && products.length"
+        >
+            <div class="flex justify-between">
+                <h2 class="font-dmserif text-3xl max-md:text-2xl max-sm:text-xl">
+                    @{{ title }}
+                </h2>
+
+                <div class="flex items-center justify-between gap-8">
+                    <a
+                        :href="navigationLink"
+                        class="hidden max-lg:flex text-fashion-accent hover:text-fashion-navy transition-colors duration-300"
+                        v-if="navigationLink"
+                    >
+                        <p class="items-center text-sm font-semibold uppercase tracking-widest flex gap-2">
+                            @lang('shop::app.components.products.carousel.view-all')
+                            <span class="icon-arrow-right text-lg"></span>
+                        </p>
+                    </a>
+
+                    <template v-if="products.length > 3">
+                        <span
+                            v-if="products.length > 4 || (products.length > 3 && isScreenMax2xl)"
+                            class="icon-arrow-left-stylish rtl:icon-arrow-right-stylish inline-block cursor-pointer text-2xl hidden"
+                            role="button"
+                            aria-label="@lang('shop::app.components.products.carousel.previous')"
+                            tabindex="0"
+                            @click="swipeLeft"
+                        >
+                        </span>
+
+                        <span
+                            v-if="products.length > 4 || (products.length > 3 && isScreenMax2xl)"
+                            class="icon-arrow-right-stylish rtl:icon-arrow-left-stylish inline-block cursor-pointer text-2xl hidden"
+                            role="button"
+                            aria-label="@lang('shop::app.components.products.carousel.next')"
+                            tabindex="0"
+                            @click="swipeRight"
+                        >
+                        </span>
+                    </template>
+                </div>
+            </div>
+
+            <div
+                ref="swiperContainer"
+                class="grid grid-cols-4 gap-8 mt-10 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:flex max-sm:overflow-auto max-sm:scroll-smooth max-sm:scrollbar-hide max-md:gap-7 max-md:mt-5 max-sm:gap-4 max-md:pb-0"
+            >
+                <x-shop::products.card
+                    class="w-full max-sm:min-w-[192px]"
+                    v-for="product in products.slice(0, 4)"
+                />
+            </div>
+
+            <a
+                :href="navigationLink"
+                class="inline-block bg-fashion-navy hover:bg-gray-800 text-white px-8 py-3 text-sm font-semibold uppercase tracking-widest transition-colors duration-300 mx-auto mt-12 w-max max-lg:mt-8 max-lg:hidden block"
+                :aria-label="title"
+                v-if="navigationLink"
+            >
+                @lang('shop::app.components.products.carousel.view-all')
+            </a>
+        </div>
+
+        <!-- Product Card Listing -->
+        <template v-if="isLoading">
+            <x-shop::shimmer.products.carousel :navigation-link="$navigationLink ?? false" />
+        </template>
+    </script>
+
+    <script type="module">
+        app.component('v-products-carousel', {
+            template: '#v-products-carousel-template',
+
+            props: [
+                'src',
+                'title',
+                'navigationLink',
+            ],
+
+            data() {
+                return {
+                    isLoading: true,
+
+                    products: [],
+
+                    offset: 323,
+
+                    isScreenMax2xl: window.innerWidth <= 1440,
+                };
+            },
+
+            mounted() {
+                this.getProducts();
+            },
+
+            created() {
+                window.addEventListener('resize', this.updateScreenSize);
+            },
+
+            beforeDestroy() {
+                window.removeEventListener('resize', this.updateScreenSize);
+            },
+
+            methods: {
+                getProducts() {
+                    this.$axios.get(this.src)
+                        .then(response => {
+                            this.isLoading = false;
+
+                            this.products = response.data.data;
+                        }).catch(error => {
+                            console.log(error);
+                        });
+                },
+
+                updateScreenSize() {
+                    this.isScreenMax2xl = window.innerWidth <= 1440;
+                },
+
+                swipeLeft() {
+                    const container = this.$refs.swiperContainer;
+
+                    container.scrollLeft -= this.offset;
+                },
+
+                swipeRight() {
+                    const container = this.$refs.swiperContainer;
+
+                    // Check if scroll reaches the end
+                    if (container.scrollLeft + container.clientWidth >= container.scrollWidth) {
+                        // Reset scroll to the beginning
+                        container.scrollLeft = 0;
+                    } else {
+                        // Scroll to the right
+                        container.scrollLeft += this.offset;
+                    }
+                },
+            },
+        });
+    </script>
+@endPushOnce

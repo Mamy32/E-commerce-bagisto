@@ -16,6 +16,21 @@
     />
 @endPush
 
+@push('scripts')
+    <script>
+        window.isProductPage = true;
+    </script>
+@endpush
+
+@push('styles')
+    <style>
+        /* Reduce the gap on the search page */
+        #main {
+            padding-top: 110px !important;
+        }
+    </style>
+@endpush
+
 <x-shop::layouts :has-feature="false">
     <!-- Page Title -->
     <x-slot:title>
