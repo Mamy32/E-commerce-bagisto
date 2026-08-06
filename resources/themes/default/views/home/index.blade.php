@@ -23,50 +23,59 @@
         {{ $channel->home_seo['meta_title'] ?? config('app.name') }}
     </x-slot>
 
-    @unless ($hasImageCarousel)
-        <section
-            class="relative overflow-hidden bg-fashion-navy"
-            aria-label="Homepage hero"
-        >
-            <div
-                class="pointer-events-none absolute inset-0 opacity-5"
-                style="background-image: repeating-linear-gradient(45deg, #C9A84C 0px, #C9A84C 1px, transparent 1px, transparent 50px);"
-                aria-hidden="true"
-            ></div>
+    @php
+        $heroCustomization = $customizations->firstWhere('type', \Webkul\Theme\Models\ThemeCustomization::IMAGE_CAROUSEL);
+        $heroImages = $heroCustomization ? ($heroCustomization->options['images'] ?? []) : [];
+        $heroSlide = $heroImages[0] ?? null;
+        
+        // If the admin uploads an image, we use it. Otherwise fallback to our cinematic image.
+        $heroImage = $heroSlide && !empty($heroSlide['image']) ? asset($heroSlide['image']) : asset('storage/theme/hero-cinematic.jpg');
+        
+        // Use the title from admin if provided, otherwise fallback to default
+        $heroTitle = $heroSlide && !empty($heroSlide['title']) ? $heroSlide['title'] : 'The Fall/Winter<br><em class="not-italic text-fashion-accent">Collection</em>';
+        
+        // Use the link from admin if provided
+        $heroLink = $heroSlide && !empty($heroSlide['link']) ? $heroSlide['link'] : route('shop.home.index') . '#collections';
+    @endphp
 
-            <div class="relative mx-auto flex max-w-[1440px] flex-col items-center justify-center px-6 py-28 text-center max-lg:py-20 max-sm:py-14">
+    <section
+        class="relative flex h-[100vh] min-h-[600px] w-full items-center justify-start overflow-hidden bg-cover bg-center bg-no-repeat"
+        style="background-image: url('{{ $heroImage }}');"
+        aria-label="Homepage hero"
+    >
+        <!-- Dark gradient overlay to make text pop -->
+        <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
 
-                <p class="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-fashion-accent">
-                    {{ config('app.name') }}
-                </p>
+        <div class="relative z-10 mx-auto flex w-full max-w-[1440px] flex-col items-start justify-center px-[60px] max-lg:px-8 max-sm:px-4">
+            <p class="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-fashion-accent">
+                {{ config('app.name') }}
+            </p>
 
-                <h1 class="font-dmserif text-6xl italic leading-[1.1] text-white max-lg:text-5xl max-md:text-4xl max-sm:text-3xl">
-                    Crafted for the<br>
-                    <em class="not-italic text-fashion-accent">discerning few</em>
-                </h1>
+            <h1 class="font-dmserif text-7xl italic leading-[1.1] text-white max-lg:text-6xl max-md:text-5xl max-sm:text-4xl">
+                {!! $heroTitle !!}
+            </h1>
 
-                <p class="mt-6 max-w-[480px] text-base leading-relaxed text-white/70 max-sm:text-sm">
-                    Discover our curated collection of premium pieces, designed with intention and built to last.
-                </p>
+            <p class="mt-6 max-w-[500px] text-lg leading-relaxed text-white/80 max-sm:text-base">
+                Discover our curated selection of premium pieces. Designed with intention, tailored to perfection, and built for the modern individual.
+            </p>
 
-                <div class="mt-10 flex flex-wrap justify-center gap-4">
-                    <a
-                        href="{{ route('shop.home.index') }}#collections"
-                        class="rounded-lg bg-fashion-accent px-8 py-3.5 text-sm font-semibold uppercase tracking-wide text-fashion-navy transition-opacity hover:opacity-80"
-                    >
-                        Shop Collection
-                    </a>
-
-                    <a
-                        href="{{ route('shop.home.index') }}"
-                        class="rounded-lg border border-white/30 px-8 py-3.5 text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:border-white/60 hover:bg-white/10"
-                    >
-                        Explore More
-                    </a>
-                </div>
+            <div class="mt-10 flex flex-wrap gap-4">
+                <a
+                    href="{{ $heroLink }}"
+                    class="rounded-xl bg-fashion-accent px-10 py-4 text-sm font-bold uppercase tracking-wide text-fashion-navy shadow-lg transition-transform hover:scale-105"
+                >
+                    Discover Now
+                </a>
+                
+                <a
+                    href="{{ route('shop.search.index') }}"
+                    class="rounded-xl border border-white/40 px-10 py-4 text-sm font-bold uppercase tracking-wide text-white backdrop-blur-sm transition-colors hover:border-white hover:bg-white/10"
+                >
+                    View All Categories
+                </a>
             </div>
-        </section>
-    @endunless
+        </div>
+    </section>
 
     <div id="collections">
         @foreach ($customizations as $customization)
@@ -75,10 +84,7 @@
             @switch ($customization->type)
 
                 @case ($customization::IMAGE_CAROUSEL)
-                    <x-shop::carousel
-                        :options="$data"
-                        aria-label="{{ trans('shop::app.home.index.image-carousel') }}"
-                    />
+                    {{-- The default image carousel is disabled in favor of our custom cinematic hero banner at the top --}}
                     @break
 
                 @case ($customization::STATIC_CONTENT)
@@ -156,6 +162,43 @@
                             <p class="mt-0.5 text-xs text-fashion-muted">{{ $feature['body'] }}</p>
                         </div>
                     </div>
+                @endforeach
+            </div>
+        </section>
+    @endif
+
+    @if (count($heroImages) > 1)
+        <section class="mx-auto mt-24 mb-16 max-w-[1440px] px-[60px] max-lg:px-8 max-sm:px-4">
+            <div class="mb-12 text-center">
+                <h2 class="font-dmserif text-4xl italic text-fashion-navy max-sm:text-3xl">Shop The Look</h2>
+                <p class="mt-3 text-sm font-semibold uppercase tracking-[0.2em] text-[#C9A84C]">@JFCFashion</p>
+            </div>
+            
+            <div class="grid grid-cols-4 gap-4 max-lg:grid-cols-2 max-sm:grid-cols-1">
+                @foreach (array_slice($heroImages, 1) as $index => $slide)
+                    @php
+                        // Asymmetrical sizing logic for a 4-item grid
+                        if ($index === 0) {
+                            $classes = 'col-span-2 row-span-2 aspect-square max-lg:col-span-2 max-lg:row-span-1 max-lg:aspect-[2/1] max-sm:col-span-1 max-sm:aspect-[4/5]';
+                        } elseif ($index === 3) {
+                            $classes = 'col-span-2 row-span-1 aspect-[2/1] max-lg:col-span-2 max-lg:row-span-1 max-sm:col-span-1 max-sm:aspect-[4/5]';
+                        } else {
+                            $classes = 'col-span-1 row-span-1 aspect-square max-lg:col-span-1 max-lg:row-span-1 max-sm:col-span-1 max-sm:aspect-[4/5]';
+                        }
+                    @endphp
+                    
+                    <a href="{{ $slide['link'] ?? '#' }}" class="group relative block overflow-hidden rounded-xl bg-gray-100 {{ $classes }}">
+                        <img 
+                            src="{{ asset($slide['image']) }}" 
+                            alt="{{ $slide['title'] ?? 'Lifestyle image' }}"
+                            class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                            loading="lazy"
+                        >
+                        <div class="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/20"></div>
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                            <span class="rounded-full bg-white/90 px-6 py-2 text-xs font-bold uppercase tracking-wider text-fashion-navy shadow-lg backdrop-blur-sm">Shop Now</span>
+                        </div>
+                    </a>
                 @endforeach
             </div>
         </section>
