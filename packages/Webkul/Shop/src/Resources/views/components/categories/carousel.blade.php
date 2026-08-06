@@ -33,13 +33,7 @@
                             :aria-label="category.name"
                         >
                             <x-shop::media.images.lazy
-                                ::src="category.logo?.small_image_url || fallback"
-                                ::srcset="`
-                                    ${(category.logo?.small_image_url || fallback)} 60w,
-                                    ${(category.logo?.medium_image_url || fallback)} 110w,
-                                    ${(category.logo?.large_image_url || fallback)} 300w
-                                `"
-                                sizes="(max-width: 640px) 90px, (max-width: 768px) 120px, 150px"
+                                ::src="category.logo?.original_image_url || category.logo?.large_image_url || fallback"
                                 width="150"
                                 height="150"
                                 class="w-full h-full object-cover rounded-full transform group-hover:scale-110 transition-transform duration-500"
