@@ -241,6 +241,17 @@ class ProductDataGrid extends DataGrid
                 },
             ]);
         }
+
+        if (bouncer()->hasPermission('catalog.products.delete')) {
+            $this->addAction([
+                'icon' => 'icon-delete',
+                'title' => trans('admin::app.catalog.products.index.datagrid.delete'),
+                'method' => 'DELETE',
+                'url' => function ($row) {
+                    return route('admin.catalog.products.delete', $row->product_id);
+                },
+            ]);
+        }
     }
 
     /**
