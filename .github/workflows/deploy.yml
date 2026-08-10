@@ -13,6 +13,7 @@ jobs:
       SERVER_IP: "72.61.142.238"
       SERVER_USER: "root"
       TARGET_DIR: "/home/pbmagency.id/laravel-sub4"
+      TARGET_DIR_PUBLIC: '/home/pbmagency.id/laravel-sub4/public'
 
     steps:
       - name: Checkout Code
