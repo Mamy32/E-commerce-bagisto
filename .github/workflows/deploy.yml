@@ -72,6 +72,13 @@ jobs:
           script: |
             cd ${{ env.TARGET_DIR }}
             
+            # Ensure required directories exist (since we excluded them in rsync)
+            mkdir -p bootstrap/cache
+            mkdir -p storage/framework/sessions
+            mkdir -p storage/framework/views
+            mkdir -p storage/framework/cache
+            mkdir -p storage/logs
+            
             # Create the storage symlink (the standard Laravel way)
             php artisan storage:link
             
