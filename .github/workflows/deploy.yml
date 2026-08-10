@@ -13,7 +13,7 @@ jobs:
       SERVER_IP: "72.61.142.238"
       SERVER_USER: "root"
       TARGET_DIR: "/home/pbmagency.id/laravel-sub4"
-      TARGET_DIR_PUBLIC: '/home/pbmagency.id/laravel-sub4/public'
+      
 
     steps:
       - name: Checkout Code
@@ -66,7 +66,7 @@ jobs:
       # ---------------------------------------------------------
       - name: Sync Storage Public Assets
         run: |
-          rsync -avz \
+          rsync -avz --rsync-path="mkdir -p ${{ env.TARGET_DIR }}/storage/app/public && rsync" \
           ./storage/app/public/ ${{ env.SERVER_USER }}@${{ env.SERVER_IP }}:${{ env.TARGET_DIR }}/storage/app/public
 
       # ---------------------------------------------------------
@@ -81,18 +81,14 @@ jobs:
           script: |
             cd ${{ env.TARGET_DIR }}
             
-            # Remove the broken local absolute symlink that rsync copied
-            rm -rf public/storage
-            
             # Ensure required directories exist (since we excluded them in rsync)
             mkdir -p bootstrap/cache
-            mkdir -p storage/app/public
             mkdir -p storage/framework/sessions
             mkdir -p storage/framework/views
             mkdir -p storage/framework/cache
             mkdir -p storage/logs
             
-            # Create the storage symlink properly for the live server
+            # Create the storage symlink (the standard Laravel way)
             php artisan storage:link
             
             # Laravel Optimization & Migrations
