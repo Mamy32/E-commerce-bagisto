@@ -1,0 +1,90 @@
+name: Deploy Laravel (Single Folder)
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      SERVER_IP: "72.61.142.238"
+      SERVER_USER: "root"
+      TARGET_DIR: "/home/pbmagency.id/laravel-sub4"
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2" 
+
+      - name: Install Composer Dependencies
+        run: |
+          composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install NPM & Build Bagisto Assets
+        run: |
+          npm install
+          npm run build
+
+      - name: Setup SSH Key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Add Server to Known Hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ env.SERVER_IP }} >> ~/.ssh/known_hosts
+
+      # ---------------------------------------------------------
+      # SYNC: Upload everything directly to the Laravel folder
+      # ---------------------------------------------------------
+      - name: Sync Project to Server
+        run: |
+          rsync -avz --delete \
+          --exclude='.env' \
+          --exclude='/storage/' \
+          --exclude='/bootstrap/cache/' \
+          --exclude='/.git/' \
+          --exclude='/node_modules/' \
+          ./ ${{ env.SERVER_USER }}@${{ env.SERVER_IP }}:${{ env.TARGET_DIR }}
+
+      # ---------------------------------------------------------
+      # POST-DEPLOYMENT
+      # ---------------------------------------------------------
+      - name: Run Artisan & Set Permissions
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ env.SERVER_IP }}
+          username: ${{ env.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ${{ env.TARGET_DIR }}
+            
+            # Create the storage symlink (the standard Laravel way)
+            php artisan storage:link
+            
+            # Laravel Optimization & Migrations
+            php artisan optimize:clear
+            php artisan migrate --force
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+
+            # Set Ownership (Make sure pbmag2242 is the correct CyberPanel user)
+            chown -R pbmag2242:pbmag2242 ${{ env.TARGET_DIR }}
+            
+            # Set Proper Permissions (Crucial for Laravel)
+            chmod -R 775 ${{ env.TARGET_DIR }}/storage
+            chmod -R 775 ${{ env.TARGET_DIR }}/bootstrap/cache
