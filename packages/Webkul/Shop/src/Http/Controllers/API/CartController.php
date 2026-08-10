@@ -65,6 +65,13 @@ class CartController extends APIController
         $product = $this->productRepository->with('parent')->findOrFail(request()->input('product_id'));
 
         try {
+            if (! auth()->guard('customer')->check()) {
+                return response()->json([
+                    'redirect_uri' => route('shop.customer.session.index'),
+                    'message'      => 'Please login to add products to your cart.',
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
             if (! $product->status) {
                 throw new \Exception(trans('shop::app.checkout.cart.inactive-add'));
             }

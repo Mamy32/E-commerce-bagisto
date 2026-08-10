@@ -1,12 +1,26 @@
 @php
     $channel = core()->getCurrentChannel();
     $hasImageCarousel = $customizations->contains('type', \Webkul\Theme\Models\ThemeCustomization::IMAGE_CAROUSEL);
+    
+    $heroCustomization = $customizations->firstWhere('type', \Webkul\Theme\Models\ThemeCustomization::IMAGE_CAROUSEL);
+    $heroImages = $heroCustomization ? ($heroCustomization->options['images'] ?? []) : [];
+    $heroSlide = $heroImages[0] ?? null;
+    
+    // If the admin uploads an image, we use it. Otherwise fallback to our cinematic image.
+    $heroImage = $heroSlide && !empty($heroSlide['image']) ? asset($heroSlide['image']) : asset('storage/theme/hero-cinematic.jpg');
+    
+    // Use the title from admin if provided, otherwise fallback to default
+    $heroTitle = $heroSlide && !empty($heroSlide['title']) ? $heroSlide['title'] : 'The Fall/Winter<br><em class="not-italic text-fashion-accent">Collection</em>';
+    
+    // Use the link from admin if provided
+    $heroLink = $heroSlide && !empty($heroSlide['link']) ? $heroSlide['link'] : route('shop.home.index') . '#collections';
 @endphp
 
 @push('meta')
     <meta name="title" content="{{ $channel->home_seo['meta_title'] ?? '' }}" />
     <meta name="description" content="{{ $channel->home_seo['meta_description'] ?? '' }}" />
     <meta name="keywords" content="{{ $channel->home_seo['meta_keywords'] ?? '' }}" />
+    <link rel="preload" as="image" href="{{ $heroImage }}">
 @endPush
 
 @push('scripts')
@@ -23,23 +37,8 @@
         {{ $channel->home_seo['meta_title'] ?? config('app.name') }}
     </x-slot>
 
-    @php
-        $heroCustomization = $customizations->firstWhere('type', \Webkul\Theme\Models\ThemeCustomization::IMAGE_CAROUSEL);
-        $heroImages = $heroCustomization ? ($heroCustomization->options['images'] ?? []) : [];
-        $heroSlide = $heroImages[0] ?? null;
-        
-        // If the admin uploads an image, we use it. Otherwise fallback to our cinematic image.
-        $heroImage = $heroSlide && !empty($heroSlide['image']) ? asset($heroSlide['image']) : asset('storage/theme/hero-cinematic.jpg');
-        
-        // Use the title from admin if provided, otherwise fallback to default
-        $heroTitle = $heroSlide && !empty($heroSlide['title']) ? $heroSlide['title'] : 'The Fall/Winter<br><em class="not-italic text-fashion-accent">Collection</em>';
-        
-        // Use the link from admin if provided
-        $heroLink = $heroSlide && !empty($heroSlide['link']) ? $heroSlide['link'] : route('shop.home.index') . '#collections';
-    @endphp
-
     <section
-        class="relative flex h-[100vh] max-md:h-[80vh] min-h-[600px] max-md:min-h-[400px] w-full items-center justify-start overflow-hidden bg-cover bg-center bg-no-repeat"
+        class="relative flex h-[100vh] max-md:h-[80vh] min-h-[600px] max-md:min-h-[400px] w-full items-center justify-start overflow-hidden bg-[#1a1a1a] bg-cover bg-center bg-no-repeat"
         style="background-image: url('{{ $heroImage }}');"
         aria-label="Homepage hero"
     >
