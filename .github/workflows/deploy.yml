@@ -61,6 +61,14 @@ jobs:
           ./ ${{ env.SERVER_USER }}@${{ env.SERVER_IP }}:${{ env.TARGET_DIR }}
 
       # ---------------------------------------------------------
+      # SYNC: Upload storage/app/public (images, product photos)
+      # ---------------------------------------------------------
+      - name: Sync Storage Public Assets
+        run: |
+          rsync -avz \
+          ./storage/app/public/ ${{ env.SERVER_USER }}@${{ env.SERVER_IP }}:${{ env.TARGET_DIR }}/storage/app/public
+
+      # ---------------------------------------------------------
       # POST-DEPLOYMENT
       # ---------------------------------------------------------
       - name: Run Artisan & Set Permissions
