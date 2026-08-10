@@ -80,14 +80,18 @@ jobs:
           script: |
             cd ${{ env.TARGET_DIR }}
             
+            # Remove the broken local absolute symlink that rsync copied
+            rm -rf public/storage
+            
             # Ensure required directories exist (since we excluded them in rsync)
             mkdir -p bootstrap/cache
+            mkdir -p storage/app/public
             mkdir -p storage/framework/sessions
             mkdir -p storage/framework/views
             mkdir -p storage/framework/cache
             mkdir -p storage/logs
             
-            # Create the storage symlink (the standard Laravel way)
+            # Create the storage symlink properly for the live server
             php artisan storage:link
             
             # Laravel Optimization & Migrations
