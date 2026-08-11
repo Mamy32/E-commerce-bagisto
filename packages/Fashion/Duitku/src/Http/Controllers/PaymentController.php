@@ -48,8 +48,16 @@ class PaymentController extends Controller
             }
 
             $selectedMethod = session('duitku_selected_method');
+            $selectedMethodName = session('duitku_selected_method_name');
             $paymentUrl = $this->duitkuService->createInvoice($order, $selectedMethod);
-            session()->forget('duitku_selected_method'); // clean up
+            
+            if ($selectedMethodName && $order->payment) {
+                $order->payment->method_title = 'Duitku - ' . $selectedMethodName;
+                $order->payment->save();
+            }
+
+            session()->forget('duitku_selected_method');
+            session()->forget('duitku_selected_method_name');
 
             Cart::deActivateCart();
             session()->flash('order_id', $order->id);
@@ -87,8 +95,14 @@ class PaymentController extends Controller
      */
     public function setMethod(Request $request)
     {
-        $request->validate(['method' => 'required|string']);
-        session(['duitku_selected_method' => $request->method]);
+        $request->validate([
+            'method' => 'required|string',
+            'name' => 'required|string'
+        ]);
+        session([
+            'duitku_selected_method' => $request->method,
+            'duitku_selected_method_name' => $request->name
+        ]);
         return response()->json(['success' => true]);
     }
 

@@ -106,7 +106,7 @@
                                             name="duitku_sub_method" 
                                             :value="dMethod.paymentMethod" 
                                             class="peer hidden"
-                                            @change="storeDuitku(payment, dMethod.paymentMethod)"
+                                            @change="storeDuitku(payment, dMethod.paymentMethod, dMethod.paymentMethodName)"
                                         >
                                         <label 
                                             :for="dMethod.paymentMethod" 
@@ -173,9 +173,12 @@
                             });
                     }
                 },
-                storeDuitku(payment, duitkuMethodCode) {
+                storeDuitku(payment, dMethodCode, dMethodName) {
                     this.$emit('processing', 'review');
-                    this.$axios.post("{{ route('duitku.set_method') }}", { method: duitkuMethodCode })
+                    this.$axios.post("{{ route('duitku.set_method') }}", { 
+                        method: dMethodCode,
+                        name: dMethodName
+                    })
                         .then(() => {
                             this.store(payment, true);
                         })
