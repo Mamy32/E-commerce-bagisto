@@ -10,7 +10,7 @@
     $heroImage = $heroSlide && !empty($heroSlide['image']) ? asset($heroSlide['image']) : asset('storage/theme/hero-cinematic.jpg');
     
     // Use the title from admin if provided, otherwise fallback to default
-    $heroTitle = $heroSlide && !empty($heroSlide['title']) ? $heroSlide['title'] : 'The Fall/Winter<br><em class="not-italic text-fashion-accent">Collection</em>';
+    $heroTitle = $heroSlide && !empty($heroSlide['title']) ? $heroSlide['title'] : __('The Fall/Winter<br><em class="not-italic text-fashion-accent">Collection</em>');
     
     // Use the link from admin if provided
     $heroLink = $heroSlide && !empty($heroSlide['link']) ? $heroSlide['link'] : route('shop.home.index') . '#collections';
@@ -55,7 +55,7 @@
             </h1>
 
             <p class="mt-6 max-w-[500px] text-lg leading-relaxed text-white/80 max-sm:text-base">
-                Discover our curated selection of premium pieces. Designed with intention, tailored to perfection, and built for the modern individual.
+                {{ __('Discover our curated selection of premium pieces. Designed with intention, tailored to perfection, and built for the modern individual.') }}
             </p>
 
             <div class="mt-10 flex flex-wrap gap-4">
@@ -63,14 +63,14 @@
                     href="{{ $heroLink }}"
                     class="rounded-xl bg-fashion-accent px-10 py-4 text-sm font-bold uppercase tracking-wide text-fashion-navy shadow-lg transition-transform hover:scale-105"
                 >
-                    Discover Now
+                    {{ __('Discover Now') }}
                 </a>
                 
                 <a
                     href="{{ route('shop.search.index') }}"
                     class="rounded-xl border border-white/40 px-10 py-4 text-sm font-bold uppercase tracking-wide text-white backdrop-blur-sm transition-colors hover:border-white hover:bg-white/10"
                 >
-                    View All Categories
+                    {{ __('View All Categories') }}
                 </a>
             </div>
         </div>
@@ -147,10 +147,10 @@
         >
             <div class="grid grid-cols-4 gap-6 max-lg:grid-cols-2 max-sm:grid-cols-1">
                 @foreach ([
-                    ['icon' => 'icon-packaging', 'title' => 'Free Shipping',   'body' => 'On all orders over a qualifying amount'],
-                    ['icon' => 'icon-return',    'title' => 'Easy Returns',    'body' => '30-day hassle-free return policy'],
-                    ['icon' => 'icon-security',  'title' => 'Secure Payment',  'body' => 'Your data is protected, always'],
-                    ['icon' => 'icon-support',   'title' => 'Expert Support',  'body' => 'Dedicated team ready to help'],
+                    ['icon' => 'icon-packaging', 'title' => __('Free Shipping'),   'body' => __('On all orders over a qualifying amount')],
+                    ['icon' => 'icon-return',    'title' => __('Easy Returns'),    'body' => __('30-day hassle-free return policy')],
+                    ['icon' => 'icon-security',  'title' => __('Secure Payment'),  'body' => __('Your data is protected, always')],
+                    ['icon' => 'icon-support',   'title' => __('Expert Support'),  'body' => __('Dedicated team ready to help')],
                 ] as $feature)
                     <div class="flex items-start gap-4">
                         <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border border-fashion-border text-2xl text-fashion-navy">
@@ -169,7 +169,7 @@
     @if (count($heroImages) > 1)
         <section class="mx-auto mt-24 mb-16 max-w-[1440px] px-[60px] max-lg:px-8 max-sm:px-4">
             <div class="mb-12 text-center">
-                <h2 class="font-dmserif text-4xl italic text-fashion-navy max-sm:text-3xl">Shop The Look</h2>
+                <h2 class="font-dmserif text-4xl italic text-fashion-navy max-sm:text-3xl">{{ __('Shop The Look') }}</h2>
                 <p class="mt-3 text-sm font-semibold uppercase tracking-[0.2em] text-[#C9A84C]">@JFCFashion</p>
             </div>
             
@@ -195,7 +195,7 @@
                         >
                         <div class="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/20"></div>
                         <div class="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                            <span class="rounded-full bg-white/90 px-6 py-2 text-xs font-bold uppercase tracking-wider text-fashion-navy shadow-lg backdrop-blur-sm">Shop Now</span>
+                            <span class="rounded-full bg-white/90 px-6 py-2 text-xs font-bold uppercase tracking-wider text-fashion-navy shadow-lg backdrop-blur-sm">{{ __('Shop Now') }}</span>
                         </div>
                     </a>
                 @endforeach
