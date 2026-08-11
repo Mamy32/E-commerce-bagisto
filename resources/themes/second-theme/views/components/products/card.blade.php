@@ -122,7 +122,7 @@
 
                 {!! view_render_event('bagisto.shop.components.products.card.name.before') !!}
 
-                <p class="font-medium text-sm uppercase tracking-wide mb-1 text-fashion-navy">
+                <p class="font-medium text-sm uppercase tracking-wide mb-2 text-fashion-navy">
                     @{{ product.name }}
                 </p>
 
@@ -132,7 +132,7 @@
                 {!! view_render_event('bagisto.shop.components.products.card.price.before') !!}
 
                 <div
-                    class="text-fashion-accent font-semibold text-sm"
+                    class="flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-fashion-accent font-semibold text-sm my-3"
                     v-html="product.price_html"
                 >
                 </div>
@@ -140,7 +140,7 @@
                 {!! view_render_event('bagisto.shop.components.products.card.price.after') !!}
 
                 <!-- Product Actions Section -->
-                <div class="action-items flex items-center justify-between opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100 max-md:opacity-100 mt-3">
+                <div class="action-items flex items-center justify-between opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100 max-md:opacity-100 mt-4">
                     @if (core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
                         {!! view_render_event('bagisto.shop.components.products.card.add_to_cart.before') !!}
 
