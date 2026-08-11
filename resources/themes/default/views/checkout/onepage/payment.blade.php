@@ -92,6 +92,31 @@
 
                                 {!! view_render_event('bagisto.shop.checkout.payment-method.after') !!}
 
+                                <!-- Duitku Channels Sub-selection -->
+                                <div v-if="payment.method === 'duitku' && selectedDuitkuMain" class="ml-10 mt-4 flex flex-col gap-3 pb-2 w-full">
+                                    <div v-if="isDuitkuLoading" class="text-sm text-zinc-500 italic">
+                                        Loading available payment methods...
+                                    </div>
+                                    <div v-else v-for="dMethod in duitkuMethods" :key="dMethod.paymentMethod" class="flex items-center gap-3">
+                                        <input 
+                                            type="radio" 
+                                            :id="dMethod.paymentMethod" 
+                                            name="duitku_sub_method" 
+                                            :value="dMethod.paymentMethod" 
+                                            class="peer hidden"
+                                            @change="storeDuitku(payment, dMethod.paymentMethod)"
+                                        >
+                                        <label 
+                                            :for="dMethod.paymentMethod" 
+                                            class="icon-radio-unselect peer-checked:icon-radio-select cursor-pointer text-xl text-navyBlue"
+                                        ></label>
+                                        <label :for="dMethod.paymentMethod" class="cursor-pointer flex items-center gap-3 w-full">
+                                            <img v-if="dMethod.paymentImage" :src="dMethod.paymentImage" class="h-6 object-contain" :alt="dMethod.paymentMethodName">
+                                            <span class="text-sm font-medium text-zinc-800">@{{ dMethod.paymentMethodName }}</span>
+                                        </label>
+                                    </div>
+                                </div>
+
                                 <!-- Todo implement the additionalDetails -->
                                 {{-- \Webkul\Payment\Payment::getAdditionalDetails($payment['method'] --}}
                             </div>
@@ -118,8 +143,46 @@
 
             emits: ['payment-method-selected', 'processing', 'processed'],
 
+            data() {
+                return {
+                    duitkuMethods: [],
+                    isDuitkuLoading: false,
+                    selectedDuitkuMain: false,
+                };
+            },
+
             methods: {
-                store(selectedMethod) {
+                loadDuitku() {
+                    this.selectedDuitkuMain = true;
+                    if (this.duitkuMethods.length === 0) {
+                        this.isDuitkuLoading = true;
+                        this.$axios.get("{{ route('duitku.payment_methods') }}")
+                            .then(res => {
+                                this.duitkuMethods = res.data;
+                                this.isDuitkuLoading = false;
+                            })
+                            .catch(err => {
+                                this.isDuitkuLoading = false;
+                            });
+                    }
+                },
+                storeDuitku(payment, duitkuMethodCode) {
+                    this.$emit('processing', 'review');
+                    this.$axios.post("{{ route('duitku.set_method') }}", { method: duitkuMethodCode })
+                        .then(() => {
+                            this.store(payment, true);
+                        })
+                        .catch(err => {
+                            this.$emit('processing', 'payment');
+                            console.error(err);
+                        });
+                },
+                store(selectedMethod, skipDuitkuCheck = false) {
+                    if (selectedMethod.method === 'duitku' && !skipDuitkuCheck) {
+                        this.loadDuitku();
+                        return;
+                    }
+
                     this.$emit('payment-method-selected', selectedMethod.method);
 
                     this.$emit('processing', 'review');

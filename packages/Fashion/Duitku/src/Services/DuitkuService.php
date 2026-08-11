@@ -38,7 +38,18 @@ class DuitkuService
         );
     }
 
-    public function createInvoice($order)
+    public function getPaymentMethods($amount)
+    {
+        try {
+            $response = Pop::getPaymentMethod((int) round($amount), $this->duitkuConfig);
+            return json_decode($response, true)['paymentFee'] ?? [];
+        } catch (Exception $e) {
+            Log::error('Duitku Get Payment Methods Error: ' . $e->getMessage());
+            return [];
+        }
+    }
+
+    public function createInvoice($order, $selectedMethod = null)
     {
         $params = [
             'paymentAmount' => (int) round($order->grand_total),
@@ -48,6 +59,10 @@ class DuitkuService
             'callbackUrl' => route('duitku.webhook'),
             'returnUrl' => route('duitku.success'),
         ];
+
+        if ($selectedMethod) {
+            $params['paymentMethod'] = $selectedMethod;
+        }
 
         Log::info('Duitku Request', $params);
 

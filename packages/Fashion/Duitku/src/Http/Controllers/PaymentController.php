@@ -47,7 +47,9 @@ class PaymentController extends Controller
                 $order = $this->orderRepository->create($data);
             }
 
-            $paymentUrl = $this->duitkuService->createInvoice($order);
+            $selectedMethod = session('duitku_selected_method');
+            $paymentUrl = $this->duitkuService->createInvoice($order, $selectedMethod);
+            session()->forget('duitku_selected_method'); // clean up
 
             Cart::deActivateCart();
             session()->flash('order_id', $order->id);
@@ -57,6 +59,37 @@ class PaymentController extends Controller
             session()->flash('error', $e->getMessage());
             return redirect()->route('shop.checkout.cart.index');
         }
+    }
+
+    /**
+     * Get available payment methods from Duitku.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getPaymentMethods()
+    {
+        $cart = Cart::getCart();
+        $amount = $cart ? $cart->grand_total : 0;
+        
+        try {
+            $methods = $this->duitkuService->getPaymentMethods($amount);
+            return response()->json($methods, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Set the selected Duitku payment method in session.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function setMethod(Request $request)
+    {
+        $request->validate(['method' => 'required|string']);
+        session(['duitku_selected_method' => $request->method]);
+        return response()->json(['success' => true]);
     }
 
     /**

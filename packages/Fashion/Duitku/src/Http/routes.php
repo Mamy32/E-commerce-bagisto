@@ -6,6 +6,10 @@ use Fashion\Duitku\Http\Controllers\PaymentController;
 Route::group(['middleware' => ['web']], function () {
     Route::get('/duitku/redirect', [PaymentController::class, 'redirect'])->name('duitku.redirect');
     Route::get('/duitku/success', [PaymentController::class, 'success'])->name('duitku.success');
+    
+    // API endpoints for Vue checkout component
+    Route::get('/duitku/payment-methods', [PaymentController::class, 'getPaymentMethods'])->name('duitku.payment_methods');
+    Route::post('/duitku/set-method', [PaymentController::class, 'setMethod'])->name('duitku.set_method');
 });
 
 Route::group(['middleware' => ['api']], function () {
