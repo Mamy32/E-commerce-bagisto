@@ -115,7 +115,7 @@
 
                 {!! view_render_event('bagisto.shop.components.products.card.name.before') !!}
 
-                <p class="font-medium text-sm uppercase tracking-wide mb-1 text-fashion-navy" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 40px;" :title="product.name">
+                <p class="font-medium text-sm uppercase tracking-wide mb-2 text-fashion-navy" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 40px;" :title="product.name">
                     @{{ product.name }}
                 </p>
 
@@ -126,8 +126,7 @@
                     {!! view_render_event('bagisto.shop.components.products.card.price.before') !!}
 
                     <div
-                        class="text-fashion-navy font-semibold text-sm"
-                        style="height: 20px;"
+                        class="flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-fashion-navy font-semibold text-sm my-3"
                         v-html="product.price_html"
                     >
                     </div>
@@ -135,7 +134,7 @@
                     {!! view_render_event('bagisto.shop.components.products.card.price.after') !!}
 
                     <!-- Product Actions Section -->
-                    <div class="action-items flex items-center justify-between opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100 max-md:opacity-100 mt-3">
+                    <div class="action-items flex items-center justify-between opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100 max-md:opacity-100 mt-4">
                         @if (core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
                             {!! view_render_event('bagisto.shop.components.products.card.add_to_cart.before') !!}
 
