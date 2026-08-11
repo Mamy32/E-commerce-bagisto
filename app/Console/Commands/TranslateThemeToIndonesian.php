@@ -39,6 +39,9 @@ class TranslateThemeToIndonesian extends Command
             'No cost EMI available on all major credit cards' => 'Cicilan tanpa biaya tersedia untuk semua kartu kredit',
             '24/7 Support' => 'Dukungan 24/7',
             'Dedicated 24/7 support via chat and email' => 'Dukungan khusus 24/7 via chat dan email',
+            'Get Ready for our new Bold Collections!' => 'Bersiaplah untuk Koleksi Bold baru kami!',
+            'Introducing Our New Bold Collections! Elevate your style with daring designs and vibrant statements. Explore striking patterns and bold colors that redefine your wardrobe. Get ready to embrace the extraordinary!' => 'Memperkenalkan Koleksi Bold Baru Kami! Tingkatkan gaya Anda dengan desain berani dan pernyataan cerah. Jelajahi pola mencolok dan warna berani yang mendefinisikan ulang lemari pakaian Anda. Bersiaplah untuk menyambut hal luar biasa!',
+            'View Collections' => 'LIHAT KOLEKSI',
             'Unleash Your Boldness with Our New Collection!' => 'Bebaskan Keberanian Anda dengan Koleksi Baru Kami!',
             'Our Bold Collections are here to redefine your wardrobe with fearless designs and striking, vibrant colors. From daring patterns to powerful hues, this is your chance to break away from the ordinary and step into the extraordinary.' => 'Koleksi Bold kami hadir untuk mendefinisikan ulang lemari pakaian Anda dengan desain yang berani dan warna yang mencolok. Dari pola berani hingga warna kuat, inilah kesempatan Anda untuk melepaskan diri dari hal biasa dan melangkah ke hal yang luar biasa.',
             'VIEW COLLECTIONS' => 'LIHAT KOLEKSI',
@@ -50,8 +53,17 @@ class TranslateThemeToIndonesian extends Command
             'Curated Essentials' => 'Kebutuhan Esensial Terkurasi',
             'Explore our latest pieces, crafted with uncompromising attention to detail and designed for the modern lifestyle.' => 'Jelajahi koleksi terbaru kami, dibuat dengan perhatian ekstra pada detail dan dirancang untuk gaya hidup modern.',
             'ELECTRONIC' => 'ELEKTRONIK',
+            'Electronic' => 'Elektronik',
             'MEN' => 'PRIA',
+            'Men' => 'Pria',
             'WOMEN' => 'WANITA',
+            'Women' => 'Wanita',
+            'FORMALWEAR MAN' => 'PAKAIAN FORMAL PRIA',
+            'Formalwear Man' => 'Pakaian Formal Pria',
+            'FORMALWEAR WOMAN' => 'PAKAIAN FORMAL WANITA',
+            'Formalwear Woman' => 'Pakaian Formal Wanita',
+            'WELLNESS' => 'KESEHATAN',
+            'Wellness' => 'Kesehatan',
         ];
 
         foreach ($translations as $translation) {
