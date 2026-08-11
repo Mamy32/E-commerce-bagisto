@@ -58,7 +58,7 @@
             </div>
 
             {{-- Footer link columns --}}
-            <div class="flex flex-1 flex-wrap justify-between gap-8 max-1060:justify-start max-sm:hidden">
+            <div class="flex flex-1 flex-wrap justify-evenly gap-8 max-1060:justify-start max-sm:hidden">
                 @if ($footerLinksCustomization?->options)
                     @foreach ($footerLinksCustomization->options as $footerLinkSection)
                         @php
