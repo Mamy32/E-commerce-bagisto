@@ -64,12 +64,22 @@ class TranslateThemeToIndonesian extends Command
             'Formalwear Woman' => 'Pakaian Formal Wanita',
             'WELLNESS' => 'KESEHATAN',
             'Wellness' => 'Kesehatan',
+            // Fixups for previously mangled strings
+            'Easy Penggantian Produkment Available!' => 'Tersedia Penggantian Produk Mudah!',
+            'Dedicated Dukungan 24/7 support via chat and email' => 'Dukungan khusus 24/7 via chat dan email',
         ];
+
+        // Sort by key length descending to prevent substring mangling
+        uksort($replacements, function ($a, $b) {
+            return strlen($b) - strlen($a);
+        });
 
         foreach ($translations as $translation) {
             $options = $translation->options;
 
             foreach ($replacements as $en => $id) {
+                // Since this might have been partially mangled in a previous run,
+                // we should also add fixups for the mangled versions just in case.
                 $options = str_replace($en, $id, $options);
             }
 
