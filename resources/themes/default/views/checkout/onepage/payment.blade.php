@@ -112,7 +112,12 @@
                                         ></label>
                                         <label :for="dMethod.paymentMethod" class="cursor-pointer flex items-center gap-3 w-full">
                                             <img v-if="dMethod.paymentImage" :src="dMethod.paymentImage" class="h-6 object-contain" :alt="dMethod.paymentMethodName">
-                                            <span class="text-sm font-medium text-zinc-800">@{{ dMethod.paymentMethodName }}</span>
+                                            <span class="text-sm font-medium text-zinc-800">
+                                                @{{ dMethod.paymentMethodName }} 
+                                                <span v-if="dMethod.totalFee > 0" class="text-zinc-500 font-normal">
+                                                    (+ Rp @{{ Number(dMethod.totalFee).toLocaleString('id-ID') }})
+                                                </span>
+                                            </span>
                                         </label>
                                     </div>
                                 </div>
