@@ -231,11 +231,9 @@
                         >
                             @lang('shop::app.customers.signup-form.button-title')
                         </button>
-
-                        <div class="flex flex-wrap gap-4">
-                            {!! view_render_event('bagisto.shop.customers.login_form_controls.after') !!}
-                        </div>
                     </div>
+
+                    {!! view_render_event('bagisto.shop.customers.login_form_controls.after') !!}
 
                     {!! view_render_event('bagisto.shop.customers.signup_form_controls.after') !!}
 
