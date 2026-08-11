@@ -20,10 +20,10 @@
 
     <div class="px-[60px] py-14 max-1060:flex-col max-md:px-8 max-sm:px-4 max-sm:py-8">
 
-        <div class="grid grid-cols-3 w-full max-1060:grid-cols-1 max-lg:gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 w-full gap-10 lg:gap-8">
 
             {{-- Brand column --}}
-            <div class="flex max-w-[280px] flex-col gap-5 max-1060:max-w-full max-1060:flex-row max-1060:flex-wrap max-1060:items-start max-sm:flex-col">
+            <div class="flex flex-col gap-5 w-full lg:max-w-[280px]">
 
                 <a
                     href="{{ route('shop.home.index') }}"
@@ -38,7 +38,7 @@
                     >
                 </a>
 
-                <p class="max-w-[220px] text-sm leading-relaxed text-fashion-muted max-1060:max-w-full">
+                <p class="w-full text-sm leading-relaxed text-fashion-muted lg:max-w-[220px]">
                     @lang('shop::app.components.layouts.footer.subscribe-stay-touch')
                 </p>
 
@@ -64,11 +64,11 @@
                         usort($footerLinkSection, fn ($a, $b) => $a['sort_order'] - $b['sort_order']);
                     @endphp
 
-                    <div class="flex w-full @if($loop->first) justify-center @else justify-end @endif max-1060:justify-start max-sm:hidden">
+                    <div class="flex w-full justify-start @if($loop->first) lg:justify-center @else lg:justify-end @endif">
                         <ul class="grid gap-3">
                             @foreach ($footerLinkSection as $index => $link)
                                 @if ($index === 0)
-                                    <li class="mb-1">
+                                    <li class="mb-2 lg:mb-1">
                                         <span class="text-xs font-semibold uppercase tracking-[0.12em] text-fashion-navy">
                                             {{ $link['title'] }}
                                         </span>
@@ -85,9 +85,9 @@
                     </div>
                 @endforeach
             @else
-                <div class="flex w-full justify-center max-1060:justify-start max-sm:hidden">
+                <div class="flex w-full justify-start lg:justify-center">
                     <ul class="grid gap-3">
-                        <li class="mb-1">
+                        <li class="mb-2 lg:mb-1">
                             <span class="text-xs font-semibold uppercase tracking-[0.12em] text-fashion-navy">
                                 @lang('shop::app.components.layouts.footer.footer-content')
                             </span>
@@ -100,32 +100,6 @@
                     </ul>
                 </div>
             @endif
-
-            {{-- Mobile accordion --}}
-            <x-shop::accordion
-                :is-active="false"
-                class="hidden !w-full rounded-xl !border !border-fashion-border sm:hidden max-sm:block"
-            >
-                <x-slot:header class="rounded-t-xl bg-fashion-surface px-4 py-3 text-sm font-semibold text-fashion-navy">
-                    @lang('shop::app.components.layouts.footer.footer-content')
-                </x-slot>
-
-                <x-slot:content class="flex flex-wrap justify-between gap-6 !bg-transparent !p-4">
-                    @if ($footerLinksCustomization?->options)
-                        @foreach ($footerLinksCustomization->options as $footerLinkSection)
-                            <ul class="grid gap-3">
-                                @foreach ($footerLinkSection as $link)
-                                    <li>
-                                        <a href="{{ $link['url'] }}" class="text-sm text-fashion-muted hover:text-fashion-navy">
-                                            {{ $link['title'] }}
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        @endforeach
-                    @endif
-                </x-slot>
-            </x-shop::accordion>
 
             {{-- Newsletter --}}
             {!! view_render_event('bagisto.shop.layout.footer.newsletter_subscription.before') !!}
