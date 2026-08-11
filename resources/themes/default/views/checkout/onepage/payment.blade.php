@@ -106,16 +106,16 @@
                                             name="duitku_sub_method" 
                                             :value="dMethod.paymentMethod" 
                                             class="peer hidden"
-                                            @change="storeDuitku(payment, dMethod.paymentMethod, dMethod.paymentMethodName)"
+                                            @change="storeDuitku(payment, dMethod.paymentMethod, dMethod.paymentName)"
                                         >
                                         <label 
                                             :for="dMethod.paymentMethod" 
                                             class="icon-radio-unselect peer-checked:icon-radio-select cursor-pointer text-xl text-navyBlue"
                                         ></label>
                                         <label :for="dMethod.paymentMethod" class="cursor-pointer flex items-center gap-3 w-full">
-                                            <img v-if="dMethod.paymentImage" :src="dMethod.paymentImage" class="h-6 object-contain" :alt="dMethod.paymentMethodName">
+                                            <img v-if="dMethod.paymentImage" :src="dMethod.paymentImage" class="h-6 object-contain" :alt="dMethod.paymentName">
                                             <span class="text-sm font-medium text-zinc-800">
-                                                @{{ dMethod.paymentMethodName }} 
+                                                @{{ dMethod.paymentName }} 
                                                 <span v-if="dMethod.totalFee > 0" class="text-zinc-500 font-normal">
                                                     (+ Rp @{{ Number(dMethod.totalFee).toLocaleString('id-ID') }})
                                                 </span>
