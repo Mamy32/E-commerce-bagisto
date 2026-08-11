@@ -41,3 +41,9 @@ Route::get('/fix-css-all', function () {
     
     return "CSS updated for ALL languages! Cache cleared. Please check your website on mobile now.";
 });
+
+Route::get('/run-theme-translation', function () {
+    \Illuminate\Support\Facades\Artisan::call('theme:translate-id');
+    \Illuminate\Support\Facades\Cache::flush();
+    return "Theme Customizations translated to Indonesian! Cache has been cleared. You can now check the homepage in Indonesian.";
+});
