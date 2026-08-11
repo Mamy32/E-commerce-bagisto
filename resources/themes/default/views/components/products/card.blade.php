@@ -115,7 +115,7 @@
 
                 {!! view_render_event('bagisto.shop.components.products.card.name.before') !!}
 
-                <p class="font-medium text-sm uppercase tracking-wide mb-1 text-fashion-navy line-clamp-2" :title="product.name">
+                <p class="font-medium text-sm uppercase tracking-wide mb-1 text-fashion-navy" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 40px;" :title="product.name">
                     @{{ product.name }}
                 </p>
 
@@ -127,6 +127,7 @@
 
                     <div
                         class="text-fashion-navy font-semibold text-sm"
+                        style="height: 20px;"
                         v-html="product.price_html"
                     >
                     </div>
