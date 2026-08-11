@@ -20,7 +20,7 @@
 
     <div class="px-[60px] py-14 max-1060:flex-col max-md:px-8 max-sm:px-4 max-sm:py-8">
 
-        <div class="flex justify-between w-full max-1060:flex-col max-lg:gap-8">
+        <div class="grid grid-cols-3 w-full max-1060:grid-cols-1 max-lg:gap-8">
 
             {{-- Brand column --}}
             <div class="flex max-w-[280px] flex-col gap-5 max-1060:max-w-full max-1060:flex-row max-1060:flex-wrap max-1060:items-start max-sm:flex-col">
@@ -58,50 +58,48 @@
             </div>
 
             {{-- Footer link columns --}}
-            <div class="flex w-2/3 justify-between max-1060:w-full max-1060:justify-start max-sm:hidden">
-                @if ($footerLinksCustomization?->options)
-                    @foreach ($footerLinksCustomization->options as $footerLinkSection)
-                        @php
-                            usort($footerLinkSection, fn ($a, $b) => $a['sort_order'] - $b['sort_order']);
-                        @endphp
+            @if ($footerLinksCustomization?->options)
+                @foreach ($footerLinksCustomization->options as $footerLinkSection)
+                    @php
+                        usort($footerLinkSection, fn ($a, $b) => $a['sort_order'] - $b['sort_order']);
+                    @endphp
 
-                        <div class="flex w-1/2 @if($loop->first) justify-center @else justify-end @endif max-1060:justify-start max-1060:w-auto max-1060:mr-8">
-                            <ul class="grid gap-3">
-                                @foreach ($footerLinkSection as $index => $link)
-                                    @if ($index === 0)
-                                        <li class="mb-1">
-                                            <span class="text-xs font-semibold uppercase tracking-[0.12em] text-fashion-navy">
-                                                {{ $link['title'] }}
-                                            </span>
-                                        </li>
-                                    @else
-                                        <li>
-                                            <a href="{{ $link['url'] }}" class="text-sm text-fashion-muted transition-colors hover:text-fashion-navy">
-                                                {{ $link['title'] }}
-                                            </a>
-                                        </li>
-                                    @endif
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endforeach
-                @else
-                    <div class="flex w-1/2 justify-center max-1060:justify-start max-1060:w-auto">
+                    <div class="flex w-full @if($loop->first) justify-center @else justify-end @endif max-1060:justify-start max-sm:hidden">
                         <ul class="grid gap-3">
-                            <li class="mb-1">
-                                <span class="text-xs font-semibold uppercase tracking-[0.12em] text-fashion-navy">
-                                    @lang('shop::app.components.layouts.footer.footer-content')
-                                </span>
-                            </li>
-                            <li>
-                                <a href="{{ route('shop.home.contact_us') }}" class="text-sm text-fashion-muted hover:text-fashion-navy">
-                                    @lang('shop::app.components.layouts.footer.contact-us')
-                                </a>
-                            </li>
+                            @foreach ($footerLinkSection as $index => $link)
+                                @if ($index === 0)
+                                    <li class="mb-1">
+                                        <span class="text-xs font-semibold uppercase tracking-[0.12em] text-fashion-navy">
+                                            {{ $link['title'] }}
+                                        </span>
+                                    </li>
+                                @else
+                                    <li>
+                                        <a href="{{ $link['url'] }}" class="text-sm text-fashion-muted transition-colors hover:text-fashion-navy">
+                                            {{ $link['title'] }}
+                                        </a>
+                                    </li>
+                                @endif
+                            @endforeach
                         </ul>
                     </div>
-                @endif
-            </div>
+                @endforeach
+            @else
+                <div class="flex w-full justify-center max-1060:justify-start max-sm:hidden">
+                    <ul class="grid gap-3">
+                        <li class="mb-1">
+                            <span class="text-xs font-semibold uppercase tracking-[0.12em] text-fashion-navy">
+                                @lang('shop::app.components.layouts.footer.footer-content')
+                            </span>
+                        </li>
+                        <li>
+                            <a href="{{ route('shop.home.contact_us') }}" class="text-sm text-fashion-muted hover:text-fashion-navy">
+                                @lang('shop::app.components.layouts.footer.contact-us')
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            @endif
 
             {{-- Mobile accordion --}}
             <x-shop::accordion
