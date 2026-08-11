@@ -40,60 +40,62 @@
                     <x-slot:content class="mt-8 !p-0 max-md:mt-0 max-md:rounded-t-none max-md:border max-md:border-t-0 max-md:!p-4">
                         <div class="flex flex-col gap-4">
                             <div 
-                                class="relative cursor-pointer select-none flex items-center gap-4"
+                                class="relative cursor-pointer select-none flex flex-col gap-2"
                                 v-for="(payment, index) in methods"
                             >
-                                {!! view_render_event('bagisto.shop.checkout.payment-method.before') !!}
+                                <div class="flex items-center gap-4">
+                                    {!! view_render_event('bagisto.shop.checkout.payment-method.before') !!}
 
-                                <div class="mt-1">
-                                    <input 
-                                        type="radio" 
-                                        name="payment[method]" 
-                                        :value="payment.payment"
-                                        :id="payment.method"
-                                        class="peer hidden"
-                                        @change="store(payment)"
-                                    >
-        
+                                    <div class="mt-1">
+                                        <input 
+                                            type="radio" 
+                                            name="payment[method]" 
+                                            :value="payment.payment"
+                                            :id="payment.method"
+                                            class="peer hidden"
+                                            @change="payment.method === 'duitku' ? loadDuitku() : store(payment)"
+                                        >
+            
+                                        <label 
+                                            :for="payment.method" 
+                                            class="icon-radio-unselect peer-checked:icon-radio-select cursor-pointer text-2xl text-navyBlue"
+                                        >
+                                        </label>
+                                    </div>
+
                                     <label 
                                         :for="payment.method" 
-                                        class="icon-radio-unselect peer-checked:icon-radio-select cursor-pointer text-2xl text-navyBlue"
+                                        class="cursor-pointer flex items-center gap-4"
                                     >
+                                        {!! view_render_event('bagisto.shop.checkout.onepage.payment-method.image.before') !!}
+
+                                        {!! view_render_event('bagisto.shop.checkout.onepage.payment-method.image.after') !!}
+
+                                        <div>
+                                            {!! view_render_event('bagisto.shop.checkout.onepage.payment-method.title.before') !!}
+
+                                            <p class="text-base font-semibold text-zinc-900">
+                                                @{{ payment.method_title }}
+                                            </p>
+                                            
+                                            {!! view_render_event('bagisto.shop.checkout.onepage.payment-method.title.after') !!}
+
+                                            {!! view_render_event('bagisto.shop.checkout.onepage.payment-method.description.before') !!}
+
+                                            <p class="text-sm font-normal text-zinc-600 mt-1">
+                                                @{{ payment.description }}
+                                            </p> 
+
+                                            {!! view_render_event('bagisto.shop.checkout.onepage.payment-method.description.after') !!}
+        
+                                        </div>
                                     </label>
+
+                                    {!! view_render_event('bagisto.shop.checkout.payment-method.after') !!}
                                 </div>
 
-                                <label 
-                                    :for="payment.method" 
-                                    class="cursor-pointer flex items-center gap-4"
-                                >
-                                    {!! view_render_event('bagisto.shop.checkout.onepage.payment-method.image.before') !!}
-
-                                    {!! view_render_event('bagisto.shop.checkout.onepage.payment-method.image.after') !!}
-
-                                    <div>
-                                        {!! view_render_event('bagisto.shop.checkout.onepage.payment-method.title.before') !!}
-
-                                        <p class="text-base font-semibold text-zinc-900">
-                                            @{{ payment.method_title }}
-                                        </p>
-                                        
-                                        {!! view_render_event('bagisto.shop.checkout.onepage.payment-method.title.after') !!}
-
-                                        {!! view_render_event('bagisto.shop.checkout.onepage.payment-method.description.before') !!}
-
-                                        <p class="text-sm font-normal text-zinc-600 mt-1">
-                                            @{{ payment.description }}
-                                        </p> 
-
-                                        {!! view_render_event('bagisto.shop.checkout.onepage.payment-method.description.after') !!}
-    
-                                    </div>
-                                </label>
-
-                                {!! view_render_event('bagisto.shop.checkout.payment-method.after') !!}
-
                                 <!-- Duitku Channels Sub-selection -->
-                                <div v-if="payment.method === 'duitku' && selectedDuitkuMain" class="ml-10 mt-4 flex flex-col gap-3 pb-2 w-full">
+                                <div v-if="payment.method === 'duitku' && selectedDuitkuMain" class="ml-10 mt-2 flex flex-col gap-3 pb-2 w-full border-l-2 border-gray-100 pl-4">
                                     <div v-if="isDuitkuLoading" class="text-sm text-zinc-500 italic">
                                         Loading available payment methods...
                                     </div>
