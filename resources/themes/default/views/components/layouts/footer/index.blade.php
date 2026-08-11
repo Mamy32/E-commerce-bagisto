@@ -20,7 +20,7 @@
 
     <div class="px-[60px] py-14 max-1060:flex-col max-md:px-8 max-sm:px-4 max-sm:py-8">
 
-        <div class="flex justify-between gap-12 max-1060:flex-col max-lg:gap-8">
+        <div class="flex justify-start gap-[120px] max-1060:flex-col max-lg:gap-8">
 
             {{-- Brand column --}}
             <div class="flex max-w-[280px] flex-col gap-5 max-1060:max-w-full max-1060:flex-row max-1060:flex-wrap max-1060:items-start max-sm:flex-col">
@@ -58,7 +58,7 @@
             </div>
 
             {{-- Footer link columns --}}
-            <div class="flex flex-1 flex-wrap justify-evenly gap-8 max-1060:justify-start max-sm:hidden">
+            <div class="flex flex-wrap justify-start gap-[100px] max-1060:justify-start max-sm:hidden">
                 @if ($footerLinksCustomization?->options)
                     @foreach ($footerLinksCustomization->options as $footerLinkSection)
                         @php
