@@ -125,7 +125,7 @@
                 {!! view_render_event('bagisto.shop.components.products.card.price.before') !!}
 
                 <div
-                    class="text-fashion-accent font-semibold text-sm my-3"
+                    class="flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-fashion-accent font-semibold text-sm my-3"
                     v-html="product.price_html"
                 >
                 </div>
