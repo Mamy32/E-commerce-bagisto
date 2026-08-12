@@ -47,3 +47,24 @@ Route::get('/run-theme-translation', function () {
     \Illuminate\Support\Facades\Cache::flush();
     return "Theme Customizations translated to Indonesian! Cache has been cleared. You can now check the homepage in Indonesian.";
 });
+
+Route::get('/fix-email-settings', function () {
+    // Fix the MAIL_FROM_NAME in .env
+    $envPath = base_path('.env');
+    if (file_exists($envPath)) {
+        $envContent = file_get_contents($envPath);
+        $envContent = preg_replace('/^MAIL_FROM_NAME=.*$/m', 'MAIL_FROM_NAME="Fjc Fashion"', $envContent);
+        // If not exists, append it
+        if (strpos($envContent, 'MAIL_FROM_NAME=') === false) {
+            $envContent .= "\nMAIL_FROM_NAME=\"Fjc Fashion\"";
+        }
+        file_put_contents($envPath, $envContent);
+    }
+    
+    // Clear caches to apply translations and env changes
+    \Illuminate\Support\Facades\Artisan::call('config:clear');
+    \Illuminate\Support\Facades\Artisan::call('cache:clear');
+    \Illuminate\Support\Facades\Artisan::call('view:clear');
+
+    return "Done! The email footer text has been translated to Indonesian, and the Sender Name has been updated to 'Fjc Fashion'.";
+});
