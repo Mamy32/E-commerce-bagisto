@@ -29,25 +29,11 @@
                 <div style="margin-bottom: 65px;">
                     <a href="{{ route('shop.home.index') }}">
                         @php
-                            $emailLogo = core()->getConfigData('emails.configure.email_settings.logo');
-                            $emailLogoPath = $emailLogo ? storage_path('app/public/' . $emailLogo) : null;
                             $channel = core()->getCurrentChannel();
                             $logoPath = $channel->logo ? storage_path('app/public/' . $channel->logo) : null;
                         @endphp
 
-                        @if ($emailLogoPath && file_exists($emailLogoPath) && isset($message))
-                            <img
-                                src="{{ $message->embed($emailLogoPath) }}"
-                                alt="{{ config('app.name') }}"
-                                style="height: 40px; width: auto;"
-                            />
-                        @elseif ($emailLogo)
-                            <img
-                                src="{{ Storage::url($emailLogo) }}"
-                                alt="{{ config('app.name') }}"
-                                style="height: 40px; width: auto;"
-                            />
-                        @elseif ($logoPath && file_exists($logoPath) && isset($message))
+                        @if ($logoPath && file_exists($logoPath) && isset($message))
                             <img
                                 src="{{ $message->embed($logoPath) }}"
                                 alt="{{ config('app.name') }}"
