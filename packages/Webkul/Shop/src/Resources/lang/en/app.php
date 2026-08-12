@@ -226,6 +226,7 @@ return [
                     'page-title' => 'Order #:order_id',
                     'payment-method' => 'Payment Method',
                     'reorder-booking-skipped' => 'Booking products were skipped during reorder. Please book them again with fresh date and time slots.',
+                    'pay-now-btn-title' => 'Pay Now',
                     'reorder-btn-title' => 'Reorder',
                     'shipping-address' => 'Shipping Address',
                     'shipping-method' => 'Shipping Method',

@@ -54,7 +54,7 @@
                         href="{{ route('duitku.pay_now', $order->id) }}"
                         class="primary-button px-5 py-3 font-normal max-md:hidden"
                     >
-                        Bayar Sekarang
+                        @lang('shop::app.customers.account.orders.view.pay-now-btn-title')
                     </a>
                 @endif
 
@@ -521,7 +521,7 @@
                                         href="{{ route('duitku.pay_now', $order->id) }}"
                                         class="mx-auto w-full py-3 text-sm font-medium text-fashion-navy hover:bg-fashion-surface max-sm:py-2"
                                     >
-                                        Bayar Sekarang
+                                        @lang('shop::app.customers.account.orders.view.pay-now-btn-title')
                                     </a>
                                 @endif
 

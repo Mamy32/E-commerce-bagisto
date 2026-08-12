@@ -226,6 +226,7 @@ return [
                     'page-title' => 'Pesanan #:order_id',
                     'payment-method' => 'Metode Pembayaran',
                     'reorder-booking-skipped' => 'Produk pemesanan dilewati saat memesan ulang. Silakan pesan ulang dengan tanggal dan slot waktu baru.',
+                    'pay-now-btn-title' => 'Bayar Sekarang',
                     'reorder-btn-title' => 'Pesan Ulang',
                     'shipping-address' => 'Alamat Pengiriman',
                     'shipping-method' => 'Metode Pengiriman',
