@@ -79,7 +79,7 @@
                 </div>
 
                 <div style="font-size: 16px;font-weight: 400;color: #384860;">
-                    {{ core()->getConfigData('sales.payment_methods.' . $shipment->order->payment->method . '.title') }}
+                    {{ $shipment->order->payment->method_title ?: core()->getConfigData('sales.payment_methods.' . $shipment->order->payment->method . '.title') }}
                 </div>
 
                 @php $additionalDetails = \Webkul\Payment\Payment::getAdditionalDetails($shipment->order->payment->method); @endphp

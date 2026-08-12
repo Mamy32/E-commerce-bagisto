@@ -81,7 +81,7 @@
                 </div>
 
                 <div style="font-size: 16px;font-weight: 400;color: #384860;">
-                    {{ core()->getConfigData('sales.payment_methods.' . $refund->order->payment->method . '.title') }}
+                    {{ $refund->order->payment->method_title ?: core()->getConfigData('sales.payment_methods.' . $refund->order->payment->method . '.title') }}
                 </div>
 
                 @php $additionalDetails = \Webkul\Payment\Payment::getAdditionalDetails($refund->order->payment->method); @endphp
