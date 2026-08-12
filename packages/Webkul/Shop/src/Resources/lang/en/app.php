@@ -1320,7 +1320,7 @@ return [
 
     'emails' => [
         'dear' => 'Dear :customer_name',
-        'thanks' => 'If you need any kind of help please contact us at <a href=":link" style=":style">:email</a>.<br/>Thanks!',
+        'thanks' => 'Jika Anda membutuhkan bantuan, silakan hubungi kami di <a href=":link" style=":style">:email</a>.<br/>Terima kasih!',
 
         'customers' => [
             'registration' => [
