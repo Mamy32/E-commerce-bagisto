@@ -36,6 +36,9 @@ class PaymentController extends Controller
         }
 
         try {
+            $selectedMethod = session('duitku_selected_method');
+            $selectedMethodName = session('duitku_selected_method_name');
+
             // Find the pending order associated with the current cart
             $order = $this->orderRepository->findOneWhere([
                 'cart_id' => $cart->id,
@@ -44,14 +47,15 @@ class PaymentController extends Controller
 
             if (! $order) {
                 $data = (new \Webkul\Sales\Transformers\OrderResource($cart))->jsonSerialize();
+                if ($selectedMethodName) {
+                    $data['payment']['method_title'] = 'Duitku - ' . $selectedMethodName;
+                }
                 $order = $this->orderRepository->create($data);
             }
 
-            $selectedMethod = session('duitku_selected_method');
-            $selectedMethodName = session('duitku_selected_method_name');
             $paymentUrl = $this->duitkuService->createInvoice($order, $selectedMethod);
             
-            if ($selectedMethodName && $order->payment) {
+            if ($selectedMethodName && $order->payment && $order->payment->method_title !== 'Duitku - ' . $selectedMethodName) {
                 $order->payment->method_title = 'Duitku - ' . $selectedMethodName;
                 $order->payment->save();
             }
