@@ -49,6 +49,15 @@
                     </a>
                 @endif
 
+                @if ($order->status === 'pending' && str_starts_with($order->payment->method, 'duitku'))
+                    <a
+                        href="{{ route('duitku.pay_now', $order->id) }}"
+                        class="primary-button px-5 py-3 font-normal max-md:hidden"
+                    >
+                        Bayar Sekarang
+                    </a>
+                @endif
+
                 {!! view_render_event('bagisto.shop.customers.account.orders.reorder_button.after', ['order' => $order]) !!}
 
                 {!! view_render_event('bagisto.shop.customers.account.orders.cancel_button.before', ['order' => $order]) !!}
@@ -501,6 +510,18 @@
                                         class="mx-auto w-full py-3 text-sm font-medium text-fashion-navy hover:bg-fashion-surface max-sm:py-2"
                                     >
                                         @lang('shop::app.customers.account.orders.view.reorder-btn-title')
+                                    </a>
+                                @endif
+
+                                @if ($order->status === 'pending' && str_starts_with($order->payment->method, 'duitku'))
+                                    <!-- Seperator -->
+                                    <span class="my-auto h-5 w-0.5 bg-zinc-200 py-3"></span>
+                                    
+                                    <a
+                                        href="{{ route('duitku.pay_now', $order->id) }}"
+                                        class="mx-auto w-full py-3 text-sm font-medium text-fashion-navy hover:bg-fashion-surface max-sm:py-2"
+                                    >
+                                        Bayar Sekarang
                                     </a>
                                 @endif
 

@@ -139,9 +139,51 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function success()
+    public function success(Request $request)
     {
+        $orderId = $request->query('order_id') ?? session('order_id');
+        
+        if ($orderId) {
+            $order = $this->orderRepository->find($orderId);
+            if ($order && $order->status === 'pending') {
+                return redirect()->route('shop.customers.account.orders.view', $orderId)
+                                 ->with('warning', trans('shop::app.checkout.cart.payment-pending'));
+            }
+            
+            // Re-flash order_id for the success page if payment was completed
+            session()->flash('order_id', $orderId);
+        }
+        
         // Bagisto handles clearing the cart internally via its own success route
         return redirect()->route('shop.checkout.onepage.success');
+    }
+
+    /**
+     * Resume payment for an existing pending order.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function payNow($id)
+    {
+        $order = $this->orderRepository->findOrFail($id);
+
+        if ($order->customer_id !== auth()->guard('customer')->user()->id) {
+            abort(403);
+        }
+
+        if ($order->status !== 'pending') {
+            return redirect()->route('shop.customers.account.orders.view', $id)
+                             ->with('warning', 'Order is no longer pending.');
+        }
+
+        try {
+            // true flag indicates a retry to append a timestamp to the transaction ID
+            $paymentUrl = $this->duitkuService->createInvoice($order, null, true);
+            return redirect($paymentUrl);
+        } catch (\Exception $e) {
+            session()->flash('error', $e->getMessage());
+            return redirect()->route('shop.customers.account.orders.view', $id);
+        }
     }
 }

@@ -49,15 +49,20 @@ class DuitkuService
         }
     }
 
-    public function createInvoice($order, $selectedMethod = null)
+    public function createInvoice($order, $selectedMethod = null, $isRetry = false)
     {
+        $merchantOrderId = $order->increment_id ?? $order->id;
+        if ($isRetry) {
+            $merchantOrderId .= '-' . time();
+        }
+
         $params = [
             'paymentAmount' => (int) round($order->grand_total),
-            'merchantOrderId' => $order->increment_id ?? $order->id,
+            'merchantOrderId' => $merchantOrderId,
             'productDetails' => 'Order #' . ($order->increment_id ?? $order->id),
             'email' => $order->customer_email,
             'callbackUrl' => route('duitku.webhook'),
-            'returnUrl' => route('duitku.success'),
+            'returnUrl' => route('duitku.success', ['order_id' => $order->id]),
         ];
 
         if ($selectedMethod) {
@@ -103,9 +108,11 @@ class DuitkuService
             throw new Exception('Duitku: Invalid signature.');
         }
 
-        $order = $this->orderRepository->findOneWhere(['increment_id' => $merchantOrderId]);
+        $realMerchantOrderId = explode('-', $merchantOrderId)[0];
+
+        $order = $this->orderRepository->findOneWhere(['increment_id' => $realMerchantOrderId]);
         if (!$order) {
-            $order = $this->orderRepository->find($merchantOrderId);
+            $order = $this->orderRepository->find($realMerchantOrderId);
         }
 
         if (!$order) {

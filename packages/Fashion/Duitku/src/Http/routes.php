@@ -10,6 +10,7 @@ Route::group(['middleware' => ['web']], function () {
     // API endpoints for Vue checkout component
     Route::get('/duitku/payment-methods', [PaymentController::class, 'getPaymentMethods'])->name('duitku.payment_methods');
     Route::post('/duitku/set-method', [PaymentController::class, 'setMethod'])->name('duitku.set_method');
+    Route::get('/duitku/pay/{id}', [PaymentController::class, 'payNow'])->name('duitku.pay_now');
 });
 
 Route::group(['middleware' => ['api']], function () {
