@@ -456,13 +456,13 @@
                                     
                                     <div class="mt-6 text-sm text-gray-700 leading-relaxed max-sm:text-xs">
                                         <div id="tab-content-description" class="tab-content">
-                                            {!! $product->description !!}
+                                            {!! nl2br(str_replace(['\r', '\n', '\\r', '\\n'], "\n", $product->description)) !!}
                                         </div>
                                         <div id="tab-content-details" class="tab-content" style="display: none;">
-                                            {!! $product->short_description ?: 'Crafted from exceptionally soft, premium materials. Check individual product labels for specific care instructions.' !!}
+                                            {!! nl2br(str_replace(['\r', '\n', '\\r', '\\n'], "\n", $product->short_description)) ?: 'Crafted from exceptionally soft, premium materials. Check individual product labels for specific care instructions.' !!}
                                         </div>
                                         <div id="tab-content-shipping" class="tab-content" style="display: none;">
-                                            {!! $product->shipping_and_returns ?: 'We offer standard and express shipping options. Returns are accepted within 30 days of receiving your order. Please ensure items are unworn and in their original packaging.' !!}
+                                            {!! nl2br(str_replace(['\r', '\n', '\\r', '\\n'], "\n", $product->shipping_and_returns)) ?: 'We offer standard and express shipping options. Returns are accepted within 30 days of receiving your order. Please ensure items are unworn and in their original packaging.' !!}
                                         </div>
                                     </div>
                                 </div>
