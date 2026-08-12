@@ -4809,6 +4809,7 @@ return [
                 ],
 
                 'email-settings' => [
+                    'logo' => 'Logo',
                     'admin-email' => 'Admin Email Address',
                     'admin-email-tip' => 'All admin notifications for this channel will be sent to this address.',
                     'admin-name' => 'Admin Name',

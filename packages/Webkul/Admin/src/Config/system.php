@@ -1682,6 +1682,12 @@ return [
                 'validation' => 'required|email',
                 'channel_based' => true,
                 'default' => config('mail.contact.address'),
+            ], [
+                'name'          => 'logo',
+                'title'         => 'admin::app.configuration.index.email.email-settings.logo',
+                'type'          => 'image',
+                'validation'    => 'mimes:jpeg,bmp,png,jpg,svg',
+                'channel_based' => true,
             ],
         ],
     ], [

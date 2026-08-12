@@ -15,9 +15,34 @@
                 <!-- Email Header -->
                 <div style="margin-bottom: 65px;">
                     <a href="{{ route('shop.home.index') }}">
-                        @if ($logo = core()->getConfigData('general.design.admin_logo.logo_image'))
+                        @php
+                            $emailLogo = core()->getConfigData('emails.configure.email_settings.logo');
+                            $emailLogoPath = $emailLogo ? storage_path('app/public/' . $emailLogo) : null;
+                            $adminLogo = core()->getConfigData('general.design.admin_logo.logo_image');
+                            $adminLogoPath = $adminLogo ? storage_path('app/public/' . $adminLogo) : null;
+                        @endphp
+
+                        @if ($emailLogoPath && file_exists($emailLogoPath) && isset($message))
                             <img
-                                src="{{ Storage::url($logo) }}"
+                                src="{{ $message->embed($emailLogoPath) }}"
+                                alt="{{ config('app.name') }}"
+                                style="height: 40px; width: auto;"
+                            />
+                        @elseif ($emailLogo)
+                            <img
+                                src="{{ Storage::url($emailLogo) }}"
+                                alt="{{ config('app.name') }}"
+                                style="height: 40px; width: auto;"
+                            />
+                        @elseif ($adminLogoPath && file_exists($adminLogoPath) && isset($message))
+                            <img
+                                src="{{ $message->embed($adminLogoPath) }}"
+                                alt="{{ config('app.name') }}"
+                                style="height: 40px; width: 110px;"
+                            />
+                        @elseif ($adminLogo)
+                            <img
+                                src="{{ Storage::url($adminLogo) }}"
                                 alt="{{ config('app.name') }}"
                                 style="height: 40px; width: 110px;"
                             />

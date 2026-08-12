@@ -4809,6 +4809,7 @@ return [
                 ],
 
                 'email-settings' => [
+                    'logo' => 'Logo',
                     'admin-email' => 'Alamat Email Admin',
                     'admin-email-tip' => 'Semua notifikasi admin untuk saluran ini akan dikirim ke alamat ini.',
                     'admin-name' => 'Nama Admin',
