@@ -60,67 +60,69 @@
                 <slot name="toggle"></slot>
             </div>
 
-            <!-- Overlay -->
-            <transition
-                tag="div"
-                name="drawer-overlay"
-                enter-class="duration-300 ease-out"
-                enter-from-class="opacity-0"
-                enter-to-class="opacity-100"
-                leave-class="duration-200 ease-in"
-                leave-from-class="opacity-100"
-                leave-to-class="opacity-0"
-            >
-                <div
-                    class="fixed inset-0 z-20 bg-gray-500 bg-opacity-50 transition-opacity"
-                    v-show="isOpen"
-                ></div>
-            </transition>
-
-            <!-- Content -->
-            <transition
-                tag="div"
-                name="drawer"
-                :enter-from-class="enterFromLeaveToClasses"
-                enter-active-class="transform transition duration-200 ease-in-out"
-                enter-to-class="translate-x-0"
-                leave-from-class="translate-x-0"
-                leave-active-class="transform transition duration-200 ease-in-out"
-                :leave-to-class="enterFromLeaveToClasses"
-            >
-                <div
-                    class="fixed z-[1000] overflow-hidden bg-white max-md:!w-full"
-                    :class="{
-                        'inset-x-0 top-0': position == 'top',
-                        'inset-x-0 bottom-0 max-sm:max-h-full': position == 'bottom',
-                        'inset-y-0 ltr:right-0 rtl:left-0': position == 'right',
-                        'inset-y-0 ltr:left-0 rtl:right-0': position == 'left'
-                    }"
-                    :style="'width:' + width"
-                    v-show="isOpen"
+            <teleport to="body">
+                <!-- Overlay -->
+                <transition
+                    tag="div"
+                    name="drawer-overlay"
+                    enter-class="duration-300 ease-out"
+                    enter-from-class="opacity-0"
+                    enter-to-class="opacity-100"
+                    leave-class="duration-200 ease-in"
+                    leave-from-class="opacity-100"
+                    leave-to-class="opacity-0"
                 >
-                    <div class="pointer-events-auto h-full w-full overflow-auto bg-white">
-                        <div class="flex h-full w-full flex-col">
-                            <div class="min-h-0 min-w-0 flex-1 overflow-auto">
-                                <div class="flex h-full flex-col">
-                                    <slot
-                                        name="header"
-                                        :close="close"
-                                    >
-                                        Default Header
-                                    </slot>
+                    <div
+                        class="fixed inset-0 z-20 bg-gray-500 bg-opacity-50 transition-opacity"
+                        v-show="isOpen"
+                    ></div>
+                </transition>
 
-                                    <!-- Content Slot -->
-                                    <slot name="content"></slot>
+                <!-- Content -->
+                <transition
+                    tag="div"
+                    name="drawer"
+                    :enter-from-class="enterFromLeaveToClasses"
+                    enter-active-class="transform transition duration-200 ease-in-out"
+                    enter-to-class="translate-x-0"
+                    leave-from-class="translate-x-0"
+                    leave-active-class="transform transition duration-200 ease-in-out"
+                    :leave-to-class="enterFromLeaveToClasses"
+                >
+                    <div
+                        class="fixed z-[1000] overflow-hidden bg-white max-md:!w-full"
+                        :class="{
+                            'inset-x-0 top-0': position == 'top',
+                            'inset-x-0 bottom-0 max-sm:max-h-full': position == 'bottom',
+                            'inset-y-0 ltr:right-0 rtl:left-0': position == 'right',
+                            'inset-y-0 ltr:left-0 rtl:right-0': position == 'left'
+                        }"
+                        :style="'width:' + width"
+                        v-show="isOpen"
+                    >
+                        <div class="pointer-events-auto h-full w-full overflow-auto bg-white">
+                            <div class="flex h-full w-full flex-col">
+                                <div class="min-h-0 min-w-0 flex-1 overflow-auto">
+                                    <div class="flex h-full flex-col">
+                                        <slot
+                                            name="header"
+                                            :close="close"
+                                        >
+                                            Default Header
+                                        </slot>
 
-                                    <!-- Footer Slot -->
-                                    <slot name="footer"></slot>
+                                        <!-- Content Slot -->
+                                        <slot name="content"></slot>
+
+                                        <!-- Footer Slot -->
+                                        <slot name="footer"></slot>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </transition>
+                </transition>
+            </teleport>
         </div>
     </script>
 
