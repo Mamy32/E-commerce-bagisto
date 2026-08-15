@@ -130,7 +130,7 @@
                     {!! view_render_event('bagisto.shop.components.products.card.price.before') !!}
 
                 <div
-                    class="flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-fashion-accent font-semibold text-sm md:text-base my-1 md:my-3"
+                    class="flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-[#d4af37] font-semibold text-sm md:text-base my-1 md:my-3"
                     v-html="product.price_html"
                 >
                 </div>
@@ -280,7 +280,7 @@
                     {!! view_render_event('bagisto.shop.components.products.card.price.before') !!}
 
                 <div
-                    class="flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-lg font-semibold my-3"
+                    class="flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-[#d4af37] text-lg font-semibold my-3"
                     v-html="product.price_html"
                 >
                 </div>
