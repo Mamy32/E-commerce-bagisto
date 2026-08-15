@@ -79,7 +79,7 @@
 
                         <!-- Product List Card Container -->
                         <div
-                            class="mt-8 grid grid-cols-1 gap-6"
+                            class="mt-8 grid grid-cols-1 gap-6 max-md:grid-cols-2 max-md:gap-2 max-md:gap-y-4"
                             v-if="(filters.toolbar.applied.mode ?? filters.toolbar.default.mode) === 'list'"
                         >
                             <!-- Product Card Shimmer Effect -->

@@ -11,8 +11,8 @@
     >
         <!-- Grid Card -->
         <div
-            class="group w-full block cursor-pointer transition-all duration-300"
-            v-if="mode != 'list'"
+            class="group w-full cursor-pointer transition-all duration-300"
+            :class="mode == 'list' ? 'hidden max-md:block' : 'block'"
         >
             <div class="relative aspect-[4/5] w-full overflow-hidden bg-gray-100">
                 {!! view_render_event('bagisto.shop.components.products.card.image.before') !!}
@@ -184,8 +184,8 @@
 
         <!-- List Card -->
         <div
-            class="relative flex max-w-max grid-cols-2 gap-4 overflow-hidden rounded max-sm:flex-wrap"
-            v-else
+            class="relative flex max-w-max grid-cols-2 gap-4 overflow-hidden rounded max-sm:flex-wrap max-md:hidden"
+            v-if="mode == 'list'"
         >
             <div class="group relative aspect-[4/5] max-w-[250px] overflow-hidden bg-gray-100">
 
