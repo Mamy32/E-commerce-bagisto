@@ -11,8 +11,8 @@
     >
         <!-- Grid Card -->
         <div
-            class="group w-full cursor-pointer transition-all duration-300"
-            :class="mode == 'list' ? 'hidden max-md:block' : 'block'"
+            class="group w-full block cursor-pointer transition-all duration-300"
+            v-if="mode != 'list'"
         >
             <div class="relative aspect-[4/5] w-full overflow-hidden bg-gray-100">
                 {!! view_render_event('bagisto.shop.components.products.card.image.before') !!}
@@ -115,7 +115,7 @@
 
                 {!! view_render_event('bagisto.shop.components.products.card.name.before') !!}
 
-                <p class="font-medium text-sm max-md:text-[11px] max-md:leading-tight uppercase tracking-wide max-md:tracking-normal mb-2 max-md:mb-1 mt-2 text-fashion-navy line-clamp-2">
+                <p class="font-medium text-sm uppercase tracking-wide mb-2 mt-2 text-fashion-navy">
                     @{{ product.name }}
                 </p>
 
@@ -125,7 +125,7 @@
                 {!! view_render_event('bagisto.shop.components.products.card.price.before') !!}
 
                 <div
-                    class="flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-fashion-accent font-semibold text-sm max-md:text-[13px] my-3 max-md:my-1.5"
+                    class="flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-fashion-accent font-semibold text-sm my-3"
                     v-html="product.price_html"
                 >
                 </div>
@@ -138,7 +138,7 @@
                         {!! view_render_event('bagisto.shop.components.products.card.add_to_cart.before') !!}
 
                         <button
-                            class="bg-[#d4af37] hover:bg-[#b8952a] text-gray-900 text-xs max-md:text-[9px] font-semibold uppercase tracking-widest max-md:tracking-normal px-4 py-2.5 max-md:px-2 max-md:py-1.5 transition-colors duration-300 w-full"
+                            class="bg-[#d4af37] hover:bg-[#b8952a] text-gray-900 text-xs font-semibold uppercase tracking-widest px-4 py-2.5 transition-colors duration-300 w-full"
                             :disabled="! product.is_saleable || isAddingToCart"
                             @click="addToCart()"
                         >
@@ -184,8 +184,8 @@
 
         <!-- List Card -->
         <div
-            class="relative flex max-w-max grid-cols-2 gap-4 overflow-hidden rounded max-sm:flex-wrap max-md:hidden"
-            v-if="mode == 'list'"
+            class="relative flex max-w-max grid-cols-2 gap-4 overflow-hidden rounded max-sm:flex-wrap"
+            v-else
         >
             <div class="group relative aspect-[4/5] max-w-[250px] overflow-hidden bg-gray-100">
 
