@@ -17,6 +17,16 @@
     @endif
 @endPush
 
+@push('styles')
+    <style>
+        @media (max-width: 768px) {
+            #main {
+                padding-top: 0px !important;
+            }
+        }
+    </style>
+@endpush
+
 <x-shop::layouts>
     <!-- Page Title -->
     <x-slot:title>
