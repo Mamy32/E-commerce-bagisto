@@ -11,7 +11,7 @@
     >
         <!-- Grid Card -->
         <div
-            class="group w-full block cursor-pointer transition-all duration-300"
+            class="group w-full flex flex-col h-full cursor-pointer transition-all duration-300"
             v-if="mode != 'list'"
         >
             <div class="relative aspect-[4/5] w-full overflow-hidden bg-gray-100">
@@ -111,7 +111,7 @@
             </div>
 
             <!-- Product Information Section -->
-            <div class="mt-4 flex flex-col text-left">
+            <div class="mt-4 flex flex-col flex-1 text-left">
 
                 {!! view_render_event('bagisto.shop.components.products.card.name.before') !!}
 
@@ -121,8 +121,9 @@
 
                 {!! view_render_event('bagisto.shop.components.products.card.name.after') !!}
 
-                <!-- Pricing -->
-                {!! view_render_event('bagisto.shop.components.products.card.price.before') !!}
+                <div class="mt-auto">
+                    <!-- Pricing -->
+                    {!! view_render_event('bagisto.shop.components.products.card.price.before') !!}
 
                 <div
                     class="flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-fashion-accent font-semibold text-sm md:text-base my-1 md:my-3"
@@ -179,12 +180,14 @@
 
                     {!! view_render_event('bagisto.shop.components.products.card.compare_option.after') !!}
                 </div>
+                </div>
             </div>
         </div>
 
         <!-- List Card -->
+        <!-- List Card -->
         <div
-            class="relative flex w-full grid-cols-2 gap-4 overflow-hidden rounded max-sm:flex-wrap"
+            class="relative flex w-full h-full flex-col sm:flex-row grid-cols-2 gap-4 overflow-hidden rounded max-sm:flex-wrap"
             v-else
         >
             <div class="group relative aspect-[4/5] w-full md:max-w-[250px] overflow-hidden bg-gray-100">
@@ -254,7 +257,7 @@
                 </div>
             </div>
 
-            <div class="grid content-start gap-4">
+            <div class="grid content-start gap-4 flex-1">
 
                 {!! view_render_event('bagisto.shop.components.products.card.name.before') !!}
 
@@ -264,7 +267,8 @@
 
                 {!! view_render_event('bagisto.shop.components.products.card.name.after') !!}
 
-                {!! view_render_event('bagisto.shop.components.products.card.price.before') !!}
+                <div class="mt-auto">
+                    {!! view_render_event('bagisto.shop.components.products.card.price.before') !!}
 
                 <div
                     class="flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-lg font-semibold my-3"
@@ -326,6 +330,7 @@
                     {!! view_render_event('bagisto.shop.components.products.card.add_to_cart.after') !!}
 
                 @endif
+                </div>
             </div>
         </div>
     </script>
