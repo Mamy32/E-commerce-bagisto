@@ -115,7 +115,11 @@
 
                 {!! view_render_event('bagisto.shop.components.products.card.name.before') !!}
 
-                <p class="font-medium text-xs md:text-sm uppercase tracking-wide mb-1 md:mb-2 mt-2 text-fashion-navy line-clamp-2">
+                <p 
+                    class="font-medium text-xs md:text-sm uppercase tracking-wide mb-1 md:mb-2 mt-2 text-fashion-navy line-clamp-2"
+                    style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;"
+                    title="@{{ product.name }}"
+                >
                     @{{ product.name }}
                 </p>
 
@@ -139,7 +143,8 @@
                         {!! view_render_event('bagisto.shop.components.products.card.add_to_cart.before') !!}
 
                         <button
-                            class="bg-[#d4af37] hover:bg-[#b8952a] text-gray-900 text-[10px] md:text-xs font-semibold uppercase tracking-widest px-2 py-1.5 md:px-4 md:py-2.5 transition-colors duration-300 w-full"
+                            class="bg-[#d4af37] hover:bg-[#b8952a] text-gray-900 md:text-xs font-semibold uppercase tracking-wide md:tracking-widest md:px-4 md:py-2.5 transition-colors duration-300 w-full whitespace-nowrap"
+                            style="font-size: 10px; padding-top: 6px; padding-bottom: 6px;"
                             :disabled="! product.is_saleable || isAddingToCart"
                             @click="addToCart()"
                         >
@@ -261,7 +266,11 @@
 
                 {!! view_render_event('bagisto.shop.components.products.card.name.before') !!}
 
-                <p class="text-base mb-2 mt-2">
+                <p 
+                    class="text-base mb-2 mt-2 line-clamp-2"
+                    style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;"
+                    title="@{{ product.name }}"
+                >
                     @{{ product.name }}
                 </p>
 

@@ -79,7 +79,7 @@
 
                         <!-- Product List Card Container -->
                         <div
-                            class="mt-8 grid grid-cols-2 md:grid-cols-1 gap-4 md:gap-6"
+                            class="mt-8 max-md:mt-1 grid grid-cols-2 md:grid-cols-1 gap-4 md:gap-6"
                             v-if="(filters.toolbar.applied.mode ?? filters.toolbar.default.mode) === 'list'"
                         >
                             <!-- Product Card Shimmer Effect -->
@@ -123,7 +123,7 @@
                         </div>
 
                         <!-- Product Grid Card Container -->
-                        <div v-else class="mt-8 max-md:mt-5">
+                        <div v-else class="mt-8 max-md:mt-1">
                             <!-- Product Card Shimmer Effect -->
                             <template v-if="isLoading">
                                 <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
