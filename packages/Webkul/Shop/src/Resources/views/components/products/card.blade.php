@@ -115,7 +115,7 @@
 
                 {!! view_render_event('bagisto.shop.components.products.card.name.before') !!}
 
-                <p class="font-medium text-sm uppercase tracking-wide mb-2 mt-2 text-fashion-navy">
+                <p class="font-medium text-xs md:text-sm uppercase tracking-wide mb-1 md:mb-2 mt-2 text-fashion-navy line-clamp-2">
                     @{{ product.name }}
                 </p>
 
@@ -125,7 +125,7 @@
                 {!! view_render_event('bagisto.shop.components.products.card.price.before') !!}
 
                 <div
-                    class="flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-fashion-accent font-semibold text-sm my-3"
+                    class="flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-fashion-accent font-semibold text-sm md:text-base my-1 md:my-3"
                     v-html="product.price_html"
                 >
                 </div>
@@ -138,7 +138,7 @@
                         {!! view_render_event('bagisto.shop.components.products.card.add_to_cart.before') !!}
 
                         <button
-                            class="bg-[#d4af37] hover:bg-[#b8952a] text-gray-900 text-xs font-semibold uppercase tracking-widest px-4 py-2.5 transition-colors duration-300 w-full"
+                            class="bg-[#d4af37] hover:bg-[#b8952a] text-gray-900 text-[10px] md:text-xs font-semibold uppercase tracking-widest px-2 py-1.5 md:px-4 md:py-2.5 transition-colors duration-300 w-full"
                             :disabled="! product.is_saleable || isAddingToCart"
                             @click="addToCart()"
                         >
@@ -184,10 +184,10 @@
 
         <!-- List Card -->
         <div
-            class="relative flex max-w-max grid-cols-2 gap-4 overflow-hidden rounded max-sm:flex-wrap"
+            class="relative flex w-full grid-cols-2 gap-4 overflow-hidden rounded max-sm:flex-wrap"
             v-else
         >
-            <div class="group relative aspect-[4/5] max-w-[250px] overflow-hidden bg-gray-100">
+            <div class="group relative aspect-[4/5] w-full md:max-w-[250px] overflow-hidden bg-gray-100">
 
                 {!! view_render_event('bagisto.shop.components.products.card.image.before') !!}
 
