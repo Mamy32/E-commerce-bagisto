@@ -31,14 +31,6 @@ return [
                 'locale_based'  => false,
             ],
             [
-                'name'          => 'api_key',
-                'title'         => 'API Key',
-                'type'          => 'password',
-                'validation'    => 'required',
-                'channel_based' => true,
-                'locale_based'  => false,
-            ],
-            [
                 'name'          => 'environment',
                 'title'         => 'Environment',
                 'type'          => 'select',
