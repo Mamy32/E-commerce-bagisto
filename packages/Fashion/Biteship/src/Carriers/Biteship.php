@@ -74,7 +74,7 @@ class Biteship extends AbstractShipping
         }
 
         // 4. Fetch Rates from API
-        $apiRates = $this->biteshipService->getRates($destinationAreaId, $totalWeight, $activeCouriers);
+        $apiRates = $this->biteshipService->getRates($destinationAreaId, $shippingAddress->postcode, $totalWeight, $activeCouriers);
 
         if (empty($apiRates)) {
             return false;

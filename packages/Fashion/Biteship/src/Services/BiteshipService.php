@@ -24,7 +24,7 @@ class BiteshipService
     /**
      * Fetch shipping rates from Biteship.
      */
-    public function getRates($destinationAreaId, $weight, $couriers)
+    public function getRates($destinationAreaId, $destinationPostcode, $weight, $couriers)
     {
         if (empty($this->apiKey) || empty($this->originAreaId)) {
             Log::error('Biteship: API Key or Origin Area ID is not configured.');
@@ -36,10 +36,17 @@ class BiteshipService
 
 
         try {
-            $response = Http::withHeaders([
-                'Authorization' => $this->apiKey,
-                'Content-Type'  => 'application/json',
-            ])->post($this->baseUrl . '/rates/couriers', [
+            // Extract origin postal code from originAreaId (e.g., IDNP6...IDZ11210 -> 11210)
+            $originPostcode = '11210';
+            if (preg_match('/IDZ(\d+)$/', $this->originAreaId, $matches)) {
+                $originPostcode = $matches[1];
+            }
+
+            // Fetch coordinates
+            $originCoords = $this->getCoordinatesFromPostcode($originPostcode);
+            $destCoords = $this->getCoordinatesFromPostcode($destinationPostcode);
+
+            $payload = [
                 'origin_area_id'      => $this->originAreaId,
                 'destination_area_id' => $destinationAreaId,
                 'couriers'            => implode(',', $couriers),
@@ -51,7 +58,20 @@ class BiteshipService
                         'quantity' => 1
                     ]
                 ]
-            ]);
+            ];
+
+            // If coordinates exist, append them to the payload for Instant Couriers
+            if ($originCoords && $destCoords) {
+                $payload['origin_latitude'] = $originCoords['latitude'];
+                $payload['origin_longitude'] = $originCoords['longitude'];
+                $payload['destination_latitude'] = $destCoords['latitude'];
+                $payload['destination_longitude'] = $destCoords['longitude'];
+            }
+
+            $response = Http::withHeaders([
+                'Authorization' => $this->apiKey,
+                'Content-Type'  => 'application/json',
+            ])->post($this->baseUrl . '/rates/couriers', $payload);
 
             if ($response->successful()) {
                 return $response->json()['pricing'] ?? [];
@@ -68,6 +88,40 @@ class BiteshipService
         } // End of else block
 
         return [];
+    }
+
+    /**
+     * Get Coordinates from Postal Code using free OpenStreetMap API
+     */
+    public function getCoordinatesFromPostcode($postcode)
+    {
+        if (empty($postcode)) {
+            return null;
+        }
+
+        try {
+            $response = Http::withHeaders([
+                'User-Agent' => 'Bagisto-Biteship-Integration/1.0'
+            ])->get('https://nominatim.openstreetmap.org/search', [
+                'postalcode' => $postcode,
+                'country' => 'Indonesia',
+                'format' => 'json'
+            ]);
+
+            if ($response->successful()) {
+                $data = $response->json();
+                if (!empty($data) && isset($data[0]['lat']) && isset($data[0]['lon'])) {
+                    return [
+                        'latitude' => $data[0]['lat'],
+                        'longitude' => $data[0]['lon']
+                    ];
+                }
+            }
+        } catch (\Exception $e) {
+            Log::error('Nominatim Geocoding Error: ' . $e->getMessage());
+        }
+
+        return null;
     }
 
     /**
