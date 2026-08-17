@@ -170,4 +170,16 @@ class ShipmentController extends Controller
 
         return view('admin::sales.shipments.view', compact('shipment'));
     }
+
+    /**
+     * Print the specified resource.
+     *
+     * @return View
+     */
+    public function printLabel(int $id)
+    {
+        $shipment = $this->shipmentRepository->findOrFail($id);
+
+        return view('admin::sales.shipments.print', compact('shipment'));
+    }
 }

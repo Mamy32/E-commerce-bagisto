@@ -136,6 +136,16 @@ class OrderShipmentDataGrid extends DataGrid
                     return route('admin.sales.shipments.view', $row->shipment_id);
                 },
             ]);
+
+            $this->addAction([
+                'icon' => 'icon-printer',
+                'title' => 'Print Label',
+                'method' => 'GET',
+                'target' => '_blank',
+                'url' => function ($row) {
+                    return route('admin.sales.shipments.print', $row->shipment_id);
+                },
+            ]);
         }
     }
 }

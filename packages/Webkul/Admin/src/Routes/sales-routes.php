@@ -80,6 +80,7 @@ Route::prefix('sales')->group(function () {
         Route::post('create/{order_id}', 'store')->name('admin.sales.shipments.store');
 
         Route::get('view/{id}', 'view')->name('admin.sales.shipments.view');
+        Route::get('print/{id}', 'printLabel')->name('admin.sales.shipments.print');
     });
 
     /**
