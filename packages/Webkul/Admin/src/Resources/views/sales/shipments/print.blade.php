@@ -169,6 +169,14 @@
             $courierLogo = '<svg width="100" height="30" viewBox="0 0 120 40"><text x="0" y="30" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="30" fill="#00a550">GoSend</text></svg>';
         } elseif (strpos($desc, 'grab') !== false) {
             $courierLogo = '<svg width="100" height="30" viewBox="0 0 120 40"><text x="0" y="30" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="30" fill="#00b14f">Grab</text></svg>';
+        } elseif (strpos($desc, 'paxel') !== false) {
+            $courierLogo = '<svg width="100" height="30" viewBox="0 0 120 40"><text x="0" y="30" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="30" fill="#673ab7">Paxel</text></svg>';
+        } elseif (strpos($desc, 'ninja') !== false) {
+            $courierLogo = '<svg width="100" height="30" viewBox="0 0 140 40"><text x="0" y="30" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-style="italic" font-size="28" fill="#e30613">Ninja Xpress</text></svg>';
+        } elseif (strpos($desc, 'anteraja') !== false) {
+            $courierLogo = '<svg width="100" height="30" viewBox="0 0 120 40"><text x="0" y="30" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-style="italic" font-size="28" fill="#e91e63">Anteraja</text></svg>';
+        } elseif (strpos($desc, 'lion') !== false) {
+            $courierLogo = '<svg width="100" height="30" viewBox="0 0 140 40"><text x="0" y="30" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-style="italic" font-size="26" fill="#e30613">Lion Parcel</text></svg>';
         } else {
             // Default to J&T
             $courierLogo = '<svg width="80" height="30" viewBox="0 0 100 40"><text x="0" y="30" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-style="italic" font-size="36" fill="#e30613">J&T</text></svg>';
