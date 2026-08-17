@@ -72,7 +72,7 @@ return [
                     ['title' => 'JNE', 'value' => 'jne'],
                     ['title' => 'Sicepat', 'value' => 'sicepat'],
                     ['title' => 'JNT', 'value' => 'jnt'],
-                    ['title' => 'GoSend', 'value' => 'gosend'],
+                    ['title' => 'GoSend', 'value' => 'gojek'],
                     ['title' => 'GrabExpress', 'value' => 'grab'],
                     ['title' => 'Paxel', 'value' => 'paxel'],
                     ['title' => 'Ninja Xpress', 'value' => 'ninja'],
