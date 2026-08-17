@@ -158,13 +158,20 @@
         $order = $shipment->order;
         $shippingAddress = $order->shipping_address;
         
-        // Extract courier name from shipping_method (e.g. biteship_jne_reg -> JNE)
-        $methodParts = explode('_', $order->shipping_method);
-        $courierName = isset($methodParts[1]) ? strtoupper($methodParts[1]) : 'COURIER';
-        if ($courierName === 'SHIPPING' || $courierName === 'BITESHIP') {
-            // Fallback if the method format is unexpected, try parsing the title
-            $titleParts = explode(' ', $shipment->carrier_title);
-            $courierName = isset($titleParts[1]) ? strtoupper(str_replace('-', '', $titleParts[1])) : 'J&T';
+        // Robust courier extraction
+        $desc = strtolower($order->shipping_description . ' ' . $shipment->carrier_title . ' ' . $order->shipping_method);
+        
+        if (strpos($desc, 'jne') !== false) {
+            $courierLogo = '<svg width="80" height="30" viewBox="0 0 100 40"><text x="0" y="30" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-style="italic" font-size="36" fill="#003b7a">JNE</text><rect x="0" y="34" width="70" height="4" fill="#e30613"/></svg>';
+        } elseif (strpos($desc, 'sicepat') !== false) {
+            $courierLogo = '<svg width="100" height="30" viewBox="0 0 120 40"><text x="0" y="30" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-style="italic" font-size="32" fill="#e30613">SiCepat</text></svg>';
+        } elseif (strpos($desc, 'gosend') !== false || strpos($desc, 'go-send') !== false || strpos($desc, 'gojek') !== false) {
+            $courierLogo = '<svg width="100" height="30" viewBox="0 0 120 40"><text x="0" y="30" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="30" fill="#00a550">GoSend</text></svg>';
+        } elseif (strpos($desc, 'grab') !== false) {
+            $courierLogo = '<svg width="100" height="30" viewBox="0 0 120 40"><text x="0" y="30" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="30" fill="#00b14f">Grab</text></svg>';
+        } else {
+            // Default to J&T
+            $courierLogo = '<svg width="80" height="30" viewBox="0 0 100 40"><text x="0" y="30" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-style="italic" font-size="36" fill="#e30613">J&T</text></svg>';
         }
 
         $logo = core()->getCurrentChannel()->logo_url;
@@ -174,7 +181,7 @@
         
         <!-- Row 1: Header -->
         <div class="row header-row">
-            <div class="courier-logo">{{ $courierName }}</div>
+            <div class="courier-logo">{!! $courierLogo !!}</div>
             <div class="biteship-logo-container">
                 @if ($logo)
                     <img src="{{ $logo }}" alt="{{ core()->getCurrentChannel()->name }}" style="max-height: 40px;">
