@@ -73,5 +73,9 @@ Route::get('/fix-email-settings', function () {
     \Illuminate\Support\Facades\Artisan::call('cache:clear');
     \Illuminate\Support\Facades\Artisan::call('view:clear');
 
-    return "Done! The email footer text has been translated to Indonesian, and the Sender Name has been updated to 'Fjc Fashion'.";
+});
+
+Route::get('/api/biteship/track/{waybill}', function ($waybill) {
+    $service = app(\Fashion\Biteship\Services\BiteshipService::class);
+    return response()->json($service->getTrackingStatus($waybill));
 });

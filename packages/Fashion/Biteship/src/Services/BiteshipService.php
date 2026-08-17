@@ -182,4 +182,37 @@ class BiteshipService
 
         return false;
     }
+
+    /**
+     * Get Tracking Status from Biteship
+     *
+     * @param string $waybillId
+     * @return array|false
+     */
+    public function getTrackingStatus($waybillId)
+    {
+        if (empty($this->apiKey)) {
+            Log::error('Biteship: Cannot fetch tracking, API Key is missing.');
+            return false;
+        }
+
+        try {
+            $response = Http::withHeaders([
+                'Authorization' => $this->apiKey,
+            ])->get($this->baseUrl . '/trackings/' . $waybillId);
+
+            if ($response->successful()) {
+                return $response->json();
+            }
+
+            Log::error('Biteship Tracking API Error', [
+                'status' => $response->status(),
+                'response' => $response->body()
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Biteship Tracking Connection Error: ' . $e->getMessage());
+        }
+
+        return false;
+    }
 }
