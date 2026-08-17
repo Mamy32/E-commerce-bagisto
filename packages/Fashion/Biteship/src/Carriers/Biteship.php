@@ -64,13 +64,13 @@ class Biteship extends AbstractShipping
         }
 
         // 3. Get Active Couriers
-        $activeCouriers = $this->getConfigData('active_couriers');
-        if (is_string($activeCouriers)) {
-            $activeCouriers = explode(',', $activeCouriers);
-        }
-
-        if (empty($activeCouriers)) {
-            $activeCouriers = [];
+        $activeCouriers = [];
+        $courierList = ['jne', 'sicepat', 'jnt', 'gojek', 'grab', 'paxel', 'ninja', 'anteraja', 'lion'];
+        
+        foreach ($courierList as $courier) {
+            if ($this->getConfigData('active_' . $courier)) {
+                $activeCouriers[] = $courier;
+            }
         }
 
         // 4. Fetch Rates from API
