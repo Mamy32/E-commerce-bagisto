@@ -67,6 +67,9 @@ class Biteship extends AbstractShipping
         $activeCouriers = $this->getConfigData('active_couriers');
         if (is_string($activeCouriers)) {
             $activeCouriers = explode(',', $activeCouriers);
+            $activeCouriers = array_map(function($c) {
+                return str_replace('bs_', '', $c);
+            }, $activeCouriers);
         }
 
         if (empty($activeCouriers)) {
