@@ -147,8 +147,9 @@
             }
 
             .logo-container img {
-                max-width: 100%;
-                height: auto;
+                max-width: 200px;
+                max-height: 80px;
+                object-fit: contain;
             }
 
             .page-header b {
