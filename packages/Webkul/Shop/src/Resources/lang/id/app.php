@@ -295,6 +295,11 @@ return [
                         'sku' => 'SKU',
                         'subtotal' => 'Subtotal',
                         'tracking-number' => 'Nomor Pelacakan',
+                        'biteship-loading' => 'Memuat pelacakan...',
+                        'biteship-not-found' => 'Pelacakan tidak ditemukan atau belum tersedia.',
+                        'biteship-live-map' => 'Lihat Peta Kurir Langsung',
+                        'biteship-waiting' => 'Menunggu pembaruan kurir...',
+                        'biteship-track-on' => 'Lacak di Biteship',
                     ],
 
                     'refunds' => [

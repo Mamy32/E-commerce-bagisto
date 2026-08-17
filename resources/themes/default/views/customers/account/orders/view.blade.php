@@ -1496,14 +1496,14 @@
                                                 {{  $shipment->track_number }}
                                             </span>
                                             <a href="https://biteship.com/cek-resi" target="_blank" class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm transition-all hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-navyBlue focus:ring-offset-2">
-                                                Track on Biteship
+                                                @lang('shop::app.customers.account.orders.view.shipments.biteship-track-on')
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="ml-1.5 h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                                 </svg>
                                             </a>
                                         </div>
                                         <div class="biteship-tracker mt-4" data-waybill="{{ $shipment->track_number }}">
-                                            <span class="text-sm text-gray-500">Loading tracking...</span>
+                                            <span class="text-sm text-gray-500">@lang('shop::app.customers.account.orders.view.shipments.biteship-loading')</span>
                                         </div>
                                     </div>
 
@@ -1573,7 +1573,7 @@
                                                     <span>@lang('shop::app.customers.account.orders.view.shipments.tracking-number'):</span>
                                                     <div class="flex items-center gap-2">
                                                         <span>{{  $shipment->track_number }}</span>
-                                                        <a href="https://biteship.com/cek-resi" target="_blank" class="text-navyBlue hover:text-navyBlue/80 transition-colors" title="Track on Biteship">
+                                                        <a href="https://biteship.com/cek-resi" target="_blank" class="text-navyBlue hover:text-navyBlue/80 transition-colors" title="{{ trans('shop::app.customers.account.orders.view.shipments.biteship-track-on') }}">
                                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                                             </svg>
@@ -1581,7 +1581,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="biteship-tracker" data-waybill="{{ $shipment->track_number }}">
-                                                    <span class="text-xs text-gray-500">Loading tracking...</span>
+                                                    <span class="text-xs text-gray-500">@lang('shop::app.customers.account.orders.view.shipments.biteship-loading')</span>
                                                 </div>
                                             </div>
 
@@ -2407,14 +2407,14 @@
                                 const result = await response.json();
 
                                 if (!response.ok || !result.success) {
-                                    tracker.innerHTML = `<span class="text-sm text-red-500">Tracking not found or not yet available.</span>`;
+                                    tracker.innerHTML = `<span class="text-sm text-red-500">@lang('shop::app.customers.account.orders.view.shipments.biteship-not-found')</span>`;
                                     return;
                                 }
 
                                 if (result.courier_link) {
                                     tracker.innerHTML = `
                                         <a href="${result.courier_link}" target="_blank" class="mt-2 inline-flex items-center justify-center rounded-lg border border-transparent bg-navyBlue px-4 py-2 text-sm font-medium text-white transition-all hover:bg-navyBlue/90">
-                                            View Live Courier Map
+                                            @lang('shop::app.customers.account.orders.view.shipments.biteship-live-map')
                                         </a>
                                     `;
                                     return;
@@ -2422,15 +2422,18 @@
 
                                 const history = result.history || [];
                                 if (history.length === 0) {
-                                    tracker.innerHTML = `<span class="text-sm text-gray-500">Waiting for courier update...</span>`;
+                                    tracker.innerHTML = `<span class="text-sm text-gray-500">@lang('shop::app.customers.account.orders.view.shipments.biteship-waiting')</span>`;
                                     return;
                                 }
+
+                                const appLocale = '{{ app()->getLocale() }}';
+                                const dateLocale = appLocale === 'id' ? 'id-ID' : 'en-US';
 
                                 let timelineHtml = `<div class="relative border-l border-gray-200 ml-3 mt-4 space-y-6">`;
                                 history.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
 
                                 history.forEach((item, index) => {
-                                    const date = new Date(item.updated_at).toLocaleString('id-ID', {
+                                    const date = new Date(item.updated_at).toLocaleString(dateLocale, {
                                         day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
                                     });
                                     const isNewest = index === 0;
@@ -2449,7 +2452,7 @@
                                 timelineHtml += `</div>`;
                                 tracker.innerHTML = timelineHtml;
                             } catch (error) {
-                                tracker.innerHTML = `<span class="text-sm text-red-500">Failed to load tracking data.</span>`;
+                                tracker.innerHTML = `<span class="text-sm text-red-500">@lang('shop::app.customers.account.orders.view.shipments.biteship-not-found')</span>`;
                             }
                         });
                     }

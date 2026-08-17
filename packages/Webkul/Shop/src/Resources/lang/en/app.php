@@ -295,6 +295,11 @@ return [
                         'sku' => 'SKU',
                         'subtotal' => 'Subtotal',
                         'tracking-number' => 'Tracking Number',
+                        'biteship-loading' => 'Loading tracking...',
+                        'biteship-not-found' => 'Tracking not found or not yet available.',
+                        'biteship-live-map' => 'View Live Courier Map',
+                        'biteship-waiting' => 'Waiting for courier update...',
+                        'biteship-track-on' => 'Track on Biteship',
                     ],
 
                     'refunds' => [
