@@ -71,7 +71,7 @@ return [
                 'options'       => [
                     ['title' => 'JNE', 'value' => 'jne'],
                     ['title' => 'Sicepat', 'value' => 'sicepat'],
-                    ['title' => 'J&T', 'value' => 'jnt'],
+                    ['title' => 'JNT', 'value' => 'jnt'],
                     ['title' => 'GoSend', 'value' => 'gosend'],
                     ['title' => 'GrabExpress', 'value' => 'grab'],
                     ['title' => 'Paxel', 'value' => 'paxel'],
