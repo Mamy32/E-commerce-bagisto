@@ -1494,6 +1494,9 @@
                                         <span>
                                             {{  $shipment->track_number }}
                                         </span>
+                                        <div class="biteship-tracker mt-4" data-waybill="{{ $shipment->track_number }}">
+                                            <span class="text-sm text-gray-500">Loading tracking...</span>
+                                        </div>
                                     </div>
 
                                     <div class="text-base font-medium">
@@ -1557,12 +1560,14 @@
                                         v-pre
                                     >
                                         <div class="grid gap-1.5 px-4 py-2.5 text-xs font-medium text-fashion-muted [&>*]:flex [&>*]:justify-between">
-                                            <div class="flex justify-between">
-                                                @lang('shop::app.customers.account.orders.view.shipments.tracking-number'):
-
-                                                <span>
-                                                    {{  $shipment->track_number }}
-                                                </span>
+                                            <div class="flex flex-col justify-between w-full gap-2">
+                                                <div class="flex justify-between w-full">
+                                                    <span>@lang('shop::app.customers.account.orders.view.shipments.tracking-number'):</span>
+                                                    <span>{{  $shipment->track_number }}</span>
+                                                </div>
+                                                <div class="biteship-tracker" data-waybill="{{ $shipment->track_number }}">
+                                                    <span class="text-xs text-gray-500">Loading tracking...</span>
+                                                </div>
                                             </div>
 
                                             @lang('shop::app.customers.account.orders.view.shipments.individual-shipment', ['shipment_id' => $shipment->id])
@@ -2364,4 +2369,77 @@
         {!! view_render_event('bagisto.shop.customers.account.orders.view.after', ['order' => $order]) !!}
 
     </div>
+    @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const checkTabs = setInterval(() => {
+                    const trackers = document.querySelectorAll('.biteship-tracker');
+                    if (trackers.length > 0) {
+                        clearInterval(checkTabs);
+                        
+                        trackers.forEach(async (tracker) => {
+                            if (tracker.getAttribute('data-loaded')) return;
+                            tracker.setAttribute('data-loaded', 'true');
+                            
+                            const waybill = tracker.getAttribute('data-waybill');
+                            if (!waybill) {
+                                tracker.innerHTML = '';
+                                return;
+                            }
+
+                            try {
+                                const response = await fetch(`/api/biteship/track/${waybill}`);
+                                const result = await response.json();
+
+                                if (!response.ok || !result.success) {
+                                    tracker.innerHTML = `<span class="text-sm text-red-500">Tracking not found or not yet available.</span>`;
+                                    return;
+                                }
+
+                                if (result.courier_link) {
+                                    tracker.innerHTML = `
+                                        <a href="${result.courier_link}" target="_blank" class="mt-2 inline-flex items-center justify-center rounded-lg border border-transparent bg-navyBlue px-4 py-2 text-sm font-medium text-white transition-all hover:bg-navyBlue/90">
+                                            View Live Courier Map
+                                        </a>
+                                    `;
+                                    return;
+                                }
+
+                                const history = result.history || [];
+                                if (history.length === 0) {
+                                    tracker.innerHTML = `<span class="text-sm text-gray-500">Waiting for courier update...</span>`;
+                                    return;
+                                }
+
+                                let timelineHtml = `<div class="relative border-l border-gray-200 ml-3 mt-4 space-y-6">`;
+                                history.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+
+                                history.forEach((item, index) => {
+                                    const date = new Date(item.updated_at).toLocaleString('id-ID', {
+                                        day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                                    });
+                                    const isNewest = index === 0;
+                                    const dotColor = isNewest ? 'bg-navyBlue ring-white' : 'bg-gray-300 ring-white';
+                                    const textColor = isNewest ? 'text-black font-semibold' : 'text-gray-600';
+
+                                    timelineHtml += `
+                                        <div class="mb-4 ml-4">
+                                            <div class="absolute -left-1.5 mt-1.5 h-3 w-3 rounded-full border border-white ${dotColor}"></div>
+                                            <time class="mb-1 text-xs font-normal leading-none text-gray-400">${date}</time>
+                                            <h3 class="text-sm ${textColor}">${item.status}</h3>
+                                            <p class="text-xs font-normal text-gray-500">${item.note}</p>
+                                        </div>
+                                    `;
+                                });
+                                timelineHtml += `</div>`;
+                                tracker.innerHTML = timelineHtml;
+                            } catch (error) {
+                                tracker.innerHTML = `<span class="text-sm text-red-500">Failed to load tracking data.</span>`;
+                            }
+                        });
+                    }
+                }, 500); // Check every 500ms for Vue to render the tab contents
+            });
+        </script>
+    @endpush
 </x-shop::layouts.account>
