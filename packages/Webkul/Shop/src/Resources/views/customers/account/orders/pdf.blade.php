@@ -147,8 +147,8 @@
             }
 
             .logo-container img {
-                max-width: 200px;
-                max-height: 80px;
+                max-width: 130px;
+                max-height: 45px;
                 object-fit: contain;
             }
 
