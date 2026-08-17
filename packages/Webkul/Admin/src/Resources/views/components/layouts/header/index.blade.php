@@ -77,6 +77,31 @@
             </span>
         </v-notifications>
 
+        <!-- Admin Locale Switcher -->
+        <x-admin::dropdown position="bottom-{{ core()->getCurrentLocale()->direction === 'ltr' ? 'right' : 'left' }}">
+            <x-slot:toggle>
+                <div class="flex items-center gap-1.5 cursor-pointer rounded-md p-1.5 transition-all hover:bg-gray-100 dark:hover:bg-gray-950">
+                    <span class="text-sm font-semibold text-gray-600 dark:text-gray-300">
+                        {{ strtoupper(app()->getLocale()) }}
+                    </span>
+                    <span class="icon-down-arrow text-lg"></span>
+                </div>
+            </x-slot>
+
+            <x-slot:content class="!p-0">
+                <div class="grid gap-1 p-2">
+                    @foreach (core()->getAllLocales() as $locale)
+                        <a 
+                            href="{{ route('admin.locale.switch', $locale->code) }}" 
+                            class="flex gap-2.5 items-center px-3 py-1 cursor-pointer rounded-md hover:bg-gray-100 dark:hover:bg-gray-950 transition-all"
+                        >
+                            <span class="text-sm font-medium text-gray-600 dark:text-gray-300">{{ $locale->name }}</span>
+                        </a>
+                    @endforeach
+                </div>
+            </x-slot>
+        </x-admin::dropdown>
+
         <!-- Admin profile -->
         <x-admin::dropdown position="bottom-{{ core()->getCurrentLocale()->direction === 'ltr' ? 'right' : 'left' }}">
             <x-slot:toggle>

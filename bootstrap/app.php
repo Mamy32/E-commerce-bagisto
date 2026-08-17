@@ -45,6 +45,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'stripe/*',
         ]);
 
+        $middleware->appendToGroup('web', \App\Http\Middleware\AdminLocaleMiddleware::class);
+
         $middleware->trustProxies(at: '*');
     })
     ->withSchedule(function (Schedule $schedule) {

@@ -4,6 +4,13 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 
+Route::get('/admin/locale/switch/{code}', function ($code) {
+    if (in_array($code, core()->getAllLocales()->pluck('code')->toArray())) {
+        session()->put('admin_locale', $code);
+    }
+    return redirect()->back();
+})->name('admin.locale.switch');
+
 Route::get('/fix-css-all', function () {
     $rows = DB::table('theme_customization_translations')->where('theme_customization_id', 3)->get();
     
