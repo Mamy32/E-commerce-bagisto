@@ -13,7 +13,7 @@ class BiteshipService
 
     public function __construct()
     {
-        $this->apiKey = env('BITESHIP_API_KEY') ?: core()->getConfigData('sales.carriers.biteship.api_key');
+        $this->apiKey = core()->getConfigData('sales.carriers.biteship.api_key');
         $this->originAreaId = core()->getConfigData('sales.carriers.biteship.origin_area_id');
         $environment = core()->getConfigData('sales.carriers.biteship.environment');
 
