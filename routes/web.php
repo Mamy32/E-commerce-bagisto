@@ -4,6 +4,35 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 
+Route::get('/', function () {
+    return redirect()->route('shop.home.index');
+});
+
+Route::get('/force-pay/{id}', function ($id) {
+    $order = \Webkul\Sales\Models\Order::find($id);
+    if (!$order) return 'Order not found';
+    
+    if ($order->canInvoice()) {
+        $invoiceRepository = app(\Webkul\Sales\Repositories\InvoiceRepository::class);
+        
+        $invoiceData = [
+            'order_id' => $order->id,
+            'invoice' => [
+                'items' => []
+            ]
+        ];
+
+        foreach ($order->items as $item) {
+            $invoiceData['invoice']['items'][$item->id] = $item->qty_to_invoice;
+        }
+
+        $invoice = $invoiceRepository->create($invoiceData);
+        return 'SUCCESS: Order #' . $id . ' has been marked as PAID! The invoice is generated and Biteship is requested.';
+    }
+    
+    return 'Order is already paid or cannot be invoiced.';
+});
+
 Route::get('/admin/locale/switch/{code}', function ($code) {
     if (in_array($code, core()->getAllLocales()->pluck('code')->toArray())) {
         session()->put('admin_locale', $code);
