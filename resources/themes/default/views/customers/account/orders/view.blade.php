@@ -2434,26 +2434,79 @@
                                     return;
                                 }
 
-                                const appLocale = '{{ app()->getLocale() }}';
-                                const dateLocale = appLocale === 'id' ? 'id-ID' : 'en-US';
-
+                                // Build beautiful timeline HTML
                                 let timelineHtml = `<div class="relative border-l border-gray-200 ml-3 mt-4 space-y-6">`;
-                                history.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+                                
+                                const currentLocale = '{{ app()->getLocale() }}';
+                                const isIndo = currentLocale === 'id';
 
-                                history.forEach((item, index) => {
-                                    const date = new Date(item.updated_at).toLocaleString(dateLocale, {
-                                        day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
-                                    });
-                                    const isNewest = index === 0;
-                                    const dotColor = isNewest ? 'bg-navyBlue ring-white' : 'bg-gray-300 ring-white';
-                                    const textColor = isNewest ? 'text-black font-semibold' : 'text-gray-600';
+                                const statusTranslations = {
+                                    'confirmed': { en: 'Confirmed', id: 'Dikonfirmasi' },
+                                    'allocated': { en: 'Allocated', id: 'Dialokasikan' },
+                                    'picking_up': { en: 'Picking Up', id: 'Menuju Lokasi' },
+                                    'picked': { en: 'Picked Up', id: 'Telah Diambil' },
+                                    'dropping_off': { en: 'Dropping Off', id: 'Menuju Tujuan' },
+                                    'in_transit': { en: 'In Transit', id: 'Dalam Perjalanan' },
+                                    'delivered': { en: 'Delivered', id: 'Terkirim' },
+                                    'rejected': { en: 'Rejected', id: 'Ditolak' },
+                                    'cancelled': { en: 'Cancelled', id: 'Dibatalkan' },
+                                    'returned': { en: 'Returned', id: 'Dikembalikan' }
+                                };
+
+                                const noteTranslations = [
+                                    { en: 'Courier is allocated and ready to pick up', id: 'Kurir telah dialokasikan dan siap mengambil pesanan' },
+                                    { en: 'Courier is on the way to pick up location', id: 'Kurir sedang dalam perjalanan menuju lokasi penjemputan' },
+                                    { en: 'Item has been picked by courier', id: 'Barang telah diambil oleh kurir' },
+                                    { en: 'Item is on the way to destination', id: 'Barang sedang dalam perjalanan menuju tujuan' },
+                                    { en: 'Courier is dropping off item to destination', id: 'Kurir sedang mengantar barang ke alamat tujuan' },
+                                    { en: 'Order has been delivered', id: 'Pesanan telah terkirim' }
+                                ];
+
+                                history.forEach(item => {
+                                    const statusColors = {
+                                        'confirmed': 'bg-blue-500',
+                                        'allocated': 'bg-blue-500',
+                                        'picking_up': 'bg-yellow-500',
+                                        'picked': 'bg-yellow-500',
+                                        'dropping_off': 'bg-purple-500',
+                                        'in_transit': 'bg-blue-500',
+                                        'delivered': 'bg-green-500',
+                                        'rejected': 'bg-red-500',
+                                        'cancelled': 'bg-red-500',
+                                        'returned': 'bg-orange-500'
+                                    };
+                                    const color = statusColors[item.status] || 'bg-gray-400';
+                                    
+                                    // Format date dynamically based on language
+                                    const dateObj = new Date(item.updated_at);
+                                    const dateLocale = isIndo ? 'id-ID' : 'en-US';
+                                    const dateStr = dateObj.toLocaleDateString(dateLocale, { month: 'short', day: 'numeric', year: 'numeric' });
+                                    const timeStr = dateObj.toLocaleTimeString(dateLocale, { hour: '2-digit', minute: '2-digit' });
+
+                                    // Translate status
+                                    const translatedStatus = statusTranslations[item.status] ? statusTranslations[item.status][isIndo ? 'id' : 'en'] : item.status;
+                                    
+                                    // Translate note if possible
+                                    let translatedNote = item.note;
+                                    if (isIndo) {
+                                        if (translatedNote.includes('Courier order is confirmed')) {
+                                            translatedNote = translatedNote.replace('Courier order is confirmed', 'Pesanan kurir dikonfirmasi').replace('has been notified to pick up', 'telah diberitahu untuk menjemput').replace('Pickup Number', 'Nomor Penjemputan');
+                                        } else {
+                                            const match = noteTranslations.find(t => translatedNote.includes(t.en));
+                                            if (match) {
+                                                translatedNote = translatedNote.replace(match.en, match.id);
+                                            }
+                                        }
+                                    }
 
                                     timelineHtml += `
-                                        <div class="mb-4 ml-4">
-                                            <div class="absolute -left-1.5 mt-1.5 h-3 w-3 rounded-full border border-white ${dotColor}"></div>
-                                            <time class="mb-1 text-xs font-normal leading-none text-gray-400">${date}</time>
-                                            <h3 class="text-sm ${textColor}">${item.status}</h3>
-                                            <p class="text-xs font-normal text-gray-500">${item.note}</p>
+                                        <div class="relative">
+                                            <span class="absolute -left-4 flex h-2 w-2 items-center justify-center rounded-full ${color} ring-4 ring-white"></span>
+                                            <div class="flex flex-col">
+                                                <span class="text-xs text-gray-400">${dateStr}, ${timeStr}</span>
+                                                <span class="text-sm font-medium text-gray-900">${translatedStatus}</span>
+                                                <span class="text-xs text-gray-500">${translatedNote}</span>
+                                            </div>
                                         </div>
                                     `;
                                 });
