@@ -2418,9 +2418,10 @@
                                     return;
                                 }
 
-                                if (result.courier_link) {
+                                const courierLink = result.courier?.link || result.courier_link;
+                                if (courierLink) {
                                     tracker.innerHTML = `
-                                        <a href="${result.courier_link}" target="_blank" class="mt-2 inline-flex items-center justify-center rounded-lg border border-transparent bg-navyBlue px-4 py-2 text-sm font-medium text-white transition-all hover:bg-navyBlue/90">
+                                        <a href="${courierLink}" target="_blank" class="mt-2 inline-flex items-center justify-center rounded-lg border border-transparent bg-navyBlue px-4 py-2 text-sm font-medium text-white transition-all hover:bg-navyBlue/90">
                                             @lang('shop::app.customers.account.orders.view.shipments.biteship-live-map')
                                         </a>
                                     `;
