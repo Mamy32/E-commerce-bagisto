@@ -243,7 +243,7 @@ class BiteshipService
      * @param string $waybillId
      * @return array|false
      */
-    public function getTrackingStatus($waybillId)
+    public function getTrackingStatus($waybillId, $courier = null)
     {
         if (empty($this->apiKey)) {
             Log::error('Biteship: Cannot fetch tracking, API Key is missing.');
@@ -251,9 +251,14 @@ class BiteshipService
         }
 
         try {
+            $endpoint = $this->baseUrl . '/trackings/' . $waybillId;
+            if ($courier) {
+                $endpoint .= '/couriers/' . $courier;
+            }
+
             $response = Http::withHeaders([
                 'Authorization' => $this->apiKey,
-            ])->get($this->baseUrl . '/trackings/' . $waybillId);
+            ])->get($endpoint);
 
             if ($response->successful()) {
                 return $response->json();

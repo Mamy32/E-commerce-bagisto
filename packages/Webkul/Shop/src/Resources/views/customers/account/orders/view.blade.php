@@ -2377,13 +2377,14 @@
                 
                 trackers.forEach(async (tracker) => {
                     const waybill = tracker.getAttribute('data-waybill');
+                    const courier = tracker.getAttribute('data-courier');
                     if (!waybill) {
                         tracker.innerHTML = '';
                         return;
                     }
 
                     try {
-                        const response = await fetch(`/api/biteship/track/${waybill}`);
+                        const response = await fetch(`/api/biteship/track/${waybill}/${courier}`);
                         const result = await response.json();
 
                         if (!response.ok || !result.success) {
