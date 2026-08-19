@@ -6,71 +6,7 @@ use Illuminate\Support\Facades\Cache;
 
 
 
-Route::get('/force-pay/{id}', function ($id) {
-    $order = \Webkul\Sales\Models\Order::find($id);
-    if (!$order) return 'Order not found';
-    
-    $result = [];
-    
-    // 1. Create Invoice
-    if ($order->canInvoice()) {
-        $invoiceRepository = app(\Webkul\Sales\Repositories\InvoiceRepository::class);
-        $invoiceData = ['order_id' => $order->id, 'invoice' => ['items' => []]];
-        foreach ($order->items as $item) {
-            $invoiceData['invoice']['items'][$item->id] = $item->qty_to_invoice;
-        }
-        $invoice = $invoiceRepository->create($invoiceData);
-        $result[] = '✅ Invoice created successfully.';
-    } else {
-        $result[] = 'ℹ️ Order is already invoiced.';
-    }
 
-    // 2. Create Shipment via Biteship
-    if ($order->canShip()) {
-        try {
-            $biteshipService = app(\Fashion\Biteship\Services\BiteshipService::class);
-            $shipmentRepository = app(\Webkul\Sales\Repositories\ShipmentRepository::class);
-            
-            $parts = explode('_', $order->shipping_method);
-            if (count($parts) >= 3) {
-                $courierCompany = $parts[1];
-                $courierType = $parts[2];
-                
-                $apiOrder = $biteshipService->createShippingOrder($order, $courierCompany, $courierType);
-                
-                if ($apiOrder && isset($apiOrder['id'])) {
-                    $waybill = $apiOrder['courier']['waybill_id'] ?? $apiOrder['id'];
-                    $shipmentData = [
-                        'order_id' => $order->id,
-                        'shipment' => [
-                            'carrier_title' => $order->shipping_title,
-                            'track_number' => $waybill,
-                            'source' => 1,
-                            'items' => []
-                        ]
-                    ];
-                    foreach ($order->items as $item) {
-                        if ($item->qty_to_ship > 0 && $item->type != 'virtual') {
-                            $shipmentData['shipment']['items'][$item->id] = [1 => $item->qty_to_ship];
-                        }
-                    }
-                    $shipmentRepository->create($shipmentData);
-                    $result[] = '🚀 Biteship Shipment created automatically! Waybill: ' . $waybill;
-                } else {
-                    $result[] = '❌ Biteship API failed: ' . json_encode($apiOrder);
-                }
-            } else {
-                $result[] = '❌ Invalid shipping method format: ' . $order->shipping_method;
-            }
-        } catch (\Exception $e) {
-            $result[] = '❌ Biteship API Error: ' . $e->getMessage();
-        }
-    } else {
-        $result[] = 'ℹ️ Order is already shipped or cannot be shipped.';
-    }
-    
-    return implode('<br><br>', $result);
-});
 
 Route::get('/admin/locale/switch/{code}', function ($code) {
     if (in_array($code, core()->getAllLocales()->pluck('code')->toArray())) {
