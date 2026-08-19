@@ -4,9 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 
-Route::get('/', function () {
-    return redirect()->route('shop.home.index');
-});
+
 
 Route::get('/force-pay/{id}', function ($id) {
     $order = \Webkul\Sales\Models\Order::find($id);
