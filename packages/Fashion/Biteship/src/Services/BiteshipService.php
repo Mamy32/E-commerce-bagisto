@@ -205,9 +205,9 @@ class BiteshipService
             'delivery_type' => 'now',
             'order_note' => 'Order #' . $order->increment_id,
             'items' => $items,
-            'origin_contact_name' => core()->getConfigData('general.general.email_settings.sender_name') ?: 'Store Admin',
-            'origin_contact_phone' => '081234567890', // Fallback as bagisto might not have this globally
-            'origin_address' => core()->getConfigData('sales.shipping.origin.address1') ?: 'Store Warehouse Address',
+            'origin_contact_name' => core()->getConfigData('sales.shipping.origin.store_name') ?: (core()->getConfigData('general.general.email_settings.sender_name') ?: 'Store Admin'),
+            'origin_contact_phone' => core()->getConfigData('sales.shipping.origin.contact') ?: '081234567890', // Fallback as bagisto might not have this globally
+            'origin_address' => core()->getConfigData('sales.shipping.origin.address') ?: 'Store Warehouse Address',
             'destination_contact_name' => $shippingAddress->first_name . ' ' . $shippingAddress->last_name,
             'destination_contact_phone' => $shippingAddress->phone ?: '081234567890',
             'destination_contact_email' => $order->customer_email,
