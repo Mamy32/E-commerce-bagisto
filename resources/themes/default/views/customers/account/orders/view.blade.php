@@ -2462,26 +2462,15 @@
                                     { en: 'Order has been delivered', id: 'Pesanan telah terkirim' }
                                 ];
 
-                                history.forEach(item => {
-                                    const statusColors = {
-                                        'confirmed': 'bg-blue-500',
-                                        'allocated': 'bg-blue-500',
-                                        'picking_up': 'bg-yellow-500',
-                                        'picked': 'bg-yellow-500',
-                                        'dropping_off': 'bg-purple-500',
-                                        'in_transit': 'bg-blue-500',
-                                        'delivered': 'bg-green-500',
-                                        'rejected': 'bg-red-500',
-                                        'cancelled': 'bg-red-500',
-                                        'returned': 'bg-orange-500'
-                                    };
-                                    const color = statusColors[item.status] || 'bg-gray-400';
-                                    
+                                history.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+
+                                history.forEach((item, index) => {
                                     // Format date dynamically based on language
                                     const dateObj = new Date(item.updated_at);
                                     const dateLocale = isIndo ? 'id-ID' : 'en-US';
-                                    const dateStr = dateObj.toLocaleDateString(dateLocale, { month: 'short', day: 'numeric', year: 'numeric' });
-                                    const timeStr = dateObj.toLocaleTimeString(dateLocale, { hour: '2-digit', minute: '2-digit' });
+                                    const dateStr = dateObj.toLocaleString(dateLocale, {
+                                        day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                                    });
 
                                     // Translate status
                                     const translatedStatus = statusTranslations[item.status] ? statusTranslations[item.status][isIndo ? 'id' : 'en'] : item.status;
@@ -2499,14 +2488,16 @@
                                         }
                                     }
 
+                                    const isNewest = index === 0;
+                                    const dotColor = isNewest ? 'bg-navyBlue ring-white' : 'bg-gray-300 ring-white';
+                                    const textColor = isNewest ? 'text-black font-semibold' : 'text-gray-600';
+
                                     timelineHtml += `
-                                        <div class="relative">
-                                            <span class="absolute -left-4 flex h-2 w-2 items-center justify-center rounded-full ${color} ring-4 ring-white"></span>
-                                            <div class="flex flex-col">
-                                                <span class="text-xs text-gray-400">${dateStr}, ${timeStr}</span>
-                                                <span class="text-sm font-medium text-gray-900">${translatedStatus}</span>
-                                                <span class="text-xs text-gray-500">${translatedNote}</span>
-                                            </div>
+                                        <div class="mb-4 ml-4">
+                                            <div class="absolute -left-1.5 mt-1.5 h-3 w-3 rounded-full border border-white ${dotColor}"></div>
+                                            <time class="mb-1 text-xs font-normal leading-none text-gray-400">${dateStr}</time>
+                                            <h3 class="text-sm ${textColor}">${translatedStatus}</h3>
+                                            <p class="text-xs font-normal text-gray-500">${translatedNote}</p>
                                         </div>
                                     `;
                                 });
