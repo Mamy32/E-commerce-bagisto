@@ -78,10 +78,5 @@ Route::get('/fix-email-settings', function () {
 Route::get('/api/biteship/track/{waybill}/{courier?}', function ($waybill, $courier = null) {
     $service = app(\Fashion\Biteship\Services\BiteshipService::class);
     
-    // If the waybill starts with WYB-, it's a Biteship test waybill
-    if (str_starts_with($waybill, 'WYB-')) {
-        $courier = 'biteship';
-    }
-    
     return response()->json($service->getTrackingStatus($waybill, $courier));
 });

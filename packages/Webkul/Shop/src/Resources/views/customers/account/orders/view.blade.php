@@ -1495,7 +1495,10 @@
                                         <span>
                                             {{  $shipment->track_number }}
                                         </span>
-                                        <div class="biteship-tracker mt-4" data-waybill="{{ $shipment->track_number }}">
+                                        @php
+                                            $courierCode = explode('_', $order->shipping_method)[1] ?? 'biteship';
+                                        @endphp
+                                        <div class="biteship-tracker mt-4" data-waybill="{{ $shipment->track_number }}" data-courier="{{ $courierCode }}">
                                             <span class="text-sm text-gray-500">Loading tracking...</span>
                                         </div>
                                     </div>
@@ -1566,7 +1569,10 @@
                                                     <span>@lang('shop::app.customers.account.orders.view.shipments.tracking-number'):</span>
                                                     <span>{{  $shipment->track_number }}</span>
                                                 </div>
-                                                <div class="biteship-tracker" data-waybill="{{ $shipment->track_number }}">
+                                                @php
+                                                    $courierCode = explode('_', $order->shipping_method)[1] ?? 'biteship';
+                                                @endphp
+                                                <div class="biteship-tracker mt-4" data-waybill="{{ $shipment->track_number }}" data-courier="{{ $courierCode }}">
                                                     <span class="text-xs text-gray-500">Loading tracking...</span>
                                                 </div>
                                             </div>
