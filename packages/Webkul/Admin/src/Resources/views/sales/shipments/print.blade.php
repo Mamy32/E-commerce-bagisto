@@ -5,11 +5,12 @@
     <title>Shipping Label - {{ $shipment->order->increment_id }}</title>
     <style>
         @page { size: 100mm 150mm; margin: 0; }
-        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: #000; background: #fff; width: 100mm; height: 150mm; box-sizing: border-box; border: 2px solid #000; overflow: hidden; }
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0; padding: 0; color: #000; background: #fff; width: 100%; max-width: 100mm; box-sizing: border-box; border: 2px solid #000; overflow: hidden; }
         
         /* Header */
         .header { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-bottom: 2px dashed #000; }
-        .header .logo { font-size: 16px; font-weight: bold; color: #ee4d2d; }
+        .header .logo { font-size: 16px; font-weight: bold; color: #ee4d2d; max-width: 50%; }
+        .header .logo img { max-height: 35px; width: auto; }
         .header .service { font-size: 24px; font-weight: bold; }
         .header .courier { font-size: 18px; font-weight: bold; font-style: italic; color: #d32f2f; }
         
@@ -47,7 +48,7 @@
         .items-table td { padding: 4px 8px; vertical-align: top; }
         
         @media print {
-            body { border: none; }
+            body { border: none; max-width: none; width: 100mm; height: 150mm; }
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
@@ -56,6 +57,7 @@
     @php
         $order = $shipment->order;
         $shippingAddress = $order->shipping_address;
+        $logo = core()->getCurrentChannel()->logo_url;
         
         // Try to get carrier nicely
         $desc = strtoupper(str_replace('biteship_', '', $shipment->carrier_title));
@@ -75,7 +77,13 @@
 
     <!-- Header -->
     <div class="header">
-        <div class="logo">🛍️ JFC Fashion</div>
+        <div class="logo">
+            @if ($logo)
+                <img src="{{ $logo }}" alt="{{ core()->getCurrentChannel()->name }}">
+            @else
+                🛍️ JFC Fashion
+            @endif
+        </div>
         <div class="service">REG</div>
         <div class="courier">{{ $desc }}</div>
     </div>
