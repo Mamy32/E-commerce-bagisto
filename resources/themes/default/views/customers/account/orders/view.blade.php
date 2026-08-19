@@ -1502,7 +1502,10 @@
                                                 </svg>
                                             </a>
                                         </div>
-                                        <div class="biteship-tracker mt-4" data-waybill="{{ $shipment->track_number }}">
+                                        @php
+                                            $courierCode = explode('_', $order->shipping_method)[1] ?? 'biteship';
+                                        @endphp
+                                        <div class="biteship-tracker mt-4" data-waybill="{{ $shipment->track_number }}" data-courier="{{ $courierCode }}">
                                             <span class="text-sm text-gray-500">@lang('shop::app.customers.account.orders.view.shipments.biteship-loading')</span>
                                         </div>
                                     </div>
@@ -1580,7 +1583,10 @@
                                                         </a>
                                                     </div>
                                                 </div>
-                                                <div class="biteship-tracker" data-waybill="{{ $shipment->track_number }}">
+                                                @php
+                                                    $courierCode = explode('_', $order->shipping_method)[1] ?? 'biteship';
+                                                @endphp
+                                                <div class="biteship-tracker mt-4" data-waybill="{{ $shipment->track_number }}" data-courier="{{ $courierCode }}">
                                                     <span class="text-xs text-gray-500">@lang('shop::app.customers.account.orders.view.shipments.biteship-loading')</span>
                                                 </div>
                                             </div>
@@ -2397,13 +2403,14 @@
                             tracker.setAttribute('data-loaded', 'true');
                             
                             const waybill = tracker.getAttribute('data-waybill');
+                            const courier = tracker.getAttribute('data-courier');
                             if (!waybill) {
                                 tracker.innerHTML = '';
                                 return;
                             }
 
                             try {
-                                const response = await fetch(`/api/biteship/track/${waybill}`);
+                                const response = await fetch(`/api/biteship/track/${waybill}/${courier}`);
                                 const result = await response.json();
 
                                 if (!response.ok || !result.success) {
