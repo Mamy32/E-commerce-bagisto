@@ -373,13 +373,17 @@
                         galleryImages.splice(0, galleryImages.length)
 
                         if (this.possibleOptionVariant) {
-                            this.config.variant_images[this.possibleOptionVariant].forEach(function(image) {
-                                galleryImages.push(image);
-                            });
+                            if (this.config.variant_images && this.config.variant_images[this.possibleOptionVariant]) {
+                                this.config.variant_images[this.possibleOptionVariant].forEach(function(image) {
+                                    galleryImages.push(image);
+                                });
+                            }
 
-                            this.config.variant_videos[this.possibleOptionVariant].forEach(function(video) {
-                                galleryImages.push(video);
-                            });
+                            if (this.config.variant_videos && this.config.variant_videos[this.possibleOptionVariant]) {
+                                this.config.variant_videos[this.possibleOptionVariant].forEach(function(video) {
+                                    galleryImages.push(video);
+                                });
+                            }
                         }
 
                         this.galleryImages.forEach(function(image) {
