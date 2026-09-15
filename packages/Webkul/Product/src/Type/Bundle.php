@@ -27,19 +27,7 @@ class Bundle extends AbstractType
      *
      * @var array
      */
-    protected $skipAttributes = [
-        'price',
-        'cost',
-        'special_price',
-        'special_price_from',
-        'special_price_to',
-        'length',
-        'width',
-        'height',
-        'weight',
-        'depth',
-        'manage_stock',
-    ];
+    protected $skipAttributes = [];
 
     /**
      * Is a composite product type.

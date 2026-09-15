@@ -25,18 +25,7 @@ class Configurable extends AbstractType
      *
      * @var array
      */
-    protected $skipAttributes = [
-        'price',
-        'cost',
-        'special_price',
-        'special_price_from',
-        'special_price_to',
-        'length',
-        'width',
-        'height',
-        'weight',
-        'manage_stock',
-    ];
+    protected $skipAttributes = [];
 
     /**
      * These are the types which can be fillable when generating variant.

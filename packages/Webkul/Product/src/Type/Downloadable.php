@@ -25,17 +25,7 @@ class Downloadable extends AbstractType
      *
      * @var array
      */
-    protected $skipAttributes = [
-        'length',
-        'width',
-        'height',
-        'weight',
-        'depth',
-        'manage_stock',
-        'guest_checkout',
-        'allow_rma',
-        'rma_rule_id',
-    ];
+    protected $skipAttributes = [];
 
     /**
      * Is a stockable product type.

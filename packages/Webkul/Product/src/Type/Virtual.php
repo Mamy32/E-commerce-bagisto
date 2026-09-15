@@ -29,15 +29,7 @@ class Virtual extends AbstractType
      *
      * @var array
      */
-    protected $skipAttributes = [
-        'length',
-        'width',
-        'height',
-        'weight',
-        'depth',
-        'allow_rma',
-        'rma_rule_id',
-    ];
+    protected $skipAttributes = [];
 
     /**
      * Is a stockable product type.
