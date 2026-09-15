@@ -50,11 +50,6 @@
                     containerOffset: 110,
                 };
             },
-
-            mounted() {
-                this.$emitter.on('configurable-variant-update-images-event', (images) => {
-                    this.media.images = images;
-                });
             },
 
             watch: {
@@ -72,6 +67,10 @@
             },
         
             mounted() {
+                this.$emitter.on('configurable-variant-update-images-event', (images) => {
+                    this.media.images = images;
+                });
+
                 if (this.media.images.length) {
 
                     this.baseFile.type = 'image';
