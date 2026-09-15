@@ -32,47 +32,12 @@
                         <div class="flex items-center gap-3">
                             <template v-for="(option, index) in attribute.options">
                                 <template v-if="option.id">
-                                    <!-- Color Swatch Options -->
-                                    <label
-                                        class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-none p-0.5 focus:outline-none"
-                                        :class="{'ring-1 ring-[#d4af37] ring-offset-2' : option.id == attribute.selectedValue}"
-                                        :title="option.label"
-                                        v-if="attribute.swatch_type == 'color'"
-                                    >
-                                        <v-field
-                                            type="radio"
-                                            :name="'super_attribute[' + attribute.id + ']'"
-                                            :value="option.id"
-                                            v-slot="{ field }"
-                                            rules="required"
-                                            :label="attribute.label"
-                                            :aria-label="attribute.label"
-                                        >
-                                            <input
-                                                type="radio"
-                                                :name="'super_attribute[' + attribute.id + ']'"
-                                                :value="option.id"
-                                                v-bind="field"
-                                                :id="'attribute_' + attribute.id"
-                                                :aria-labelledby="'color-choice-' + index + '-label'"
-                                                class="peer sr-only"
-                                                @click="configure(attribute, $event.target.value)"
-                                            />
-                                        </v-field>
-
-                                        <span
-                                            class="h-8 w-8 rounded-none border border-gray-200 max-sm:h-[25px] max-sm:w-[25px]"
-                                            tabindex="0"
-                                            :style="{ 'background-color': option.swatch_value }"
-                                        ></span>
-                                    </label>
-
                                     <!-- Image Swatch Options -->
-                                    <label 
+                                    <label
                                         class="group relative flex h-[60px] w-[60px] cursor-pointer items-center justify-center overflow-hidden rounded-md border bg-white font-medium uppercase text-gray-900 hover:bg-gray-50 sm:py-6"
                                         :class="{'border-navyBlue' : option.id == attribute.selectedValue }"
                                         :title="option.label"
-                                        v-if="attribute.swatch_type == 'image'"
+                                        v-if="attribute.swatch_type == 'image' && attribute.code !== 'color'"
                                     >
                                         <v-field
                                             type="radio"
@@ -107,7 +72,7 @@
                                         class="group relative flex h-[46px] min-w-[46px] cursor-pointer items-center justify-center rounded-none border border-gray-300 bg-transparent px-4 py-2 font-medium uppercase text-gray-900 transition-all hover:border-gray-900 max-sm:h-[36px] max-sm:min-w-[36px] max-sm:px-3 max-sm:py-1 max-sm:text-sm"
                                         :class="{'!border-[#d4af37] text-[#d4af37]' : option.id == attribute.selectedValue }"
                                         :title="option.label"
-                                        v-if="attribute.swatch_type != 'color' && attribute.swatch_type != 'image'"
+                                        v-if="attribute.swatch_type != 'image' || attribute.code === 'color'"
                                     >
                                         <v-field
                                             type="radio"
@@ -381,10 +346,6 @@
                         this.galleryImages.forEach(function(image) {
                             galleryImages.push(image);
                         });
-
-                        if (galleryImages.length) {
-                            this.$parent.$parent.$refs.gallery.media.images =  [...galleryImages];
-                        }
 
                         this.$emitter.emit('configurable-variant-update-images-event', galleryImages);
                     },
