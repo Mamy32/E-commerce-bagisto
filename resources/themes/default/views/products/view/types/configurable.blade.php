@@ -386,7 +386,7 @@
                             galleryImages.push(image);
                         });
 
-                        if (galleryImages.length) {
+                        if (galleryImages.length && this.$parent && this.$parent.$parent && this.$parent.$parent.$refs && this.$parent.$parent.$refs.gallery) {
                             this.$parent.$parent.$refs.gallery.media.images =  [...galleryImages];
                         }
 
