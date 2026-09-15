@@ -51,6 +51,12 @@
                 };
             },
 
+            mounted() {
+                this.$emitter.on('configurable-variant-update-images-event', (images) => {
+                    this.media.images = images;
+                });
+            },
+
             watch: {
                 'media.images': {
                     deep: true,
