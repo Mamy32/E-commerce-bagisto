@@ -32,10 +32,10 @@
                         <div class="flex items-center gap-3">
                             <template v-for="(option, index) in attribute.options">
                                 <template v-if="option.id">
-                                    <!-- Color Swatch Options -->
+                                    <!-- Color Swatch Options (Modified to show text instead of square block) -->
                                     <label
-                                        class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-none p-0.5 focus:outline-none"
-                                        :class="{'ring-1 ring-[#d4af37] ring-offset-2' : option.id == attribute.selectedValue}"
+                                        class="group relative flex h-[46px] min-w-[46px] cursor-pointer items-center justify-center rounded-none border border-gray-300 bg-transparent px-4 py-2 font-medium uppercase text-gray-900 transition-all hover:border-gray-900 max-sm:h-[36px] max-sm:min-w-[36px] max-sm:px-3 max-sm:py-1 max-sm:text-sm"
+                                        :class="{'!border-[#d4af37] text-[#d4af37]' : option.id == attribute.selectedValue}"
                                         :title="option.label"
                                         v-if="attribute.swatch_type == 'color'"
                                     >
@@ -60,11 +60,15 @@
                                             />
                                         </v-field>
 
+                                        <span class="text-lg max-sm:text-sm">
+                                            @{{ option.label }}
+                                        </span>
+
                                         <span
-                                            class="h-8 w-8 rounded-none border border-gray-200 max-sm:h-[25px] max-sm:w-[25px]"
-                                            tabindex="0"
-                                            :style="{ 'background-color': option.swatch_value }"
-                                        ></span>
+                                            class="pointer-events-none absolute -inset-px rounded-none"
+                                            role="presentation"
+                                        >
+                                        </span>
                                     </label>
 
                                     <!-- Image Swatch Options -->
