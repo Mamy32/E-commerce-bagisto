@@ -50,7 +50,6 @@
                     containerOffset: 110,
                 };
             },
-            },
 
             watch: {
                 'media.images': {
