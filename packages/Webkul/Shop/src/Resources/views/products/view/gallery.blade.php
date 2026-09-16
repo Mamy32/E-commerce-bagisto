@@ -53,13 +53,15 @@
 
             watch: {
                 'media.images': {
-                    deep: true,
+                    deep: false,
 
-                    handler(newImages, oldImages) {
-                        let selectedImage = newImages?.[this.activeIndex];
+                    handler(newImages) {
+                        this.activeIndex = 0;
 
-                        if (JSON.stringify(newImages) !== JSON.stringify(oldImages) && selectedImage?.large_image_url) {
-                            this.baseFile.path = selectedImage.large_image_url;
+                        if (newImages && newImages.length) {
+                            this.baseFile.type = 'image';
+                            this.baseFile.path = newImages[0].large_image_url;
+                            this.isMediaLoading = true;
                         }
                     },
                 },
