@@ -23,8 +23,40 @@
                     class="mt-5"
                     v-for='(attribute, index) in childAttributes'
                 >
+                    <!-- Dropdown Options Container -->
+                    <template v-if="! attribute.swatch_type || attribute.swatch_type == '' || attribute.swatch_type == 'dropdown'">
+                        <!-- Dropdown Label -->
+                        <h2 class="mb-4 text-xl max-sm:mb-1.5 max-sm:text-base max-sm:font-medium">
+                            @{{ attribute.label }}
+                        </h2>
+                        
+                        <!-- Dropdown Options -->
+                        <v-field
+                            as="select"
+                            :name="'super_attribute[' + attribute.id + ']'"
+                            class="custom-select mb-3 block w-full cursor-pointer rounded-lg border border-zinc-200 bg-white px-5 py-3 text-base text-zinc-500 focus:border-blue-500 focus:ring-blue-500"
+                            :class="[errors['super_attribute[' + attribute.id + ']'] ? 'border border-red-500' : '']"
+                            :id="'attribute_' + attribute.id"
+                            v-model="attribute.selectedValue"
+                            rules="required"
+                            :label="attribute.label"
+                            :aria-label="attribute.label"
+                            :disabled="attribute.disabled"
+                            @change="configure(attribute, $event.target.value)"
+                        >
+                            <option
+                                v-for='(option, index) in attribute.options'
+                                :value="option.id"
+                            >
+                                @{{ option.label }}
+                            </option>
+                        </v-field>
+                    </template>
+
+                    <!-- Swatch Options Container -->
+                    <template v-else>
                         <!-- Option Label -->
-                        <h2 class="mb-4 mt-6 text-sm font-medium uppercase tracking-widest text-zinc-900 max-sm:mb-2 max-sm:text-xs">
+                        <h2 class="mb-4 text-xl max-sm:mb-2 max-sm:text-base">
                             @{{ attribute.label }}
                         </h2>
 
@@ -32,51 +64,12 @@
                         <div class="flex items-center gap-3">
                             <template v-for="(option, index) in attribute.options">
                                 <template v-if="option.id">
-                                    <!-- Color Swatch Options (Modified to show text instead of square block) -->
-                                    <label
-                                        class="group relative flex h-[46px] min-w-[46px] cursor-pointer items-center justify-center rounded-none border border-gray-300 bg-transparent px-4 py-2 font-medium uppercase text-gray-900 transition-all hover:border-gray-900 max-sm:h-[36px] max-sm:min-w-[36px] max-sm:px-3 max-sm:py-1 max-sm:text-sm"
-                                        :class="{'!border-[#d4af37] text-[#d4af37]' : option.id == attribute.selectedValue}"
-                                        :title="option.label"
-                                        v-if="attribute.swatch_type == 'color'"
-                                    >
-                                        <v-field
-                                            type="radio"
-                                            :name="'super_attribute[' + attribute.id + ']'"
-                                            :value="option.id"
-                                            v-slot="{ field }"
-                                            rules="required"
-                                            :label="attribute.label"
-                                            :aria-label="attribute.label"
-                                        >
-                                            <input
-                                                type="radio"
-                                                :name="'super_attribute[' + attribute.id + ']'"
-                                                :value="option.id"
-                                                v-bind="field"
-                                                :id="'attribute_' + attribute.id"
-                                                :aria-labelledby="'color-choice-' + index + '-label'"
-                                                class="peer sr-only"
-                                                @click="configure(attribute, $event.target.value)"
-                                            />
-                                        </v-field>
-
-                                        <span class="text-lg max-sm:text-sm">
-                                            @{{ option.label }}
-                                        </span>
-
-                                        <span
-                                            class="pointer-events-none absolute -inset-px rounded-none"
-                                            role="presentation"
-                                        >
-                                        </span>
-                                    </label>
-
                                     <!-- Image Swatch Options -->
-                                    <label 
+                                    <label
                                         class="group relative flex h-[60px] w-[60px] cursor-pointer items-center justify-center overflow-hidden rounded-md border bg-white font-medium uppercase text-gray-900 hover:bg-gray-50 sm:py-6"
                                         :class="{'border-navyBlue' : option.id == attribute.selectedValue }"
                                         :title="option.label"
-                                        v-if="attribute.swatch_type == 'image'"
+                                        v-if="attribute.swatch_type == 'image' && attribute.code !== 'color'"
                                     >
                                         <v-field
                                             type="radio"
@@ -108,10 +101,10 @@
 
                                     <!-- Text Swatch Options -->
                                     <label 
-                                        class="group relative flex h-[46px] min-w-[46px] cursor-pointer items-center justify-center rounded-none border border-gray-300 bg-transparent px-4 py-2 font-medium uppercase text-gray-900 transition-all hover:border-gray-900 max-sm:h-[36px] max-sm:min-w-[36px] max-sm:px-3 max-sm:py-1 max-sm:text-sm"
-                                        :class="{'!border-[#d4af37] text-[#d4af37]' : option.id == attribute.selectedValue }"
+                                        class="group relative flex h-fit min-w-fit cursor-pointer items-center justify-center rounded-full border border-gray-300 bg-white px-5 py-3 font-medium uppercase text-gray-900 hover:bg-gray-50 max-sm:h-fit max-sm:w-fit max-sm:px-3.5 max-sm:py-2"
+                                        :class="{'border-transparent !bg-navyBlue text-white' : option.id == attribute.selectedValue }"
                                         :title="option.label"
-                                        v-if="attribute.swatch_type != 'color' && attribute.swatch_type != 'image'"
+                                        v-if="attribute.swatch_type == 'text' || attribute.swatch_type == 'color' || attribute.code === 'color'"
                                     >
                                         <v-field
                                             type="radio"
@@ -140,7 +133,7 @@
                                         </span>
 
                                         <span
-                                            class="pointer-events-none absolute -inset-px rounded-none"
+                                            class="pointer-events-none absolute -inset-px rounded-full"
                                             role="presentation"
                                         >
                                         </span>
@@ -155,6 +148,7 @@
                                 @lang('shop::app.products.view.type.configurable.select-above-options')
                             </span>
                         </div>
+                    </template>
 
                     <v-error-message
                         :name="'super_attribute[' + attribute.id + ']'"
@@ -169,8 +163,6 @@
         </script>
 
         <script type="module">
-            let galleryImages = @json(product_image()->getGalleryImages($product));
-
             app.component('v-product-configurable-options', {
                 template: '#v-product-configurable-options-template',
 
@@ -370,31 +362,18 @@
                     },
 
                     reloadImages () {
-                        galleryImages.splice(0, galleryImages.length)
+                        let updatedImages = [];
 
                         if (this.possibleOptionVariant) {
-                            if (this.config.variant_images && this.config.variant_images[this.possibleOptionVariant]) {
-                                this.config.variant_images[this.possibleOptionVariant].forEach(function(image) {
-                                    galleryImages.push(image);
-                                });
-                            }
-
-                            if (this.config.variant_videos && this.config.variant_videos[this.possibleOptionVariant]) {
-                                this.config.variant_videos[this.possibleOptionVariant].forEach(function(video) {
-                                    galleryImages.push(video);
-                                });
-                            }
+                            updatedImages = updatedImages.concat(
+                                this.config.variant_images[this.possibleOptionVariant],
+                                this.config.variant_videos[this.possibleOptionVariant]
+                            );
                         }
 
-                        this.galleryImages.forEach(function(image) {
-                            galleryImages.push(image);
-                        });
+                        updatedImages = updatedImages.concat(this.galleryImages);
 
-                        if (galleryImages.length && this.$parent && this.$parent.$parent && this.$parent.$parent.$refs && this.$parent.$parent.$refs.gallery) {
-                            this.$parent.$parent.$refs.gallery.media.images =  [...galleryImages];
-                        }
-
-                        this.$emitter.emit('configurable-variant-update-images-event', galleryImages);
+                        this.$emitter.emit('configurable-variant-update-images-event', updatedImages);
                     },
                 }
             });
