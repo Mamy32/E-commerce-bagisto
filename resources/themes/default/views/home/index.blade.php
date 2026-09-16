@@ -166,41 +166,4 @@
         </section>
     @endif
 
-    @if (count($heroImages) > 1)
-        <section class="mx-auto mt-24 mb-16 max-w-[1440px] px-[60px] max-lg:px-8 max-sm:px-4">
-            <div class="mb-12 text-center">
-                <h2 class="font-dmserif text-4xl italic text-fashion-navy max-sm:text-3xl">{{ __('Shop The Look') }}</h2>
-                <p class="mt-3 text-sm font-semibold uppercase tracking-[0.2em] text-[#C9A84C]">@JFCFashion</p>
-            </div>
-            
-            <div class="grid grid-cols-4 gap-4 max-lg:grid-cols-2 max-sm:grid-cols-1">
-                @foreach (array_slice($heroImages, 1) as $index => $slide)
-                    @php
-                        // Asymmetrical sizing logic for a 4-item grid
-                        if ($index === 0) {
-                            $classes = 'col-span-2 row-span-2 aspect-square max-lg:col-span-2 max-lg:row-span-1 max-lg:aspect-[2/1] max-sm:col-span-1 max-sm:aspect-[4/5]';
-                        } elseif ($index === 3) {
-                            $classes = 'col-span-2 row-span-1 aspect-[2/1] max-lg:col-span-2 max-lg:row-span-1 max-sm:col-span-1 max-sm:aspect-[4/5]';
-                        } else {
-                            $classes = 'col-span-1 row-span-1 aspect-square max-lg:col-span-1 max-lg:row-span-1 max-sm:col-span-1 max-sm:aspect-[4/5]';
-                        }
-                    @endphp
-                    
-                    <a href="{{ $slide['link'] ?? '#' }}" class="group relative block overflow-hidden rounded-xl bg-gray-100 {{ $classes }}">
-                        <img 
-                            src="{{ asset($slide['image']) }}" 
-                            alt="{{ $slide['title'] ?? 'Lifestyle image' }}"
-                            class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                            loading="lazy"
-                        >
-                        <div class="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/20"></div>
-                        <div class="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                            <span class="rounded-full bg-white/90 px-6 py-2 text-xs font-bold uppercase tracking-wider text-fashion-navy shadow-lg backdrop-blur-sm">{{ __('Shop Now') }}</span>
-                        </div>
-                    </a>
-                @endforeach
-            </div>
-        </section>
-    @endif
-
 </x-shop::layouts>
