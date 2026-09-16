@@ -234,9 +234,9 @@
                             this.resetChildAttributes(attribute);
                         }
 
-                        this.reloadPrice();
-                        
                         this.reloadImages();
+
+                        this.reloadPrice();
                     },
 
                     getPossibleOptionVariant(attribute, optionId) {
@@ -316,45 +316,67 @@
 
                         let regularPrice = document.querySelector('.regular-price');
 
+                        let priceLabel = document.querySelector('.price-label');
+
                         let configVariant = this.config.variant_prices[this.possibleOptionVariant];
 
                         if (this.childAttributes.length == selectedOptionCount) {
-                            document.querySelector('.price-label').style.display = 'none';
+                            if (priceLabel) {
+                                priceLabel.style.display = 'none';
+                            }
 
                             if (parseFloat(configVariant.regular.price) > parseFloat(configVariant.final.price)) {
-                                regularPrice.style.display = 'block';
+                                if (regularPrice) {
+                                    regularPrice.style.display = 'block';
 
-                                finalPrice.innerHTML = configVariant.final.formatted_price;
+                                    regularPrice.innerHTML = configVariant.regular.formatted_price;
+                                }
 
-                                regularPrice.innerHTML = configVariant.regular.formatted_price;
+                                if (finalPrice) {
+                                    finalPrice.innerHTML = configVariant.final.formatted_price;
+                                }
                             } else {
-                                finalPrice.innerHTML = configVariant.regular.formatted_price;
+                                if (finalPrice) {
+                                    finalPrice.innerHTML = configVariant.regular.formatted_price;
+                                }
 
-                                regularPrice.style.display = 'none';
+                                if (regularPrice) {
+                                    regularPrice.style.display = 'none';
 
-                                regularPrice.innerHTML = '';
+                                    regularPrice.innerHTML = '';
+                                }
                             }
 
                             this.$emitter.emit('configurable-variant-selected-event',this.possibleOptionVariant);
                         } else {
-                            document.querySelector('.price-label').style.display = 'inline-block';
+                            if (priceLabel) {
+                                priceLabel.style.display = 'inline-block';
+                            }
 
                             const baseRegular = parseFloat(this.config.regular?.price ?? 0);
 
                             const baseFinal = parseFloat(this.config.final?.price ?? baseRegular);
 
                             if (baseFinal < baseRegular) {
-                                regularPrice.style.display = 'block';
+                                if (regularPrice) {
+                                    regularPrice.style.display = 'block';
 
-                                regularPrice.innerHTML = this.config.regular.formatted_price;
+                                    regularPrice.innerHTML = this.config.regular.formatted_price;
+                                }
 
-                                finalPrice.innerHTML = this.config.final.formatted_price;
+                                if (finalPrice) {
+                                    finalPrice.innerHTML = this.config.final.formatted_price;
+                                }
                             } else {
-                                regularPrice.style.display = 'none';
+                                if (regularPrice) {
+                                    regularPrice.style.display = 'none';
 
-                                regularPrice.innerHTML = '';
+                                    regularPrice.innerHTML = '';
+                                }
 
-                                finalPrice.innerHTML = this.config.regular.formatted_price;
+                                if (finalPrice) {
+                                    finalPrice.innerHTML = this.config.regular.formatted_price;
+                                }
                             }
 
                             this.$emitter.emit('configurable-variant-selected-event', 0);
