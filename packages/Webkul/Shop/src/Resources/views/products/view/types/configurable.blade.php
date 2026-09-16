@@ -163,8 +163,6 @@
         </script>
 
         <script type="module">
-            let galleryImages = @json(product_image()->getGalleryImages($product));
-
             app.component('v-product-configurable-options', {
                 template: '#v-product-configurable-options-template',
 
@@ -364,23 +362,18 @@
                     },
 
                     reloadImages () {
-                        galleryImages.splice(0, galleryImages.length)
+                        let updatedImages = [];
 
                         if (this.possibleOptionVariant) {
-                            this.config.variant_images[this.possibleOptionVariant].forEach(function(image) {
-                                galleryImages.push(image);
-                            });
-
-                            this.config.variant_videos[this.possibleOptionVariant].forEach(function(video) {
-                                galleryImages.push(video);
-                            });
+                            updatedImages = updatedImages.concat(
+                                this.config.variant_images[this.possibleOptionVariant],
+                                this.config.variant_videos[this.possibleOptionVariant]
+                            );
                         }
 
-                        this.galleryImages.forEach(function(image) {
-                            galleryImages.push(image);
-                        });
+                        updatedImages = updatedImages.concat(this.galleryImages);
 
-                        this.$emitter.emit('configurable-variant-update-images-event', galleryImages);
+                        this.$emitter.emit('configurable-variant-update-images-event', updatedImages);
                     },
                 }
             });
