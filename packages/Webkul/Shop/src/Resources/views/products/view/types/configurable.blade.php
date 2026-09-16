@@ -29,7 +29,7 @@
                         <h2 class="mb-4 text-xl max-sm:mb-1.5 max-sm:text-base max-sm:font-medium">
                             @{{ attribute.label }}
                         </h2>
-
+                        
                         <!-- Dropdown Options -->
                         <v-field
                             as="select"
@@ -100,7 +100,7 @@
                                     </label>
 
                                     <!-- Text Swatch Options -->
-                                    <label
+                                    <label 
                                         class="group relative flex h-fit min-w-fit cursor-pointer items-center justify-center rounded-full border border-gray-300 bg-white px-5 py-3 font-medium uppercase text-gray-900 hover:bg-gray-50 max-sm:h-fit max-sm:w-fit max-sm:px-3.5 max-sm:py-2"
                                         :class="{'border-transparent !bg-navyBlue text-white' : option.id == attribute.selectedValue }"
                                         :title="option.label"
@@ -214,7 +214,7 @@
 
                         if (optionId) {
                             attribute.selectedValue = optionId;
-
+                            
                             if (attribute.nextAttribute) {
                                 attribute.nextAttribute.disabled = false;
 
@@ -235,7 +235,7 @@
                         }
 
                         this.reloadPrice();
-
+                        
                         this.reloadImages();
                     },
 
