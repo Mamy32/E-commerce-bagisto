@@ -59,9 +59,14 @@
                         this.activeIndex = 0;
 
                         if (newImages && newImages.length) {
+                            let newPath = newImages[0].large_image_url;
+
+                            if (newPath !== this.baseFile.path) {
+                                this.isMediaLoading = true;
+                            }
+
                             this.baseFile.type = 'image';
-                            this.baseFile.path = newImages[0].large_image_url;
-                            this.isMediaLoading = true;
+                            this.baseFile.path = newPath;
                         }
                     },
                 },
