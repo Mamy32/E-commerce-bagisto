@@ -179,6 +179,21 @@ class Flat extends AbstractIndexer
 
                         $productAttributeValue = $productAttributeValues->first();
 
+                        if (
+                            empty($productAttributeValue[$attribute->column_name] ?? null)
+                            && $attribute->value_per_locale
+                        ) {
+                            $fallbackAttributeValues = $attributeValues->where('attribute_id', $attribute->id);
+
+                            if ($attribute->value_per_channel) {
+                                $fallbackAttributeValues = $fallbackAttributeValues->where('channel', core()->getDefaultChannelCode());
+                            }
+
+                            $productAttributeValue = $fallbackAttributeValues
+                                ->where('locale', core()->getDefaultLocaleCodeFromDefaultChannel())
+                                ->first();
+                        }
+
                         $productFlat->{$attribute->code} = $productAttributeValue[$attribute->column_name] ?? null;
                     }
 
