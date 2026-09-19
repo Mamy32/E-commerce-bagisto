@@ -56,6 +56,7 @@
                 v-model="rental_booking.daily_price"
                 :label="trans('admin::app.catalog.products.edit.types.booking.rental.daily-price')"
                 :placeholder="trans('admin::app.catalog.products.edit.types.booking.rental.daily-price')"
+                @input="handleChange((function(v){v=v.replace(/[^0-9.]/g,'');var p=v.split('.');if(p.length>2){v=p[0]+'.'+p.slice(1).join('');p=v.split('.');}if(p[1]&&p[1].length>3){v=p[0]+'.'+p[1].slice(0,3);}return v;})($event.target.value))"
             />
 
             <x-admin::form.control-group.error control-name="booking[renting_type]" />
@@ -77,6 +78,7 @@
                 v-model="rental_booking.hourly_price"
                 :label="trans('admin::app.catalog.products.edit.types.booking.rental.hourly-price')"
                 :placeholder="trans('admin::app.catalog.products.edit.types.booking.rental.hourly-price')"
+                @input="handleChange((function(v){v=v.replace(/[^0-9.]/g,'');var p=v.split('.');if(p.length>2){v=p[0]+'.'+p.slice(1).join('');p=v.split('.');}if(p[1]&&p[1].length>3){v=p[0]+'.'+p[1].slice(0,3);}return v;})($event.target.value))"
             />
 
             <x-admin::form.control-group.error control-name="booking[hourly_price]" />

@@ -311,6 +311,7 @@
                                                             name="price"
                                                             ::rules="{required: true, decimal: true, min_value: 0}"
                                                             :label="trans('admin::app.catalog.products.edit.types.configurable.mass-edit.price')"
+                                                            @input="handleChange((function(v){v=v.replace(/[^0-9.]/g,'');var p=v.split('.');if(p.length>2){v=p[0]+'.'+p.slice(1).join('');p=v.split('.');}if(p[1]&&p[1].length>3){v=p[0]+'.'+p[1].slice(0,3);}return v;})($event.target.value))"
                                                         />
                                                     </div>
                                                 </x-admin::form.control-group>
@@ -964,6 +965,7 @@
                                                     ::rules="{required: true, decimal: true, min_value: 0}"
                                                     ::value="variant.price"
                                                     :label="trans('admin::app.catalog.products.edit.types.configurable.edit.price')"
+                                                    @input="handleChange((function(v){v=v.replace(/[^0-9.]/g,'');var p=v.split('.');if(p.length>2){v=p[0]+'.'+p.slice(1).join('');p=v.split('.');}if(p[1]&&p[1].length>3){v=p[0]+'.'+p[1].slice(0,3);}return v;})($event.target.value))"
                                                 />
                     
                                                 <x-admin::form.control-group.error control-name="price" />
