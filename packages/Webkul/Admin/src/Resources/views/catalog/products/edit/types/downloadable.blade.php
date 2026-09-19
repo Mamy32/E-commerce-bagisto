@@ -854,6 +854,18 @@
         </div>
     </script>
 
+    @php
+        $formattedLinks = $product->downloadable_links->sortBy('sort_order')->values()->map(function ($link) {
+            $price = $link->price;
+
+            $link = $link->toArray();
+
+            $link['price'] = is_null($price) ? null : number_format((float) $price, 3, '.', '');
+
+            return $link;
+        })->all();
+    @endphp
+
     <script type="module">
         app.component('v-downloadable-links', {
             template: '#v-downloadable-links-template',
@@ -862,10 +874,7 @@
 
             data() {
                 return {
-                    links: @json($product->downloadable_links->sortBy('sort_order')->values()->map(fn ($link) => array_merge(
-                        $link->toArray(),
-                        ['price' => is_null($link->price) ? null : number_format((float) $link->price, 3, '.', '')]
-                    ))->all()),
+                    links: @json($formattedLinks),
 
                     selectedLink: {},
                 }

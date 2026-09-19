@@ -249,6 +249,16 @@
         </div>
     </script>
 
+    @php
+        $formattedGroupPrices = $product->customer_group_prices->map(function ($price) {
+            $price = $price->toArray();
+
+            $price['value'] = number_format((float) $price['value'], 3, '.', '');
+
+            return $price;
+        });
+    @endphp
+
     <script type="module">
         app.component('v-product-customer-group-price', {
             template: '#v-product-customer-group-price-template',
@@ -257,10 +267,7 @@
                 return {
                     groups: @json($customerGroupRepository->all()),
 
-                    prices: @json($product->customer_group_prices->map(fn ($price) => array_merge(
-                        $price->toArray(),
-                        ['value' => number_format((float) $price->value, 3, '.', '')]
-                    ))),
+                    prices: @json($formattedGroupPrices),
 
                     selectedPrice: {
                         id: null,

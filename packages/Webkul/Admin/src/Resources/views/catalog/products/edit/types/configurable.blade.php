@@ -1087,6 +1087,18 @@
         </div>
     </script>
 
+    @php
+        $formattedVariants = $product->variants()->with(['attribute_family', 'images', 'inventories'])->get()->map(function ($variant) {
+            $price = $variant->price;
+
+            $variant = $variant->toArray();
+
+            $variant['price'] = is_null($price) ? null : number_format((float) $price, 3, '.', '');
+
+            return $variant;
+        });
+    @endphp
+
     <script type="module">
         app.component('v-product-variations', {
             template: '#v-product-variations-template',
@@ -1097,10 +1109,7 @@
                 return {
                     defaultId: parseInt('{{ $product->additional['default_variant_id'] ?? null }}'),
 
-                    variants: @json($product->variants()->with(['attribute_family', 'images', 'inventories'])->get()->map(fn ($variant) => array_merge(
-                        $variant->toArray(),
-                        ['price' => is_null($variant->price) ? null : number_format((float) $variant->price, 3, '.', '')]
-                    ))),
+                    variants: @json($formattedVariants),
 
                     superAttributes: @json($product->super_attributes()->with(['options', 'options.attribute', 'options.translations'])->get()),
 

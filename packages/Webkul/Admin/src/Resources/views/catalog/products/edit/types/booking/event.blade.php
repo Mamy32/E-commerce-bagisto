@@ -335,19 +335,27 @@
         </x-admin::form>
     </script>
 
+    @php
+        $formattedTickets = $bookingProduct ? $bookingProduct->event_tickets()->get()->map(function ($ticket) {
+            $price = $ticket->price;
+            $specialPrice = $ticket->special_price;
+
+            $ticket = $ticket->toArray();
+
+            $ticket['price'] = is_null($price) ? null : number_format((float) $price, 3, '.', '');
+            $ticket['special_price'] = is_null($specialPrice) ? null : number_format((float) $specialPrice, 3, '.', '');
+
+            return $ticket;
+        }) : [];
+    @endphp
+
     <script type="module">
         app.component('v-event-booking', {
             template: '#v-event-booking-template',
 
             data() {
                 return {
-                    tickets: @json($bookingProduct ? $bookingProduct->event_tickets()->get()->map(fn ($ticket) => array_merge(
-                        $ticket->toArray(),
-                        [
-                            'price' => is_null($ticket->price) ? null : number_format((float) $ticket->price, 3, '.', ''),
-                            'special_price' => is_null($ticket->special_price) ? null : number_format((float) $ticket->special_price, 3, '.', ''),
-                        ]
-                    )) : []),
+                    tickets: @json($formattedTickets),
 
                     optionRowCount: 0,
 
