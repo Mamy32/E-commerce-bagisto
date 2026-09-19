@@ -257,7 +257,10 @@
                 return {
                     groups: @json($customerGroupRepository->all()),
 
-                    prices: @json($product->customer_group_prices),
+                    prices: @json($product->customer_group_prices->map(fn ($price) => array_merge(
+                        $price->toArray(),
+                        ['value' => number_format((float) $price->value, 3, '.', '')]
+                    ))),
 
                     selectedPrice: {
                         id: null,

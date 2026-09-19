@@ -120,6 +120,21 @@
         </v-slots>
     </script>
 
+    @php
+        $rentalBooking = $bookingProduct?->rental_slot
+            ? array_merge($bookingProduct->rental_slot->toArray(), [
+                'daily_price' => is_null($bookingProduct->rental_slot->daily_price) ? '' : number_format((float) $bookingProduct->rental_slot->daily_price, 3, '.', ''),
+                'hourly_price' => is_null($bookingProduct->rental_slot->hourly_price) ? '' : number_format((float) $bookingProduct->rental_slot->hourly_price, 3, '.', ''),
+            ])
+            : [
+                'renting_type' => 'daily',
+                'daily_price' => '',
+                'hourly_price' => '',
+                'same_slot_all_days' => 1,
+                'slots' => [],
+            ];
+    @endphp
+
     <script type="module">
         app.component('v-rental-booking', {
             template: '#v-rental-booking-template',
@@ -128,17 +143,7 @@
 
             data() {
                 return {
-                    rental_booking: @json($bookingProduct && $bookingProduct?->rental_slot) ? @json($bookingProduct?->rental_slot) : {
-                        renting_type: 'daily',
-
-                        daily_price: '',
-
-                        hourly_price: '',
-
-                        same_slot_all_days: 1,
-
-                        slots: [],
-                    }
+                    rental_booking: @json($rentalBooking)
                 }
             },
         });

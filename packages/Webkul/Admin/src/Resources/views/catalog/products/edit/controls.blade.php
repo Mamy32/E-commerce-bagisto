@@ -28,7 +28,7 @@
             :class="($attribute->code == 'price' ? 'py-2.5 bg-gray-50 text-xl font-bold' : '')"
             :name="$attribute->code"
             ::rules="{{ $attribute->validations }}"
-            value="{{ old($attribute->code) ?: $product[$attribute->code] }}"
+            value="{{ old($attribute->code) ?: (is_null($product[$attribute->code]) ? '' : number_format((float) $product[$attribute->code], 3, '.', '')) }}"
             :label="$attribute->admin_name"
         >
             <x-slot:currency :class="'dark:text-gray-300 ' . ($attribute->code == 'price' ? 'bg-gray-50 dark:bg-gray-900 text-xl' : '')">

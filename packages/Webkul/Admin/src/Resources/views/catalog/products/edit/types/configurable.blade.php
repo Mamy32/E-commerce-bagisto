@@ -1097,7 +1097,10 @@
                 return {
                     defaultId: parseInt('{{ $product->additional['default_variant_id'] ?? null }}'),
 
-                    variants: @json($product->variants()->with(['attribute_family', 'images', 'inventories'])->get()),
+                    variants: @json($product->variants()->with(['attribute_family', 'images', 'inventories'])->get()->map(fn ($variant) => array_merge(
+                        $variant->toArray(),
+                        ['price' => is_null($variant->price) ? null : number_format((float) $variant->price, 3, '.', '')]
+                    ))),
 
                     superAttributes: @json($product->super_attributes()->with(['options', 'options.attribute', 'options.translations'])->get()),
 

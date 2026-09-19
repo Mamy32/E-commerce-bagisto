@@ -341,7 +341,13 @@
 
             data() {
                 return {
-                    tickets: @json($bookingProduct ? $bookingProduct->event_tickets()->get() : []),
+                    tickets: @json($bookingProduct ? $bookingProduct->event_tickets()->get()->map(fn ($ticket) => array_merge(
+                        $ticket->toArray(),
+                        [
+                            'price' => is_null($ticket->price) ? null : number_format((float) $ticket->price, 3, '.', ''),
+                            'special_price' => is_null($ticket->special_price) ? null : number_format((float) $ticket->special_price, 3, '.', ''),
+                        ]
+                    )) : []),
 
                     optionRowCount: 0,
 

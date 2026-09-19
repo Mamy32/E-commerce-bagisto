@@ -862,7 +862,10 @@
 
             data() {
                 return {
-                    links: @json($product->downloadable_links->sortBy('sort_order')->values()->all()),
+                    links: @json($product->downloadable_links->sortBy('sort_order')->values()->map(fn ($link) => array_merge(
+                        $link->toArray(),
+                        ['price' => is_null($link->price) ? null : number_format((float) $link->price, 3, '.', '')]
+                    ))->all()),
 
                     selectedLink: {},
                 }

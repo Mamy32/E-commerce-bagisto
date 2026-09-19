@@ -696,7 +696,7 @@
                                 max_characters: option.max_characters,
                                 supported_file_extensions: option.supported_file_extensions,
                                 price_id: option.customizable_option_prices[0].id,
-                                price: option.customizable_option_prices[0].price,
+                                price: Number(option.customizable_option_prices[0].price).toFixed(3),
                                 customizable_option_prices: option.customizable_option_prices,
                             };
                         }
@@ -811,7 +811,7 @@
                                 return {
                                     id: optionItem.id,
                                     label: optionItem.label,
-                                    price: optionItem.price,
+                                    price: Number(optionItem.price).toFixed(3),
                                 };
                             });
                         },
