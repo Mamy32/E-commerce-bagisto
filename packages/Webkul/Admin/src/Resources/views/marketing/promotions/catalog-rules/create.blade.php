@@ -215,6 +215,7 @@
                                         rules="required"
                                         :value="old('discount_amount') ?? 0"
                                         :label="trans('admin::app.marketing.promotions.catalog-rules.create.discount-amount')"
+                                        oninput="let v=this.value.replace(/[^0-9.]/g,''); let p=v.split('.'); if (p.length > 2) { v = p[0] + '.' + p.slice(1).join(''); p = v.split('.'); } if (p[1] && p[1].length > 3) { v = p[0] + '.' + p[1].slice(0, 3); } this.value = v;"
                                     />
 
                                     <x-admin::form.control-group.error control-name="discount_amount" />
