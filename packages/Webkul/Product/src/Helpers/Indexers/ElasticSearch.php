@@ -352,21 +352,38 @@ class ElasticSearch extends AbstractIndexer
 
         if ($attribute->value_per_channel) {
             if ($attribute->value_per_locale) {
-                $attributeValues = $attributeValues
+                $filteredAttributeValues = $attributeValues
                     ->where('channel', $this->channel->code)
                     ->where('locale', $this->locale->code);
             } else {
-                $attributeValues = $attributeValues->where('channel', $this->channel->code);
+                $filteredAttributeValues = $attributeValues->where('channel', $this->channel->code);
             }
         } else {
             if ($attribute->value_per_locale) {
-                $attributeValues = $attributeValues->where('locale', $this->locale->code);
+                $filteredAttributeValues = $attributeValues->where('locale', $this->locale->code);
             } else {
-                $attributeValues = $attributeValues;
+                $filteredAttributeValues = $attributeValues;
             }
         }
 
-        return $attributeValues->first();
+        $attributeValue = $filteredAttributeValues->first();
+
+        if (
+            empty($attributeValue[$attribute->column_name] ?? null)
+            && $attribute->value_per_locale
+        ) {
+            $fallbackAttributeValues = $attributeValues;
+
+            if ($attribute->value_per_channel) {
+                $fallbackAttributeValues = $fallbackAttributeValues->where('channel', core()->getDefaultChannelCode());
+            }
+
+            $attributeValue = $fallbackAttributeValues
+                ->where('locale', core()->getDefaultLocaleCodeFromDefaultChannel())
+                ->first();
+        }
+
+        return $attributeValue;
     }
 
     /**
