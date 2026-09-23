@@ -387,18 +387,13 @@
                         let updatedImages = [];
 
                         if (this.possibleOptionVariant) {
-                            if (this.config.variant_images && this.config.variant_images[this.possibleOptionVariant]) {
-                                updatedImages = updatedImages.concat(this.config.variant_images[this.possibleOptionVariant]);
-                            }
-
-                            if (this.config.variant_videos && this.config.variant_videos[this.possibleOptionVariant]) {
-                                updatedImages = updatedImages.concat(this.config.variant_videos[this.possibleOptionVariant]);
-                            }
+                            updatedImages = updatedImages.concat(
+                                this.config.variant_images[this.possibleOptionVariant],
+                                this.config.variant_videos[this.possibleOptionVariant]
+                            );
                         }
 
-                        if (galleryImages && galleryImages.length) {
-                            updatedImages = updatedImages.concat(galleryImages);
-                        }
+                        updatedImages = updatedImages.concat(this.galleryImages);
 
                         this.$emitter.emit('configurable-variant-update-images-event', updatedImages);
                     },
