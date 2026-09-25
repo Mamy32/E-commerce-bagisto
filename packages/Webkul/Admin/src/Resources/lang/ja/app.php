@@ -1398,6 +1398,7 @@ return [
                             'edit-names' => '名前を編集',
                             'edit-prices' => '価格を編集',
                             'edit-sku' => 'SKUを編集',
+                            'edit-special-price' => '特別価格を編集',
                             'edit-status' => 'ステータスを編集',
                             'edit-weight' => '重さを編集',
                             'name' => '名前',
@@ -1406,6 +1407,7 @@ return [
                             'remove-variants' => 'バリアントを削除',
                             'select-action' => 'アクションを選択',
                             'select-variants' => 'バリアントを選択',
+                            'special-price' => '特別価格',
                             'status' => 'ステータス',
                             'variant-name' => 'バリアント名',
                             'variant-sku' => 'バリアントSKU',
@@ -4151,6 +4153,15 @@ return [
                     'copyright-content' => [
                         'title' => '著作権コンテンツ',
                         'info' => '知的財産を保護し、ブランド認知を高めるために、ウェブサイトのフッターに表示される著作権コンテンツを設定してください。',
+                    ],
+
+                    'whatsapp' => [
+                        'title' => 'フローティングWhatsAppボタン',
+                        'info' => 'すべてのストアページにフローティングWhatsAppお問い合わせボタンを表示します。',
+                        'enable' => 'フローティングWhatsAppボタンを有効化',
+                        'number' => 'WhatsApp番号',
+                        'number-info' => '国番号を含め、数字のみ、スペースや記号なしで入力してください（例: 6281234567890）。',
+                        'message' => 'プリセットメッセージ',
                     ],
 
                     'speculation-rules' => [

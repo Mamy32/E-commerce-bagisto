@@ -623,6 +623,11 @@ return [
                 'view-wishlist' => 'Buka halaman daftar keinginan untuk meninjau produk tersimpan pelanggan.',
             ],
 
+            'whatsapp' => [
+                'chat-on-whatsapp' => 'Chat di WhatsApp',
+            ],
+
+
             'footer' => [
                 'about-us' => 'Tentang Kami',
                 'contact-us' => 'Hubungi Kami',

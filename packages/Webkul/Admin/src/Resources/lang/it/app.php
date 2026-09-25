@@ -1398,6 +1398,7 @@ return [
                             'edit-names' => 'Modifica Nomi',
                             'edit-prices' => 'Modifica Prezzi',
                             'edit-sku' => 'Modifica SKU',
+                            'edit-special-price' => 'Modifica prezzo speciale',
                             'edit-status' => 'Modifica Stato',
                             'edit-weight' => 'Modifica Peso',
                             'name' => 'Nome',
@@ -1406,6 +1407,7 @@ return [
                             'remove-variants' => 'Rimuovi Varianti',
                             'select-action' => 'Seleziona Azione',
                             'select-variants' => 'Seleziona Varianti',
+                            'special-price' => 'Prezzo speciale',
                             'status' => 'Stato',
                             'variant-name' => 'Nome Variante',
                             'variant-sku' => 'SKU Variante',
@@ -4151,6 +4153,15 @@ return [
                     'copyright-content' => [
                         'title' => 'Contenuto del copyright',
                         'info' => 'Configura il contenuto del copyright visualizzato nel piè di pagina del tuo sito web per proteggere la tua proprietà intellettuale e migliorare il riconoscimento del marchio.',
+                    ],
+
+                    'whatsapp' => [
+                        'title' => 'Pulsante WhatsApp flottante',
+                        'info' => 'Mostra un pulsante di contatto WhatsApp flottante su ogni pagina del negozio.',
+                        'enable' => 'Attiva pulsante WhatsApp flottante',
+                        'number' => 'Numero WhatsApp',
+                        'number-info' => 'Includi il prefisso internazionale, solo cifre, senza spazi o simboli (es. 6281234567890).',
+                        'message' => 'Messaggio precompilato',
                     ],
 
                     'speculation-rules' => [

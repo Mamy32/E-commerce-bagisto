@@ -617,6 +617,10 @@ return [
                 'view-wishlist' => 'Müşterinin kaydettiği ürünleri incelemek için istek listesi sayfasını açın.',
             ],
 
+            'whatsapp' => [
+                'chat-on-whatsapp' => 'WhatsApp\'ta Sohbet Et',
+            ],
+
             'footer' => [
                 'about-us' => 'Hakkımızda',
                 'contact-us' => 'İletişim',

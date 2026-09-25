@@ -1398,6 +1398,7 @@ return [
                             'edit-names' => 'Edit Nama',
                             'edit-prices' => 'Edit Harga',
                             'edit-sku' => 'Edit SKU',
+                            'edit-special-price' => 'Edit Harga Spesial',
                             'edit-status' => 'Edit Status',
                             'edit-weight' => 'Edit Berat',
                             'name' => 'Nama',
@@ -1406,6 +1407,7 @@ return [
                             'remove-variants' => 'Hapus Varian',
                             'select-action' => 'Pilih Aksi',
                             'select-variants' => 'Pilih Varian',
+                            'special-price' => 'Harga Spesial',
                             'status' => 'Status',
                             'variant-name' => 'Nama Varian',
                             'variant-sku' => 'SKU Varian',
@@ -4151,6 +4153,15 @@ return [
                     'copyright-content' => [
                         'title' => 'Contenuto del copyright',
                         'info' => 'Configura il contenuto del copyright visualizzato nel piè di pagina del tuo sito web per proteggere la tua proprietà intellettuale e migliorare il riconoscimento del marchio.',
+                    ],
+
+                    'whatsapp' => [
+                        'title' => 'Tombol WhatsApp Mengambang',
+                        'info' => 'Tampilkan tombol kontak WhatsApp mengambang di setiap halaman toko.',
+                        'enable' => 'Aktifkan Tombol WhatsApp Mengambang',
+                        'number' => 'Nomor WhatsApp',
+                        'number-info' => 'Sertakan kode negara, hanya angka, tanpa spasi atau simbol (mis. 6281234567890).',
+                        'message' => 'Pesan Bawaan',
                     ],
 
                     'speculation-rules' => [

@@ -50,6 +50,8 @@ class ProductDataGrid extends DataGrid
                 $leftJoin->on('pc.category_id', '=', 'ct.category_id')
                     ->where('ct.locale', app()->getLocale());
             })
+            ->leftJoin('products', 'product_flat.product_id', '=', 'products.id')
+            ->whereNull('products.parent_id')
             ->select(
                 'product_flat.locale',
                 'product_flat.channel',
@@ -331,6 +333,10 @@ class ProductDataGrid extends DataGrid
             return Product::formatElasticSearchIndexName($channelCode, app()->getLocale());
         })->toArray();
 
+        $boolQuery = $this->getElasticFilters($params['filters'] ?? []);
+
+        $boolQuery['must_not'][] = ['exists' => ['field' => 'parent_id']];
+
         $results = ElasticSearch::search([
             'index' => $indexNames,
             'body' => [
@@ -338,7 +344,7 @@ class ProductDataGrid extends DataGrid
                 'size' => $pagination['per_page'],
                 'stored_fields' => [],
                 'query' => [
-                    'bool' => $this->getElasticFilters($params['filters'] ?? []) ?: new \stdClass,
+                    'bool' => $boolQuery,
                 ],
                 'sort' => $this->getElasticSort($params['sort'] ?? []),
                 'track_total_hits' => true,

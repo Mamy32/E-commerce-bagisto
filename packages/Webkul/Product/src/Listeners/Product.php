@@ -2,7 +2,6 @@
 
 namespace Webkul\Product\Listeners;
 
-use Illuminate\Support\Facades\Bus;
 use Webkul\Product\Helpers\Indexers\Flat as FlatIndexer;
 use Webkul\Product\Jobs\ElasticSearch\DeleteIndex as DeleteElasticSearchIndexJob;
 use Webkul\Product\Jobs\ElasticSearch\UpdateCreateIndex as UpdateCreateElasticSearchIndexJob;
@@ -38,6 +37,15 @@ class Product
 
         $productIds = $this->getAllRelatedProductIds($product);
 
+        /**
+         * The inventory and price indices are dispatched synchronously (rather than
+         * queued) because customer-facing stock/price correctness must not depend on
+         * a queue worker being configured or running.
+         */
+        UpdateCreateInventoryIndexJob::dispatchSync($productIds);
+
+        UpdateCreatePriceIndexJob::dispatchSync($productIds);
+
         UpdateCreateElasticSearchIndexJob::dispatch($productIds);
     }
 
@@ -53,11 +61,16 @@ class Product
 
         $productIds = $this->getAllRelatedProductIds($product);
 
-        Bus::chain([
-            new UpdateCreateInventoryIndexJob($productIds),
-            new UpdateCreatePriceIndexJob($productIds),
-            new UpdateCreateElasticSearchIndexJob($productIds),
-        ])->dispatch();
+        /**
+         * The inventory and price indices are dispatched synchronously (rather than
+         * queued) because customer-facing stock/price correctness must not depend on
+         * a queue worker being configured or running.
+         */
+        UpdateCreateInventoryIndexJob::dispatchSync($productIds);
+
+        UpdateCreatePriceIndexJob::dispatchSync($productIds);
+
+        UpdateCreateElasticSearchIndexJob::dispatch($productIds);
     }
 
     /**

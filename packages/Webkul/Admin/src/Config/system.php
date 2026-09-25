@@ -99,6 +99,32 @@ return [
             ],
         ],
     ], [
+        'key' => 'general.content.whatsapp',
+        'name' => 'admin::app.configuration.index.general.content.whatsapp.title',
+        'info' => 'admin::app.configuration.index.general.content.whatsapp.info',
+        'sort' => 3,
+        'fields' => [
+            [
+                'name' => 'enabled',
+                'title' => 'admin::app.configuration.index.general.content.whatsapp.enable',
+                'type' => 'boolean',
+                'default' => false,
+            ], [
+                'name' => 'number',
+                'title' => 'admin::app.configuration.index.general.content.whatsapp.number',
+                'info' => 'admin::app.configuration.index.general.content.whatsapp.number-info',
+                'type' => 'text',
+                'validation' => 'nullable|regex:/^[0-9]+$/',
+                'depends' => 'enabled:true',
+            ], [
+                'name' => 'message',
+                'title' => 'admin::app.configuration.index.general.content.whatsapp.message',
+                'type' => 'text',
+                'default' => 'Hi, I would like to ask about your products.',
+                'depends' => 'enabled:true',
+            ],
+        ],
+    ], [
         'key' => 'general.content.speculation_rules',
         'name' => 'admin::app.configuration.index.general.content.speculation-rules.title',
         'info' => 'admin::app.configuration.index.general.content.speculation-rules.info',

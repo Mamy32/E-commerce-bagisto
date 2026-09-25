@@ -1398,6 +1398,7 @@ return [
                             'edit-names' => 'Edit Names',
                             'edit-prices' => 'Edit Prices',
                             'edit-sku' => 'Edit SKU',
+                            'edit-special-price' => 'Editează prețul special',
                             'edit-status' => 'Edit Status',
                             'edit-weight' => 'Edit Weight',
                             'name' => 'Name',
@@ -1406,6 +1407,7 @@ return [
                             'remove-variants' => 'Remove Variants',
                             'select-action' => 'Select Action',
                             'select-variants' => 'Select Variants',
+                            'special-price' => 'Preț special',
                             'status' => 'Status',
                             'variant-name' => 'Variant Name',
                             'variant-sku' => 'Variant SKU',
@@ -4151,6 +4153,15 @@ return [
                     'copyright-content' => [
                         'title' => 'Conținut drepturi de autor',
                         'info' => 'Configurați conținutul drepturilor de autor afișat în subsolul site-ului dvs. pentru a vă proteja proprietatea intelectuală și a îmbunătăți recunoașterea brandului.',
+                    ],
+
+                    'whatsapp' => [
+                        'title' => 'Buton flotant WhatsApp',
+                        'info' => 'Afișează un buton flotant de contact WhatsApp pe fiecare pagină a magazinului.',
+                        'enable' => 'Activează butonul flotant WhatsApp',
+                        'number' => 'Număr WhatsApp',
+                        'number-info' => 'Include codul țării, doar cifre, fără spații sau simboluri (ex. 6281234567890).',
+                        'message' => 'Mesaj predefinit',
                     ],
 
                     'speculation-rules' => [

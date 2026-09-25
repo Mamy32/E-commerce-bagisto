@@ -254,7 +254,7 @@ class ElasticSearch extends AbstractIndexer
             'attribute_family_id' => $this->product->attribute_family_id,
             'category_ids' => $this->product->categories->pluck('id')->toArray(),
             'created_at' => $this->product->created_at,
-        ], $this->product->additional ?? []);
+        ], $this->product->parent_id ? ['parent_id' => $this->product->parent_id] : [], $this->product->additional ?? []);
 
         $attributes = $this->getAttributes();
 

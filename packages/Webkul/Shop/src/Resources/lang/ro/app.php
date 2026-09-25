@@ -617,6 +617,11 @@ return [
                 'view-wishlist' => 'Deschide pagina listei de dorințe pentru a revizui produsele salvate ale clientului.',
             ],
 
+            'whatsapp' => [
+                'chat-on-whatsapp' => 'Discută pe WhatsApp',
+            ],
+
+
             'footer' => [
                 'about-us' => 'Despre noi',
                 'contact-us' => 'Contactați-ne',

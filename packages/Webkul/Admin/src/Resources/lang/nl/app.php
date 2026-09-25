@@ -1398,6 +1398,7 @@ return [
                             'edit-names' => 'Namen Bewerken',
                             'edit-prices' => 'Prijzen Bewerken',
                             'edit-sku' => 'SKU Bewerken',
+                            'edit-special-price' => 'Speciale prijs bewerken',
                             'edit-status' => 'Status Bewerken',
                             'edit-weight' => 'Gewicht Bewerken',
                             'name' => 'Namen',
@@ -1406,6 +1407,7 @@ return [
                             'remove-variants' => 'Varianten Verwijderen',
                             'select-action' => 'Actie Selecteren',
                             'select-variants' => 'Varianten Selecteren',
+                            'special-price' => 'Speciale prijs',
                             'status' => 'Status',
                             'variant-name' => 'Variant Naam',
                             'variant-sku' => 'Variant SKU',
@@ -4151,6 +4153,15 @@ return [
                     'copyright-content' => [
                         'title' => 'Auteursrechtinhoud',
                         'info' => 'Configureer de auteursrechtinhoud die in de voettekst van uw website wordt weergegeven om uw intellectuele eigendom te beschermen en de merkherkenning te verbeteren.',
+                    ],
+
+                    'whatsapp' => [
+                        'title' => 'Zwevende WhatsApp-knop',
+                        'info' => 'Toon een zwevende WhatsApp-contactknop op elke winkelpagina.',
+                        'enable' => 'Zwevende WhatsApp-knop inschakelen',
+                        'number' => 'WhatsApp-nummer',
+                        'number-info' => 'Inclusief landcode, alleen cijfers, zonder spaties of symbolen (bijv. 6281234567890).',
+                        'message' => 'Vooraf ingevuld bericht',
                     ],
 
                     'speculation-rules' => [

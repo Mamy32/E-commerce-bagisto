@@ -623,6 +623,10 @@ return [
                 'view-wishlist' => 'Open the wishlist page to review the customer\'s saved products.',
             ],
 
+            'whatsapp' => [
+                'chat-on-whatsapp' => 'Chat on WhatsApp',
+            ],
+
             'footer' => [
                 'about-us' => 'About Us',
                 'contact-us' => 'Contact Us',

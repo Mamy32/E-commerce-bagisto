@@ -617,6 +617,11 @@ return [
                 'view-wishlist' => 'Open de verlanglijstpagina om de opgeslagen producten van de klant te bekijken.',
             ],
 
+            'whatsapp' => [
+                'chat-on-whatsapp' => 'Chat via WhatsApp',
+            ],
+
+
             'footer' => [
                 'about-us' => 'Over ons',
                 'contact-us' => 'Neem contact met ons op',

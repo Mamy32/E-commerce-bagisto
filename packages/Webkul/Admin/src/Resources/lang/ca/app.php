@@ -1398,6 +1398,7 @@ return [
                             'edit-names' => 'Editar Noms',
                             'edit-prices' => 'Editar Preus',
                             'edit-sku' => 'Editar SKU',
+                            'edit-special-price' => 'Edita el preu especial',
                             'edit-status' => 'Editar Estat',
                             'edit-weight' => 'Editar Pes',
                             'name' => 'Nom',
@@ -1406,6 +1407,7 @@ return [
                             'remove-variants' => 'Eliminar Variants',
                             'select-action' => 'Seleccionar Acció',
                             'select-variants' => 'Seleccionar Variants',
+                            'special-price' => 'Preu especial',
                             'status' => 'Estat',
                             'variant-name' => 'Nom de la Variant',
                             'variant-sku' => 'SKU de la Variant',
@@ -4151,6 +4153,15 @@ return [
                     'copyright-content' => [
                         'title' => 'Contingut de drets d\'autor',
                         'info' => 'Configura el contingut de drets d\'autor que es mostra al peu de pàgina del teu lloc web per protegir la teva propietat intel·lectual i millorar el reconeixement de la marca.',
+                    ],
+
+                    'whatsapp' => [
+                        'title' => 'Botó flotant de WhatsApp',
+                        'info' => 'Mostra un botó flotant de contacte de WhatsApp a totes les pàgines de la botiga.',
+                        'enable' => 'Activa el botó flotant de WhatsApp',
+                        'number' => 'Número de WhatsApp',
+                        'number-info' => 'Inclou el codi de país, només dígits, sense espais ni símbols (p. ex. 6281234567890).',
+                        'message' => 'Missatge predefinit',
                     ],
 
                     'speculation-rules' => [

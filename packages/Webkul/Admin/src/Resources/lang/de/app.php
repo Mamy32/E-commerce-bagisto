@@ -1398,6 +1398,7 @@ return [
                             'edit-names' => 'Namen bearbeiten',
                             'edit-prices' => 'Preise bearbeiten',
                             'edit-sku' => 'SKU bearbeiten',
+                            'edit-special-price' => 'Sonderpreis bearbeiten',
                             'edit-status' => 'Status bearbeiten',
                             'edit-weight' => 'Gewicht bearbeiten',
                             'name' => 'Namen',
@@ -1406,6 +1407,7 @@ return [
                             'remove-variants' => 'Varianten entfernen',
                             'select-action' => 'Aktion auswählen',
                             'select-variants' => 'Varianten auswählen',
+                            'special-price' => 'Sonderpreis',
                             'status' => 'Status',
                             'variant-name' => 'Variantenname',
                             'variant-sku' => 'Varianten-SKU',
@@ -4151,6 +4153,15 @@ return [
                     'copyright-content' => [
                         'title' => 'Urheberrechtsinhalt',
                         'info' => 'Konfigurieren Sie den im Footer Ihrer Website angezeigten Urheberrechtsinhalt, um Ihr geistiges Eigentum zu schützen und die Markenbekanntheit zu stärken.',
+                    ],
+
+                    'whatsapp' => [
+                        'title' => 'Schwebender WhatsApp-Button',
+                        'info' => 'Zeigt auf jeder Shop-Seite einen schwebenden WhatsApp-Kontaktbutton an.',
+                        'enable' => 'Schwebenden WhatsApp-Button aktivieren',
+                        'number' => 'WhatsApp-Nummer',
+                        'number-info' => 'Mit Ländercode, nur Ziffern, ohne Leerzeichen oder Symbole (z. B. 6281234567890).',
+                        'message' => 'Vorausgefüllte Nachricht',
                     ],
 
                     'speculation-rules' => [

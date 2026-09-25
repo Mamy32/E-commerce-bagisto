@@ -617,6 +617,11 @@ return [
                 'view-wishlist' => 'Apri la pagina della lista dei desideri per rivedere i prodotti salvati del cliente.',
             ],
 
+            'whatsapp' => [
+                'chat-on-whatsapp' => 'Chatta su WhatsApp',
+            ],
+
+
             'footer' => [
                 'about-us' => 'Chi siamo',
                 'contact-us' => 'Contattaci',
