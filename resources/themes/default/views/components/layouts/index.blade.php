@@ -144,6 +144,8 @@
             @endif
         </div>
 
+        <x-shop::layouts.whatsapp />
+
         {!! view_render_event('bagisto.shop.layout.body.after') !!}
 
         <x-shop::layouts.webmcp />
