@@ -8,7 +8,7 @@
         href="https://wa.me/{{ preg_replace('/[^0-9]/', '', core()->getConfigData('general.content.whatsapp.number')) }}?text={{ urlencode(core()->getConfigData('general.content.whatsapp.message') ?? '') }}"
         target="_blank"
         rel="noopener noreferrer"
-        class="fixed bottom-4 z-[999] flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] shadow-lg transition-transform hover:scale-110 ltr:right-4 rtl:left-4"
+        class="fixed bottom-4 right-4 z-[999] flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] shadow-lg transition-transform hover:scale-110"
         aria-label="@lang('shop::app.components.layouts.whatsapp.chat-on-whatsapp')"
     >
         <svg
