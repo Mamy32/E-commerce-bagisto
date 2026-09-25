@@ -157,6 +157,9 @@
             @endif
         </div>
 
+        <!-- Floating WhatsApp Button -->
+        <x-shop::layouts.whatsapp />
+
         {!! view_render_event('bagisto.shop.layout.body.after') !!}
 
         <!-- WebMCP Tool Registration For AI Agents -->

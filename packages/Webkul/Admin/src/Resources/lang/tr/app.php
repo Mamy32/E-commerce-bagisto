@@ -1398,6 +1398,7 @@ return [
                             'edit-names' => 'İsimleri Düzenle',
                             'edit-prices' => 'Fiyatları Düzenle',
                             'edit-sku' => 'SKU\'ları Düzenle',
+                            'edit-special-price' => 'Özel Fiyatı Düzenle',
                             'edit-status' => 'Durumu Düzenle',
                             'edit-weight' => 'Ağırlığı Düzenle',
                             'name' => 'Ad',
@@ -1406,6 +1407,7 @@ return [
                             'remove-variants' => 'Varyantları Kaldır',
                             'select-action' => 'Eylemi Seç',
                             'select-variants' => 'Varyantları Seç',
+                            'special-price' => 'Özel Fiyat',
                             'status' => 'Durum',
                             'variant-name' => 'Varyant Adı',
                             'variant-sku' => 'Varyant SKU',
@@ -4151,6 +4153,15 @@ return [
                     'copyright-content' => [
                         'title' => 'Telif Hakkı İçeriği',
                         'info' => 'Fikri mülkiyetinizi korumak ve marka bilinirliğini artırmak için web sitenizin alt bilgisinde görüntülenen telif hakkı içeriğini yapılandırın.',
+                    ],
+
+                    'whatsapp' => [
+                        'title' => 'Yüzen WhatsApp Butonu',
+                        'info' => 'Her mağaza sayfasında yüzen bir WhatsApp iletişim butonu gösterin.',
+                        'enable' => 'Yüzen WhatsApp Butonunu Etkinleştir',
+                        'number' => 'WhatsApp Numarası',
+                        'number-info' => 'Ülke kodunu ekleyin, sadece rakam, boşluk veya sembol olmadan (örn. 6281234567890).',
+                        'message' => 'Önceden Doldurulmuş Mesaj',
                     ],
 
                     'speculation-rules' => [

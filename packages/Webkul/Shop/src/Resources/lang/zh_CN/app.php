@@ -617,6 +617,11 @@ return [
                 'view-wishlist' => '打开心愿单页面以查看客户保存的产品。',
             ],
 
+            'whatsapp' => [
+                'chat-on-whatsapp' => '通过WhatsApp聊天',
+            ],
+
+
             'footer' => [
                 'about-us' => '关于我们',
                 'contact-us' => '联系我们',

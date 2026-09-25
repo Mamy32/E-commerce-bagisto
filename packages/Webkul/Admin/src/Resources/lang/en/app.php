@@ -1398,6 +1398,7 @@ return [
                             'edit-names' => 'Edit Names',
                             'edit-prices' => 'Edit Prices',
                             'edit-sku' => 'Edit SKU',
+                            'edit-special-price' => 'Edit Special Price',
                             'edit-status' => 'Edit Status',
                             'edit-weight' => 'Edit Weight',
                             'name' => 'Name',
@@ -1406,6 +1407,7 @@ return [
                             'remove-variants' => 'Remove Variants',
                             'select-action' => 'Select Action',
                             'select-variants' => 'Select Variants',
+                            'special-price' => 'Special Price',
                             'status' => 'Status',
                             'variant-name' => 'Variant Name',
                             'variant-sku' => 'Variant SKU',
@@ -4151,6 +4153,15 @@ return [
                     'copyright-content' => [
                         'title' => 'Copyright Content',
                         'info' => 'Configure the copyright content displayed in the footer of your website to protect your intellectual property and enhance brand recognition.',
+                    ],
+
+                    'whatsapp' => [
+                        'title' => 'Floating WhatsApp Button',
+                        'info' => 'Show a floating WhatsApp contact button on every storefront page.',
+                        'enable' => 'Enable Floating WhatsApp Button',
+                        'number' => 'WhatsApp Number',
+                        'number-info' => 'Include country code, digits only, no spaces or symbols (e.g. 6281234567890).',
+                        'message' => 'Pre-filled Message',
                     ],
 
                     'speculation-rules' => [

@@ -156,16 +156,6 @@
                     @foreach ($groups as $group)
                         @php $customAttributes = $product->getEditableAttributes($group); @endphp
 
-                        @if (
-                            $group->code === 'inventories' 
-                            && (
-                                $product->getTypeInstance()->isComposite()
-                                || $product->type === 'downloadable'
-                            )
-                        )
-                            @continue
-                        @endif
-
                         @if ($group->code === 'rma')
                             @if (
                                 ! in_array($product->type, explode(',', core()->getConfigData('sales.rma.setting.select_allowed_product_type'))) 

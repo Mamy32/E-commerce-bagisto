@@ -1398,6 +1398,7 @@ return [
                             'edit-names' => 'Edytuj nazwy',
                             'edit-prices' => 'Edytuj ceny',
                             'edit-sku' => 'Edytuj SKU',
+                            'edit-special-price' => 'Edytuj cenę specjalną',
                             'edit-status' => 'Edytuj status',
                             'edit-weight' => 'Edytuj wagę',
                             'name' => 'Imię',
@@ -1406,6 +1407,7 @@ return [
                             'remove-variants' => 'Usuń warianty',
                             'select-action' => 'Wybierz działanie',
                             'select-variants' => 'Wybierz warianty',
+                            'special-price' => 'Cena specjalna',
                             'status' => 'Status',
                             'variant-name' => 'Nazwa wariantu',
                             'variant-sku' => 'SKU wariantu',
@@ -4151,6 +4153,15 @@ return [
                     'copyright-content' => [
                         'title' => 'Treść praw autorskich',
                         'info' => 'Skonfiguruj treść praw autorskich wyświetlaną w stopce swojej witryny, aby chronić swoją własność intelektualną i zwiększyć rozpoznawalność marki.',
+                    ],
+
+                    'whatsapp' => [
+                        'title' => 'Pływający przycisk WhatsApp',
+                        'info' => 'Wyświetl pływający przycisk kontaktu WhatsApp na każdej stronie sklepu.',
+                        'enable' => 'Włącz pływający przycisk WhatsApp',
+                        'number' => 'Numer WhatsApp',
+                        'number-info' => 'Podaj numer kierunkowy kraju, same cyfry, bez spacji i symboli (np. 6281234567890).',
+                        'message' => 'Wstępnie wypełniona wiadomość',
                     ],
 
                     'speculation-rules' => [

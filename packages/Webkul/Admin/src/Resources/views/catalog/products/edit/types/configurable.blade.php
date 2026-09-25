@@ -325,6 +325,42 @@
                                         </div>
                                     </template>
 
+                                    <template v-if="selectedType == 'editSpecialPrice'">
+                                        <div class="border-b pb-2.5 dark:border-gray-800">
+                                            <div class="flex items-end gap-2.5">
+                                                <x-admin::form.control-group class="!mb-0 flex-1">
+                                                    <x-admin::form.control-group.label>
+                                                        @lang('admin::app.catalog.products.edit.types.configurable.mass-edit.special-price')
+                                                    </x-admin::form.control-group.label>
+
+                                                    <div class="relative">
+                                                        <span
+                                                            class="absolute top-1/2 -translate-y-1/2 text-gray-500 ltr:left-4 rtl:right-4"
+                                                            v-pre
+                                                        >
+                                                            {{ core()->currencySymbol(core()->getBaseCurrencyCode()) }}
+                                                        </span>
+
+                                                        <x-admin::form.control-group.control
+                                                            type="text"
+                                                            class="ltr:pl-8 rtl:pr-8"
+                                                            name="special_price"
+                                                            ::rules="{decimal: true, min_value: 0}"
+                                                            :label="trans('admin::app.catalog.products.edit.types.configurable.mass-edit.special-price')"
+                                                            @input="handleChange((function(v){v=v.replace(/[^0-9.]/g,'');var p=v.split('.');if(p.length>2){v=p[0]+'.'+p.slice(1).join('');p=v.split('.');}if(p[1]&&p[1].length>3){v=p[0]+'.'+p[1].slice(0,3);}return v;})($event.target.value))"
+                                                        />
+                                                    </div>
+                                                </x-admin::form.control-group>
+
+                                                <button class="secondary-button">
+                                                    @lang('admin::app.catalog.products.edit.types.configurable.mass-edit.apply-to-all-btn')
+                                                </button>
+                                            </div>
+
+                                            <x-admin::form.control-group.error control-name="special_price" />
+                                        </div>
+                                    </template>
+
                                     <template v-if="selectedType == 'editInventories'">
                                         <div class="border-b pb-2.5 dark:border-gray-800">
                                             <div class="mb-2.5 grid grid-cols-3 gap-4">
@@ -477,7 +513,7 @@
                                 :class="{'grid grid-cols-2 items-center justify-between gap-3': [
                                         'editName', 'editSku',
                                 ].includes(selectedType), 'flex items-center justify-between' : [
-                                    'editWeight', 'editPrices', 'editStatus',
+                                    'editWeight', 'editPrices', 'editSpecialPrice', 'editStatus',
                                 ].includes(selectedType)}"
                                 v-for="variant in tempSelectedVariants"
                             >
@@ -510,6 +546,39 @@
                                                 :rules="{required: true, decimal: true, min_value: 0}"
                                                 v-model="variant.price"
                                                 label="@lang('admin::app.catalog.products.edit.types.configurable.mass-edit.price')"
+                                            >
+                                            </v-field>
+                                        </div>
+
+                                        <v-error-message
+                                            :name="'variants[variant_' + variant.id + ']'"
+                                            v-slot="{ message }"
+                                        >
+                                            <p class="mt-1 text-xs italic text-red-600">
+                                                @{{ message }}
+                                            </p>
+                                        </v-error-message>
+                                    </x-admin::form.control-group>
+                                </template>
+
+                                <template v-if="selectedType == 'editSpecialPrice'">
+                                    <x-admin::form.control-group class="mb-0 max-w-[115px] flex-1">
+                                        <div class="relative">
+                                            <span
+                                                class="absolute top-1/2 -translate-y-1/2 text-gray-500 ltr:left-4 rtl:right-4"
+                                                v-pre
+                                            >
+                                                {{ core()->currencySymbol(core()->getBaseCurrencyCode()) }}
+                                            </span>
+
+                                            <v-field
+                                                type="text"
+                                                class="flex min-h-[39px] w-full rounded-md border bg-white py-1.5 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 ltr:pl-8 rtl:pr-8"
+                                                :class="[errors['variants[variant_' + variant.id + ']'] ? 'border border-red-500' : '']"
+                                                :name="'variants[variant_' + variant.id + ']'"
+                                                :rules="{decimal: true, min_value: 0}"
+                                                v-model="variant.special_price"
+                                                label="@lang('admin::app.catalog.products.edit.types.configurable.mass-edit.special-price')"
                                             >
                                             </v-field>
                                         </div>
@@ -727,6 +796,12 @@
                     type="hidden"
                     :name="'variants[' + variant.id + '][price]'"
                     :value="variant.price"
+                />
+
+                <input
+                    type="hidden"
+                    :name="'variants[' + variant.id + '][special_price]'"
+                    :value="variant.special_price"
                 />
 
                 <input
@@ -997,6 +1072,23 @@
                                         </div>
 
                                         <x-admin::form.control-group>
+                                            <x-admin::form.control-group.label>
+                                                @lang('admin::app.catalog.products.edit.types.configurable.mass-edit.special-price')
+                                            </x-admin::form.control-group.label>
+
+                                            <x-admin::form.control-group.control
+                                                type="text"
+                                                name="special_price"
+                                                ::rules="{decimal: true, min_value: 0}"
+                                                ::value="variant.special_price"
+                                                :label="trans('admin::app.catalog.products.edit.types.configurable.mass-edit.special-price')"
+                                                @input="handleChange((function(v){v=v.replace(/[^0-9.]/g,'');var p=v.split('.');if(p.length>2){v=p[0]+'.'+p.slice(1).join('');p=v.split('.');}if(p[1]&&p[1].length>3){v=p[0]+'.'+p[1].slice(0,3);}return v;})($event.target.value))"
+                                            />
+
+                                            <x-admin::form.control-group.error control-name="special_price" />
+                                        </x-admin::form.control-group>
+
+                                        <x-admin::form.control-group>
                                             <x-admin::form.control-group.label class="required">
                                                 @lang('admin::app.catalog.products.edit.types.configurable.edit.weight')
                                             </x-admin::form.control-group.label>
@@ -1093,9 +1185,13 @@
         $formattedVariants = $product->variants()->with(['attribute_family', 'images', 'inventories'])->get()->map(function ($variant) {
             $price = $variant->price;
 
+            $specialPrice = $variant->special_price;
+
             $variant = $variant->toArray();
 
             $variant['price'] = is_null($price) ? null : number_format((float) $price, 3, '.', '');
+
+            $variant['special_price'] = is_null($specialPrice) ? null : number_format((float) $specialPrice, 3, '.', '');
 
             return $variant;
         });
@@ -1206,6 +1302,12 @@
                             key: 'editPrices',
                             value: 'price',
                             title: "@lang('admin::app.catalog.products.edit.types.configurable.mass-edit.edit-prices')"
+                        },
+
+                        editSpecialPrice: {
+                            key: 'editSpecialPrice',
+                            value: 'special_price',
+                            title: "@lang('admin::app.catalog.products.edit.types.configurable.mass-edit.edit-special-price')"
                         },
 
                         editInventories: {
@@ -1326,6 +1428,7 @@
                                 'editName',
                                 'editSku',
                                 'editPrices',
+                                'editSpecialPrice',
                                 'editInventories',
                                 'editWeight',
                                 'editStatus',
@@ -1394,6 +1497,15 @@
                         variant.price = this.findVariantByAttribute({
                             id: variant.id,
                             name: 'price'
+                        });
+                    });
+                },
+
+                editSpecialPrice(params) {
+                    this.selectedVariants.forEach((variant) => {
+                        variant.special_price = this.findVariantByAttribute({
+                            id: variant.id,
+                            name: 'special_price'
                         });
                     });
                 },

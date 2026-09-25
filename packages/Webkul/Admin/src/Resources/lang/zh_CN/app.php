@@ -1398,6 +1398,7 @@ return [
                             'edit-names' => '编辑名称',
                             'edit-prices' => '编辑价格',
                             'edit-sku' => '编辑 SKU',
+                            'edit-special-price' => '编辑特价',
                             'edit-status' => '编辑状态',
                             'edit-weight' => '编辑重量',
                             'name' => '名称',
@@ -1406,6 +1407,7 @@ return [
                             'remove-variants' => '移除变体',
                             'select-action' => '选择操作',
                             'select-variants' => '选择变体',
+                            'special-price' => '特价',
                             'status' => '状态',
                             'variant-name' => '变体名称',
                             'variant-sku' => '变体 SKU',
@@ -4151,6 +4153,15 @@ return [
                     'copyright-content' => [
                         'title' => '版权内容',
                         'info' => '配置在您网站页脚显示的版权内容，以保护您的知识产权并提升品牌知名度。',
+                    ],
+
+                    'whatsapp' => [
+                        'title' => '悬浮WhatsApp按钮',
+                        'info' => '在每个商店页面显示悬浮WhatsApp联系按钮。',
+                        'enable' => '启用悬浮WhatsApp按钮',
+                        'number' => 'WhatsApp号码',
+                        'number-info' => '请包含国家代码，仅限数字，不含空格或符号（例如 6281234567890）。',
+                        'message' => '预填消息',
                     ],
 
                     'speculation-rules' => [

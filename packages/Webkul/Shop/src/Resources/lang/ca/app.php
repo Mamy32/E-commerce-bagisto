@@ -617,6 +617,11 @@ return [
                 'view-wishlist' => 'Obre la pàgina de la llista de desitjos per revisar els productes desats del client.',
             ],
 
+            'whatsapp' => [
+                'chat-on-whatsapp' => 'Xateja per WhatsApp',
+            ],
+
+
             'footer' => [
                 'about-us' => 'Sobre nosaltres',
                 'contact-us' => 'Contacte',

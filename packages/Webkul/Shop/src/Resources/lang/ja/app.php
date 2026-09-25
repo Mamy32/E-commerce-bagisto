@@ -617,6 +617,11 @@ return [
                 'view-wishlist' => '顧客が保存した商品を確認するためにお気に入りリストのページを開きます。',
             ],
 
+            'whatsapp' => [
+                'chat-on-whatsapp' => 'WhatsAppでチャット',
+            ],
+
+
             'footer' => [
                 'about-us' => '当社について',
                 'contact-us' => 'お問い合わせ',

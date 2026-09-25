@@ -1398,6 +1398,7 @@ return [
                             'edit-names' => 'Editar Nombres',
                             'edit-prices' => 'Editar Precios',
                             'edit-sku' => 'Editar SKU',
+                            'edit-special-price' => 'Editar precio especial',
                             'edit-status' => 'Editar Estado',
                             'edit-weight' => 'Editar Peso',
                             'name' => 'Nombre',
@@ -1406,6 +1407,7 @@ return [
                             'remove-variants' => 'Eliminar Variantes',
                             'select-action' => 'Seleccionar Acción',
                             'select-variants' => 'Seleccionar Variantes',
+                            'special-price' => 'Precio especial',
                             'status' => 'Estado',
                             'variant-name' => 'Nombre de la Variante',
                             'variant-sku' => 'SKU de la Variante',
@@ -4151,6 +4153,15 @@ return [
                     'copyright-content' => [
                         'title' => 'Contenido de derechos de autor',
                         'info' => 'Configura el contenido de derechos de autor que se muestra en el pie de página de tu sitio web para proteger tu propiedad intelectual y mejorar el reconocimiento de tu marca.',
+                    ],
+
+                    'whatsapp' => [
+                        'title' => 'Botón flotante de WhatsApp',
+                        'info' => 'Muestra un botón flotante de contacto de WhatsApp en cada página de la tienda.',
+                        'enable' => 'Activar botón flotante de WhatsApp',
+                        'number' => 'Número de WhatsApp',
+                        'number-info' => 'Incluye el código de país, solo dígitos, sin espacios ni símbolos (ej. 6281234567890).',
+                        'message' => 'Mensaje predefinido',
                     ],
 
                     'speculation-rules' => [
