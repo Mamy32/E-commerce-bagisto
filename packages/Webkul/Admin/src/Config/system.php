@@ -114,7 +114,7 @@ return [
                 'title' => 'admin::app.configuration.index.general.content.whatsapp.number',
                 'info' => 'admin::app.configuration.index.general.content.whatsapp.number-info',
                 'type' => 'text',
-                'validation' => 'nullable|regex:/^[0-9]+$/',
+                'validation' => 'regex:/^[0-9]+$/',
                 'depends' => 'enabled:true',
             ], [
                 'name' => 'message',
