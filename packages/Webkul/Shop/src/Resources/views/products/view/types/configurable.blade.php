@@ -348,34 +348,6 @@
                             }
 
                             this.$emitter.emit('configurable-variant-selected-event',this.possibleOptionVariant);
-                        } else if (configVariant) {
-                            if (priceLabel) {
-                                priceLabel.style.display = 'inline-block';
-                            }
-
-                            if (parseFloat(configVariant.regular.price) > parseFloat(configVariant.final.price)) {
-                                if (regularPrice) {
-                                    regularPrice.style.display = 'block';
-
-                                    regularPrice.innerHTML = configVariant.regular.formatted_price;
-                                }
-
-                                if (finalPrice) {
-                                    finalPrice.innerHTML = configVariant.final.formatted_price;
-                                }
-                            } else {
-                                if (finalPrice) {
-                                    finalPrice.innerHTML = configVariant.regular.formatted_price;
-                                }
-
-                                if (regularPrice) {
-                                    regularPrice.style.display = 'none';
-
-                                    regularPrice.innerHTML = '';
-                                }
-                            }
-
-                            this.$emitter.emit('configurable-variant-selected-event', 0);
                         } else {
                             if (priceLabel) {
                                 priceLabel.style.display = 'inline-block';
