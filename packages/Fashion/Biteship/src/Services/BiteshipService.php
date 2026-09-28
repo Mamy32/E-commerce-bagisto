@@ -24,7 +24,7 @@ class BiteshipService
     /**
      * Fetch shipping rates from Biteship.
      */
-    public function getRates($destinationAreaId, $destinationPostcode, $weight, $couriers)
+    public function getRates($destinationAreaId, $destinationPostcode, $weight, $couriers, $isCod = false)
     {
         if (empty($this->apiKey) || empty($this->originAreaId)) {
             Log::error('Biteship: API Key or Origin Area ID is not configured.');
@@ -60,6 +60,11 @@ class BiteshipService
                 ]
             ];
 
+            // Add COD flag if payment is Cash on Delivery
+            if ($isCod) {
+                $payload['cash_on_delivery'] = true;
+            }
+
             // If coordinates exist, append them to the payload for Instant Couriers
             if ($originCoords && $destCoords) {
                 $payload['origin_latitude'] = $originCoords['latitude'];
@@ -74,7 +79,13 @@ class BiteshipService
             ])->post($this->baseUrl . '/rates/couriers', $payload);
 
             if ($response->successful()) {
-                return $response->json()['pricing'] ?? [];
+                $pricing = $response->json()['pricing'] ?? [];
+
+                // Attach cod_fee to each rate for display in carrier
+                return array_map(function ($rate) {
+                    $rate['cod_fee'] = $rate['cod_fee'] ?? 0;
+                    return $rate;
+                }, $pricing);
             }
 
             Log::error('Biteship API Error', [

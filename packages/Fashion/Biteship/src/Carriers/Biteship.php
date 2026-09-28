@@ -73,8 +73,14 @@ class Biteship extends AbstractShipping
             }
         }
 
-        // 4. Fetch Rates from API
-        $apiRates = $this->biteshipService->getRates($destinationAreaId, $shippingAddress->postcode, $totalWeight, $activeCouriers);
+        // 4. Check if COD payment is selected
+        $isCod = false;
+        if ($cart->payment && $cart->payment->method === 'cashondelivery') {
+            $isCod = true;
+        }
+
+        // 5. Fetch Rates from API
+        $apiRates = $this->biteshipService->getRates($destinationAreaId, $shippingAddress->postcode, $totalWeight, $activeCouriers, $isCod);
 
         if (empty($apiRates)) {
             return false;
@@ -89,8 +95,9 @@ class Biteship extends AbstractShipping
             $cartShippingRate->carrier = $this->code;
             $cartShippingRate->carrier_title = $this->getConfigData('title') ?: 'Biteship';
             $cartShippingRate->method = $this->code . '_' . $rate['courier_code'] . '_' . $rate['courier_service_code'];
-            $cartShippingRate->method_title = strtoupper($rate['courier_name']) . ' - ' . $rate['courier_service_name'];
-            $cartShippingRate->method_description = 'Estimated Delivery: ' . $rate['duration'];
+            $codLabel = ($isCod && ! empty($rate['cod_fee'])) ? ' (COD +' . number_format($rate['cod_fee'], 0, ',', '.') . ')' : '';
+            $cartShippingRate->method_title = strtoupper($rate['courier_name']) . ' - ' . $rate['courier_service_name'] . $codLabel;
+            $cartShippingRate->method_description = 'Estimated Delivery: ' . $rate['duration'] . ($isCod ? ' | Cash on Delivery' : '');
             
             $cartShippingRate->price = core()->convertPrice($rate['price']);
             $cartShippingRate->base_price = $rate['price'];
