@@ -193,9 +193,15 @@ class OnepageController extends APIController
 
         session()->flash('order_id', $order->id);
 
+        $redirectUrl = route('shop.checkout.onepage.success');
+
+        if ($order->payment->method === 'cashondelivery' && auth()->guard('customer')->check()) {
+            $redirectUrl = route('shop.customers.account.orders.view', $order->id);
+        }
+
         return new JsonResource([
             'redirect' => true,
-            'redirect_url' => route('shop.checkout.onepage.success'),
+            'redirect_url' => $redirectUrl,
         ]);
     }
 
