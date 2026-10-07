@@ -38,9 +38,19 @@
                     >
                 </a>
 
-                <p class="w-full text-sm leading-relaxed text-fashion-muted lg:max-w-[220px]">
-                    @lang('shop::app.components.layouts.footer.subscribe-stay-touch')
-                </p>
+                <div class="flex flex-col gap-2 text-sm leading-relaxed text-fashion-muted">
+                    <a href="mailto:kianjung40@gmail.com" class="hover:text-fashion-navy transition-colors">
+                        kianjung40@gmail.com
+                    </a>
+                    <a href="tel:+6281227663833" class="hover:text-fashion-navy transition-colors">
+                        +62 812-2766-3833
+                    </a>
+                    <p class="mt-1">
+                        Kompleks Jamblang Indah Blok 1 No. 12 RT.13/RW.2,<br>
+                        Kel. Duri Selatan, Tambora, Jakarta Barat,<br>
+                        DKI Jakarta, 11270
+                    </p>
+                </div>
 
                 <div class="flex items-center gap-4">
                     <a href="#" class="flex h-9 w-9 items-center justify-center rounded-full border border-fashion-border text-fashion-muted transition-colors hover:border-fashion-navy hover:text-fashion-navy" aria-label="Instagram" rel="noopener noreferrer" target="_blank">
