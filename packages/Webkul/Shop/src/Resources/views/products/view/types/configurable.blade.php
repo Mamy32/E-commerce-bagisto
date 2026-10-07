@@ -61,7 +61,7 @@
                         </h2>
 
                         <!-- Swatch Options -->
-                        <div class="flex items-center gap-3">
+                        <div class="grid grid-cols-3 gap-3 max-sm:grid-cols-2">
                             <template v-for="(option, index) in attribute.options">
                                 <template v-if="option.id">
                                     <!-- Image Swatch Options -->
