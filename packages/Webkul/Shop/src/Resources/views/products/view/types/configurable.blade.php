@@ -61,7 +61,7 @@
                         </h2>
 
                         <!-- Swatch Options -->
-                        <div class="flex flex-wrap items-center gap-3">
+                        <div class="grid grid-cols-3 gap-3 max-sm:grid-cols-2">
                             <template v-for="(option, index) in attribute.options">
                                 <template v-if="option.id">
                                     <!-- Image Swatch Options -->
@@ -101,7 +101,7 @@
 
                                     <!-- Text Swatch Options -->
                                     <label 
-                                        class="group relative flex h-fit min-w-fit cursor-pointer items-center justify-center rounded-full border border-gray-300 bg-white px-5 py-3 font-medium uppercase text-gray-900 hover:bg-gray-50 max-sm:h-fit max-sm:w-fit max-sm:px-3.5 max-sm:py-2"
+                                        class="group relative flex h-full w-full cursor-pointer items-center justify-center rounded-full border border-gray-300 bg-white px-2 py-3 text-center font-medium uppercase text-gray-900 hover:bg-gray-50 max-sm:px-2 max-sm:py-2"
                                         :class="{'border-transparent !bg-navyBlue text-white' : option.id == attribute.selectedValue }"
                                         :title="option.label"
                                         v-if="attribute.swatch_type == 'text' || attribute.swatch_type == 'color' || attribute.code === 'color'"
@@ -128,7 +128,7 @@
                                             />
                                         </v-field>
 
-                                        <span class="text-lg max-sm:text-sm">
+                                        <span class="text-center text-sm leading-tight max-w-full break-words max-sm:text-xs">
                                             @{{ option.label }}
                                         </span>
 
